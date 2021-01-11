@@ -38,6 +38,8 @@
 
 \usepackage{enumerate} % To modify the enumerate environment
 
+\usepackage{amsmath}
+
 %----------------------------------------------------------------------------------------
 %	ASSIGNMENT INFORMATION
 %----------------------------------------------------------------------------------------
@@ -75,10 +77,68 @@
 \subsection*{Answer}
 
 \begin{enumerate}[(\itshape a\normalfont)] % Sub-questions styled as italic letters
-	\item
+	\item From (1.41) we could derive
+	\begin{equation}
+	\begin{aligned}
+	& \int_{-\infty}^{\infty} exp\{-\frac{\lambda}{2}x^2\}dx = (\frac{2\pi}{\lambda})^{1/2} \\
+	\Rightarrow & \int_{-\infty}^{\infty} exp\{-(\sqrt{\frac{\lambda}{2}}x)^2\}d\sqrt{\frac{\lambda}{2}}x = \pi^{1/2} \\
+	\Rightarrow & \int_{-\infty}^{\infty} exp\{-x^2\}dx = \pi^{1/2} \\
+	\end{aligned}
+	\end{equation}
 	
-	\item
+	Therefore, the result of the L.H.S of (1.42) is $\pi ^{d/2}$, thus we can convert the 1.42 into following form
+	\begin{equation}
+	\begin{aligned}
+	& \pi ^{d/2} = S_d \int_{0}^{\infty}e^{-r^2}r^{d-1}dr \\
+	\Leftrightarrow & S_d = \frac{\pi ^{d/2}}{\int_{0}^{\infty}e^{-r^2}r^{d-1}dr} \\
+	\Leftrightarrow & S_d = \frac{2\pi ^{d/2}}{\int_{0}^{\infty}e^{-r^2}r^{d-2}2rdr} \\
+	\Leftrightarrow & S_d = \frac{2\pi ^{d/2}}{\int_{0}^{\infty}e^{-r^2}r^{d-2}dr^2} \\
+	\Leftrightarrow & S_d = \frac{2\pi ^{d/2}}{\int_{0}^{\infty}e^{-u}u^{\frac{d}{2}-1}du} \\
+	\Leftrightarrow & S_d = \frac{2\pi ^{d/2}}{\Gamma(d/2)} (Inserting (1.44))
+	\end{aligned}
+	\end{equation}
 	
+	Hence we have proved the (1.43).
+	
+	When $d = 2$, $S_d = \frac{2\pi}{\Gamma(1)} = 2\pi$ and when $d = 3$ we have $S_d = \frac{2\pi^{3/2}}{\Gamma(3/2)} = 4\pi$, which are equal to well-know expressions of circle and 3D sphere.
+	
+	\item By utilizing the (1.43)
+	\begin{equation}
+	\begin{aligned}
+	 S_d(r)& = S_d(1)r^d = S_dr^{d-1} \\
+	 V_d& = \int_{0}^{a}S_d(r)dr \\
+	\Leftrightarrow & = S_d\int_{0}^{a}r^{d-1}dr\\
+	\Leftrightarrow & = \frac{S_da^d}{d}\\
+	\end{aligned}
+	\end{equation}
+	It's easy to know that the volume of hypercube is $(2a)^d$, so the ratio would be
+	\begin{equation}
+	\begin{aligned}
+	\frac{VS_d}{VC_d} &= \frac{S_da^d}{d(2a)^d}\\
+	&=\frac{2\pi^{d/2}a^d}{d2^da^d\Gamma(d/2)}\\
+	&=\frac{\pi^{d/2}}{d2^{d-1}\Gamma(d/2)}\\
+	\end{aligned}
+	\label{eq:4}
+	\end{equation}
+	When $d\rightarrow\infty$, we could use Stirling approx(1.47) to derive that
+	\begin{equation}
+	\begin{aligned}
+	 \lim_{d\rightarrow\infty}  \Gamma(x + 1) &\approx (2\pi)^{1/2}e^{-x}(x)^{x+1/2}\\
+	 &\textgreater e^{-x} x^x \\
+	 & =(\frac{x}{e})^x \rightarrow \infty\\
+	\end{aligned}
+	\label{eq:5}
+	\end{equation}
+	Right now we now when d is large enough the $\Gamma$function would be close to infinity, for the rest part of the eq\ref{eq:4} we have
+	\begin{equation}
+	\lim_{d\rightarrow\infty}\frac{\pi^{d/2}}{d2^{d-1}} \textless \frac{\pi^{d/2}}{2^d}=(\frac{\pi}{4})^{d/2}\rightarrow 0
+	\label{eq:6}
+	\end{equation}
+	By combining eq\ref{eq:5} and eq\ref{eq:6} we can draw a conclution that
+	\begin{equation}
+	\lim_{d\rightarrow \infty}\frac{VS_d}{VC_d} \rightarrow \frac{0}{\infty} \rightarrow 0
+	\end{equation}
+	The distance from center to corner is $\sqrt{\Sigma_{i=1}^{d}a^2}=\sqrt{d}a$ while the height(center to hypersurface distance) is simply a, therefore the ratio is $\sqrt{d}$, and when d is large enough this ratio goes to infinity.
 	\item
 	
 	\item
