@@ -59,8 +59,8 @@ def Cross_Validation_Procedure(images, K_split, NameList, indices):
     train_data = train_data.reshape((len(train_data), -1))
     valid_data = valid_data.reshape((len(valid_data), -1))
     test_data = test_data.reshape((len(test_data), -1))
-    
-    return train_data, train_label, valid_data, valid_label, test_data, test_label
+    p = np.random.permutation(len(train_data))
+    return train_data[p], train_label[p], valid_data, valid_label, test_data, test_label
     
 
 
@@ -74,9 +74,11 @@ for i in range(k):
     # Get train, valid and test set
     train_data, train_label, valid_data, valid_label, test_data, test_label = \
         Cross_Validation_Procedure(images, K_split, images.keys(), indices)
+    # Apply the PCA
     projected, mean_image, top_sqrt_eigen_values, top_eigen_vectors = \
         PCA(train_data, n_components)
-        
+    # Normalize the projected
+    projected = np.divide(projected, top_sqrt_eigen_values)
         
         
         
