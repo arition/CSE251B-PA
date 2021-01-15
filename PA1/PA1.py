@@ -56,31 +56,58 @@ def Cross_Validation_Procedure(images, K_split, NameList, indices):
     train_label = np.array([item for sublist in train_label for item in sublist])
     valid_label = np.array([item for sublist in valid_label for item in sublist])
     test_label = np.array([item for sublist in test_label for item in sublist])
+    #convert shape
     train_data = train_data.reshape((len(train_data), -1))
     valid_data = valid_data.reshape((len(valid_data), -1))
     test_data = test_data.reshape((len(test_data), -1))
+    #label encoding
+    category = np.array(range(len(NameList)))
+    resvec = np.zeros((category.size, category.max()+1))
+    resvec[np.arange(category.size),category] = 1
+    LabelEncoding = dict(zip(NameList, resvec))
+    train_label = np.array([x if x not in LabelEncoding else LabelEncoding[x] for x in train_label])
+    valid_label = np.array([x if x not in LabelEncoding else LabelEncoding[x] for x in valid_label])
+    test_label = np.array([x if x not in LabelEncoding else LabelEncoding[x] for x in test_label])
+    # Shuffle the train set
     p = np.random.permutation(len(train_data))
     return train_data[p], train_label[p], valid_data, valid_label, test_data, test_label
     
 
 
+
+
+
+
+
+
+# Init
 k = 10 # choose the number you want
-n_components = 4 # choose the number you want
+n_components = 10 # choose the number you want
 images, cnt = load_data()
+
 #split data into k-fold
 K_split = K_split(images, cnt, k)
 indices = np.array(range(0, k))
-for i in range(k):
+for i in range(1):
+    print('This is epoch', i)
     # Get train, valid and test set
     train_data, train_label, valid_data, valid_label, test_data, test_label = \
         Cross_Validation_Procedure(images, K_split, images.keys(), indices)
     # Apply the PCA
     projected, mean_image, top_sqrt_eigen_values, top_eigen_vectors = \
         PCA(train_data, n_components)
-    # Normalize the projected
-    projected = np.divide(projected, top_sqrt_eigen_values)
-        
-        
+    print('The mean and std of projected training set is', np.mean(projected), 'and',\
+          np.std(projected) * np.sqrt(projected.shape[0]))
+    # Project the valid and test set
+    valid_data = np.dot((valid_data - mean_image), top_eigen_vectors) / top_sqrt_eigen_values
+    print('The mean and std of projected validation set is', np.mean(valid_data), 'and',\
+          np.std(valid_data) * np.sqrt(projected.shape[0]))
+    test_data = np.dot((test_data - mean_image), top_eigen_vectors) / top_sqrt_eigen_values
+    print('The mean and std of projected test set is', np.mean(test_data), 'and',\
+      np.std(test_data) * np.sqrt(projected.shape[0]))
+    # Train the model
+    
+    
         
         
         
