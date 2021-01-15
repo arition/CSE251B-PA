@@ -204,9 +204,9 @@ indices = np.array(range(0, k))
 NameList = ['Convertible', 'Minivan']
 learning_rate = 0.01
 w = np.random.rand(n_components + 1, 1)
-epoch_lim = 1000 
+epoch_lim = 500 
 
-for i in range(1):
+for i in range(k):
     # Get train, valid and test set
     train_data, train_label, valid_data, valid_label, test_data, test_label = \
         Cross_Validation_Procedure(images, K_split, NameList, indices)
