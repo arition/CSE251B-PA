@@ -4,10 +4,11 @@
 from dataloader import load_data
 from PCA import PCA
 import numpy as np
-import os, random
+import os, random, sys
 import matplotlib.pyplot as plt
 from PIL import Image
 
+# Data load and preprocess and Cross Validation Procedure
 
 def K_split(images, cnt, k):
     '''split the indices
@@ -145,7 +146,7 @@ print('The mean and std of projected test set is', np.mean(test_data), 'and',\
 
 
 
-# Logistic regression
+# Logistic regression (b)
 # Split data into k-fold
 K_split = K_split(images, cnt, k)
 indices = np.array(range(0, k))
@@ -181,7 +182,7 @@ for i in range(1): # No need to run k times as stated in the problem
         w = w + learning_rate * dw
         
         # Check then loss and accuracy every 50 epochs
-        if(epoch % 50 == 0):
+        if((epoch + 1) % 50 == 0):
             model_valid_output = simple_logistic_model(w, valid_data)
             loss_valid = simple_logistic_model_loss(model_valid_output, valid_data, valid_label)
             pred_valid = np.array([0 if i < 0.5 else 1 for i in model_valid_output])
@@ -194,8 +195,8 @@ for i in range(1): # No need to run k times as stated in the problem
             pred_test = np.array([0 if i < 0.5 else 1 for i in model_test_output])
             true_test = np.array([1 if i[0] == 0.0 else 0 for i in test_label])
             accu_test = np.sum(pred_test == true_test) / len(pred_test)
-            print('epoch:', epoch)
-            print('validation loss is {:.2f}, accuracy is {:.2f},test loss is{:.2f}, accuracy is {:.2f}'\
+            print('epoch:', epoch + 1)
+            print('validation loss is {:.2f}, accuracy is {:.2f}, test loss is {:.2f}, accuracy is {:.2f}'\
                   .format(loss_valid, accu_valid, loss_test, accu_test))
                     
     # Rotate the indices to ensure each set would 
@@ -210,17 +211,19 @@ for i in range(1): # No need to run k times as stated in the problem
 '''
 
     
-# Softmax Regression
+# Logistic Regression
 # Split data into k-fold
-# you may want to delete my variable first
 K_split = K_split(images, cnt, k)
 indices = np.array(range(0, k))
 NameList = ['Convertible', 'Minivan']
-learning_rate = 0.01
+learning_rate = 0.1
 w = np.random.rand(n_components + 1, 1)
+best_w = w
+best_loss = sys.float_info.max
+best_accu = -1
 epoch_lim = 500 
 
-for i in range(k):
+for i in range(1): # No need to run k times as stated in the problem
     # Get train, valid and test set
     train_data, train_label, valid_data, valid_label, test_data, test_label = \
         Cross_Validation_Procedure(images, K_split, NameList, indices)
@@ -235,12 +238,35 @@ for i in range(k):
     valid_data = np.append(np.ones((valid_data.shape[0],1)),valid_data, axis = 1)
     test_data = np.append(np.ones((test_data.shape[0],1)),test_data, axis = 1)
     # Train the model  
-    # Define the softmax regression model then run it here, bias term has been appended
-    # to the fisrt colume of the input
-
-
-
-
+    for epoch in range(epoch_lim):
+        #Logistic model
+        model_output = simple_logistic_model(w, train_data)
+        # MSE loss
+        loss = simple_logistic_model_loss(model_output, train_data, train_label)
+        # Get the gradient
+        dw = simple_logistic_model_MSE_gradient_descent\
+            (model_output, train_data, train_label)
+        #update the weight
+        w = w + learning_rate * dw
+        
+        # Check then loss and accuracy every 50 epochs
+        if((epoch + 1) % 50 == 0):
+            model_valid_output = simple_logistic_model(w, valid_data)
+            loss_valid = simple_logistic_model_loss(model_valid_output, valid_data, valid_label)
+            pred_valid = np.array([0 if i < 0.5 else 1 for i in model_valid_output])
+            true_valid = np.array([1 if i[0] == 0.0 else 0 for i in valid_label])
+            accu_valid = np.sum(pred_valid == true_valid) / len(pred_valid)
+            
+            
+            model_test_output = simple_logistic_model(w, test_data)
+            loss_test = simple_logistic_model_loss(model_test_output, test_data, test_label)
+            pred_test = np.array([0 if i < 0.5 else 1 for i in model_test_output])
+            true_test = np.array([1 if i[0] == 0.0 else 0 for i in test_label])
+            accu_test = np.sum(pred_test == true_test) / len(pred_test)
+            print('epoch:', epoch + 1)
+            print('validation loss is {:.2f}, accuracy is {:.2f}, test loss is {:.2f}, accuracy is {:.2f}'\
+                  .format(loss_valid, accu_valid, loss_test, accu_test))
+                    
     # Rotate the indices to ensure each set would 
     # be selected as the valid and test set once
     indices = (indices + 1) % k
