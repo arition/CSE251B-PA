@@ -1,46 +1,55 @@
-################################################################################
-# CSE 251B: Programming Assignment 1
-# Code snippet by Divyanshu
-# Winter 2021
-################################################################################
-# We've provided you with the dataset in PA1.zip
-################################################################################
-
 import numpy as np
 
-def PCA(X, n_components):
-	"""
-	Args:
-		X: has shape Mxd where M is the number of images and d is the dimension of each image
-		n_components: The number of components you want to project your image onto. 
-	
-	Returns:
-		projected: projected data of shape M x n_components
-		mean_image: mean of all images
-		top_sqrt_eigen_values: singular values
-		top_eigen_vectors: eigenvectors 
-	"""
 
-	mean_image = np.average(X, axis = 0)
+class PCA():
+    '''
+    Principal Components Analysis
+    '''
 
-	msd = X - mean_image # M x d
+    def __init__(self, x: np.ndarray, n_components: int):
+        '''
+        Args:
 
-	smart_cov_matrix = np.matmul(msd, msd.T)
-	eigen_values, smart_eigen_vectors = np.linalg.eig(smart_cov_matrix)
+        x: has shape Mxd where M is the number of images and d is the dimension of each image
 
-	idx = eigen_values.argsort()[::-1]   
-	eigen_values = eigen_values[idx]
-	smart_eigen_vectors = smart_eigen_vectors[:,idx]
+        n_components: The number of components you want to project your image onto.
+        '''
 
-	eigen_vectors = (np.matmul(msd.T, smart_eigen_vectors)).T # M x d
+        mean_image = np.average(x, axis=0)
 
-	row_norm = np.sum(np.abs(eigen_vectors)**2,axis=-1)**(1./2) # M
+        msd = x - mean_image  # M x d
 
-	normalized_eigen_vectors = eigen_vectors/(row_norm.reshape(-1, 1)) # M x d
+        smart_cov_matrix = np.matmul(msd, msd.T)
+        eigen_values, smart_eigen_vectors = np.linalg.eig(smart_cov_matrix)
 
-	top_eigen_vectors = normalized_eigen_vectors[:n_components].T
-	top_sqrt_eigen_values = np.sqrt(eigen_values[:n_components])
+        idx = eigen_values.argsort()[::-1]
+        eigen_values = eigen_values[idx]
+        smart_eigen_vectors = smart_eigen_vectors[:, idx]
 
-	projected = np.matmul(msd, top_eigen_vectors)/top_sqrt_eigen_values
+        eigen_vectors = (np.matmul(msd.T, smart_eigen_vectors)).T  # M x d
 
-	return projected, mean_image, top_sqrt_eigen_values, top_eigen_vectors
+        row_norm = np.sum(np.abs(eigen_vectors)**2, axis=-1)**(1. / 2)  # M
+
+        normalized_eigen_vectors = eigen_vectors / (row_norm.reshape(-1, 1))  # M x d
+
+        top_eigen_vectors = normalized_eigen_vectors[:n_components].T
+        top_sqrt_eigen_values = np.sqrt(eigen_values[:n_components])
+
+        self.mean_image = mean_image
+        self.top_sqrt_eigen_values = top_sqrt_eigen_values
+        self.top_eigen_vectors = top_eigen_vectors
+
+        result = np.matmul(x - self.mean_image, self.top_eigen_vectors) / self.top_sqrt_eigen_values
+        assert np.mean(result) < 0.0001
+        assert np.std(result) - 1 < 0.0001
+
+    def apply(self, x: np.ndarray) -> np.ndarray:
+        '''
+        Apply PCA to data
+
+        Args:
+
+        x: has shape Mxd where M is the number of images and d is the dimension of each image
+        '''
+
+        return np.matmul(x - self.mean_image, self.top_eigen_vectors) / self.top_sqrt_eigen_values
