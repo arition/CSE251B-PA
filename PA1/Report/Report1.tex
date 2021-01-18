@@ -96,6 +96,7 @@
 
 
 \section{Logistic regression}
+Logistic model is a very simple model which has only one output and use sigmoid as the activation function. It can only identify 2 different objects while it's simplicity make it a very popular toy model to understand the principle behind machine learning. Here we use python with only Numpy library to build a trivial program to implement this model's key idea.
 \label{Sec:LR}
 \subsection{(a)} The logistic regression code is shown in \autoref{lst:LR}. We only need one output because we only have 2 categories, if we assume the output is the probability of the first category, then the probability for the second one is naturally 1 - p.
 \lstset{language=Python}
@@ -119,7 +120,7 @@
 		return x
 \end{lstlisting}
 \subsection{(b)}
-The loss of the validation set is shown in Fig 1. And the accuracy on test set is around 63.33\%, here we have 40 PCA components. Looking at the PCA components(the first 4 are shown in Fig 2), we found that since the objects are not aligned, it's very hard for PCA to get accurate car's shape, thus not able to achieve high accuracy.
+The loss of the validation set is shown in Fig 1. And the accuracy on test set is around 63.33\%, the validation loss clearly shows the overfiting problem here that loss goes down quickly at first then goes up. Here we have 40 PCA components. Looking at the PCA components(the first 4 are shown in Fig 2), we found that since the objects are not aligned, it's very hard for PCA to get accurate car's shape, thus not able to achieve high accuracy. 
 \begin{figure}
 	\centering
 	\includegraphics[width = 8cm]{LR(b)00.eps}
@@ -145,6 +146,39 @@ The loss of the validation set is shown in Fig 1. And the accuracy on test set i
 \end{figure*}
 
 \subsection{(c)}
+By alternating the data source from resized to aligned, we see a a huge improvement on accuracy, the accuracy we achieved here is 83.5\% with 300 epochs. The mean and std of accuracy and loss is shown in Figure 3. We also try different laearning rate here, one is too large, one is too small and a normal one, the difference is shown in Figure 4. As we can see that a large learning rate may lead to strong oscillation while a small one would lead to a slow converging speed.
+
+\begin{figure}
+	
+	\centering
+	\subfigure{
+			\includegraphics[width=0.5\linewidth]{LR(c)01.png}
+			\includegraphics[width=0.5\linewidth]{LR(c)02.png}
+		}
+	\label{fig:3}
+	\caption{Mean and std of accuracy and loss, classification between Convertible and Minivan.}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width = 0.8\linewidth]{LR(c)DiffLR.png}
+	\caption{Different learning rate effects on training loss.}
+\end{figure}
+
+
+\subsection{(d)}
+The classification accuracy between category Pickup and Sedan is 82.67\%, namely, we didn't notice any significant differences between different category classification tasks, Which is reasonable since this logistic model is simple yet powerful enough to generalized to similar objects. The mean and std of training loss is shown in Figure 5.
+
+\begin{figure}
+	
+	\centering
+	\subfigure{
+		\includegraphics[width=0.5\linewidth]{LR(c)03.png}
+		\includegraphics[width=0.5\linewidth]{LR(c)04.png}
+	}
+	\label{fig:3}
+	\caption{Mean and std of accuracy and loss, classification between Pickup and Sedan.}
+\end{figure}
 
 
 
