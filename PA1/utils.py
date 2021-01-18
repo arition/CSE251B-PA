@@ -18,9 +18,12 @@ def plot(title, train, holdout, train_std=None, holdout_std=None):
     plt.plot(range(len(train)), train, label='Training set')
     plt.plot(range(len(holdout)), holdout, label='Holdout set')
     if train_std is not None and holdout_std is not None:
-        errorbar_x = (np.arange(len(train_std)) + 1) * 50 - 1
-        plt.errorbar(errorbar_x, train[errorbar_x], yerror=train_std[errorbar_x], fmt=None)
-        plt.errorbar(errorbar_x, train[errorbar_x], yerror=holdout_std[errorbar_x], fmt=None)
+        errorbar_x = (np.arange(int(len(train) / 50)) + 1) * 50 - 1
+        plt.errorbar(errorbar_x, train[errorbar_x], yerr=train_std[errorbar_x], fmt='o')
+        #plt.errorbar(range(300), train, yerr=train_std, fmt='o')
+        plt.errorbar(errorbar_x, holdout[errorbar_x], yerr=holdout_std[errorbar_x], fmt='o')
+        #plt.errorbar(range(300), holdout, yerr=holdout_std, fmt='o')
     plt.legend()
     plt.title(title)
+    plt.xlabel('Epochs')
     plt.show()
