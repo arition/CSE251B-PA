@@ -1,0 +1,12 @@
+PA1 Code implementation instruction:
+
+Main body: PA1.ipynb
+Dataloading, preprocessing and cross validation: cross_validation.py
+Logistic_regression: logistic_regression.py
+Softmax_regression: softmax_regression.py
+Accuracy and plotting: utils.py
+
+Instructs: We encapsulated different functions into differnt files accordingly,
+and the main body of our program can be found in the PA1.ipynb. Each cell
+are independent from each other hence running any of them would give the
+corresponding sub-quiestion's result.
