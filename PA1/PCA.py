@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class PCA():
@@ -14,6 +15,8 @@ class PCA():
 
         n_components: The number of components you want to project your image onto.
         '''
+
+        self.n_components = n_components
 
         mean_image = np.average(x, axis=0)
 
@@ -53,3 +56,29 @@ class PCA():
         '''
 
         return np.matmul(x - self.mean_image, self.top_eigen_vectors) / self.top_sqrt_eigen_values
+
+    def recreate(self, x: np.ndarray) -> np.ndarray:
+        '''
+        Recreate original data from projected data
+
+        Args:
+
+        x: the projected data
+        '''
+
+        return (x * self.top_sqrt_eigen_values) @ self.top_eigen_vectors.T + self.mean_image
+
+    def plot_pc(self):
+        '''
+        Plot top 4 principal components
+        '''
+        fig, axs = plt.subplots(2, 2)
+        axs[0, 0].imshow(self.top_eigen_vectors.T[0].reshape((200, 300)))
+        axs[0, 0].set_title('Principal component: 0')
+        axs[0, 1].imshow(self.top_eigen_vectors.T[1].reshape((200, 300)))
+        axs[0, 1].set_title('Principal component: 1')
+        axs[1, 0].imshow(self.top_eigen_vectors.T[2].reshape((200, 300)))
+        axs[1, 0].set_title('Principal component: 2')
+        axs[1, 1].imshow(self.top_eigen_vectors.T[3].reshape((200, 300)))
+        axs[1, 1].set_title('Principal component: 3')
+        plt.show()

@@ -43,8 +43,8 @@ class CrossValidationDataset():
         datas = datas.reshape((datas.shape[0], -1))
 
         shuffle_index = np.random.permutation(len(labels))
-        self.datas = np.split(datas[shuffle_index], k)
-        self.labels = np.split(labels[shuffle_index], k)
+        self.datas = np.array_split(datas[shuffle_index], k)
+        self.labels = np.array_split(labels[shuffle_index], k)
         self.k = k
 
     def data(self):
