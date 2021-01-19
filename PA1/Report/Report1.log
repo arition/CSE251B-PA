@@ -1,348 +1,298 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.11.6)  18 JAN 2021 11:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.5.27)  18 JAN 2021 20:28
 entering extended mode
- restricted \write18 enabled.
- %&-line parsing enabled.
-**Report1.tex
-(./Report1.tex
-LaTeX2e <2018-04-01> patch level 5
-(d:/texlive/2018/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-(d:/texlive/2018/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+**e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.tex
+(e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.tex
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-05-15> (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/base\article.cls
+Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+(C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/base\size10.clo
+File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
 )
-\c@part=\count80
-\c@section=\count81
-\c@subsection=\count82
-\c@subsubsection=\count83
-\c@paragraph=\count84
-\c@subparagraph=\count85
-\c@figure=\count86
-\c@table=\count87
-\abovecaptionskip=\skip41
-\belowcaptionskip=\skip42
-\bibindent=\dimen102
-) (./neurips_2020.sty
-Package: neurips_2020 2020/01/31 NeurIPS 2020 submission/camera-ready style fil
-e
-
-(d:/texlive/2018/texmf-dist/tex/latex/environ/environ.sty
+\c@part=\count167
+\c@section=\count168
+\c@subsection=\count169
+\c@subsubsection=\count170
+\c@paragraph=\count171
+\c@subparagraph=\count172
+\c@figure=\count173
+\c@table=\count174
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+) (e:/Onedrive_backup\CSE251B\PA\PA1\Report\neurips_2020.sty
+Package: neurips_2020 2020/01/31 NeurIPS 2020 submission/camera-ready style file
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/environ\environ.sty
 Package: environ 2014/05/04 v0.3 A new way to define environments
-
-(d:/texlive/2018/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/trimspaces\trimspaces.sty
 Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 )
-\@envbody=\toks14
-)
-(d:/texlive/2018/texmf-dist/tex/latex/natbib/natbib.sty
+\@envbody=\toks15
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/natbib\natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip43
-\bibsep=\skip44
+\bibhang=\skip49
+\bibsep=\skip50
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count88
-)
-(d:/texlive/2018/texmf-dist/tex/latex/geometry/geometry.sty
-Package: geometry 2018/04/16 v5.8 Page Geometry
-
-(d:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
+\c@NAT@ctr=\count175
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/geometry\geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/graphics\keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks15
-)
-(d:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
-)
-(d:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifvtex.sty
-Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
-Package ifvtex Info: VTeX not detected.
-)
-(d:/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
-Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
-)
-\Gm@cnth=\count89
-\Gm@cntv=\count90
-\c@Gm@tempcnt=\count91
-\Gm@bindingoffset=\dimen103
-\Gm@wd@mp=\dimen104
-\Gm@odd@mp=\dimen105
-\Gm@even@mp=\dimen106
-\Gm@layoutwidth=\dimen107
-\Gm@layoutheight=\dimen108
-\Gm@layouthoffset=\dimen109
-\Gm@layoutvoffset=\dimen110
-\Gm@dimlist=\toks16
-)
-\@neuripsabovecaptionskip=\skip45
-\@neuripsbelowcaptionskip=\skip46
-)
-(d:/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2018/04/06 v1.3b Input encoding file
-\inpenc@prehook=\toks17
-\inpenc@posthook=\toks18
-)
-(d:/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
-Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
-
-(d:/texlive/2018/texmf-dist/tex/latex/base/t1enc.def
-File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
-LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+\KV@toks@=\toks16
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/iftex\ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/iftex\iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
-(d:/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2018/09/30 v6.88a Hypertext links for LaTeX
-
-(d:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
-Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
-
-
-(d:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
-Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
-Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
-Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
-Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
-Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
-Package ifluatex Info: LuaTeX not detected.
-Package hobsub Info: Skipping package `ifvtex' (already loaded).
-Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
-Package hobsub Info: Skipping package `ifpdf' (already loaded).
-Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
-Package etexcmds Info: Could not find \expanded.
-(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
-(etexcmds)             that some package has redefined \expanded.
-(etexcmds)             In the latter case, load this package earlier.
-Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
-Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
-Package: pdftexcmds 2018/09/10 v0.29 Utility functions of pdfTeX for LuaTeX (HO
+\Gm@cnth=\count176
+\Gm@cntv=\count177
+\c@Gm@tempcnt=\count178
+\Gm@bindingoffset=\dimen135
+\Gm@wd@mp=\dimen136
+\Gm@odd@mp=\dimen137
+\Gm@even@mp=\dimen138
+\Gm@layoutwidth=\dimen139
+\Gm@layoutheight=\dimen140
+\Gm@layouthoffset=\dimen141
+\Gm@layoutvoffset=\dimen142
+\Gm@dimlist=\toks17
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/geometry\geometry.cfg))
+\@neuripsabovecaptionskip=\skip51
+\@neuripsbelowcaptionskip=\skip52
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/base\inputenc.sty
+Package: inputenc 2018/08/11 v1.3c Input encoding file
+\inpenc@prehook=\toks18
+\inpenc@posthook=\toks19
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/base\fontenc.sty
+Package: fontenc 2020/02/11 v2.0o Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 112.
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/psnfss\t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/hyperref\hyperref.sty
+Package: hyperref 2020-05-15 v7.00e Hypertext links for LaTeX
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO)
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/infwarerr\infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
-Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
-Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/kvdefinekeys\kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/pdfescape\pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/hycolor\hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/letltxmacro\letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/auxhook\auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
 )
-Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
-Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
-)
-Package hobsub Info: Skipping package `hobsub' (already loaded).
-Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
-Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
-Package: xcolor-patch 2016/05/16 xcolor patch
-Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
-Package atveryend Info: \enddocument detected (standard20110627).
-Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
-Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
-Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
-)
-(d:/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty
-Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
-)
-(d:/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
-Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
-)
-\@linkdim=\dimen111
-\Hy@linkcounter=\count92
-\Hy@pagecounter=\count93
-
-(d:/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2018/09/30 v6.88a Hyperref: PDFDocEncoding definition (HO)
+\@linkdim=\dimen143
+\Hy@linkcounter=\count179
+\Hy@pagecounter=\count180
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/intcalc\intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/etexcmds\etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count94
-
-(d:/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg
-File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
-)
-Package hyperref Info: Hyper figures OFF on input line 4535.
-Package hyperref Info: Link nesting OFF on input line 4540.
-Package hyperref Info: Hyper index ON on input line 4543.
-Package hyperref Info: Plain pages OFF on input line 4550.
-Package hyperref Info: Backreferencing OFF on input line 4555.
+\Hy@SavedSpaceFactor=\count181
+Package hyperref Info: Hyper figures OFF on input line 4464.
+Package hyperref Info: Link nesting OFF on input line 4469.
+Package hyperref Info: Hyper index ON on input line 4472.
+Package hyperref Info: Plain pages OFF on input line 4479.
+Package hyperref Info: Backreferencing OFF on input line 4484.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4788.
-\c@Hy@tempcnt=\count95
-
-(d:/texlive/2018/texmf-dist/tex/latex/url/url.sty
-\Urlmuskip=\muskip10
+Package hyperref Info: Bookmarks ON on input line 4717.
+\c@Hy@tempcnt=\count182
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/url\url.sty
+\Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 5141.
-\XeTeXLinkMargin=\dimen112
-\Fld@menulength=\count96
-\Field@Width=\dimen113
-\Fld@charsize=\dimen114
-Package hyperref Info: Hyper figures OFF on input line 6396.
-Package hyperref Info: Link nesting OFF on input line 6401.
-Package hyperref Info: Hyper index ON on input line 6404.
-Package hyperref Info: backreferencing OFF on input line 6411.
-Package hyperref Info: Link coloring OFF on input line 6416.
-Package hyperref Info: Link coloring with OCG OFF on input line 6421.
-Package hyperref Info: PDF/A mode OFF on input line 6426.
-LaTeX Info: Redefining \ref on input line 6466.
-LaTeX Info: Redefining \pageref on input line 6470.
-\Hy@abspage=\count97
-\c@Item=\count98
-\c@Hfootnote=\count99
+LaTeX Info: Redefining \url on input line 5076.
+\XeTeXLinkMargin=\dimen144
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/bitset\bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/bigintcalc\bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count183
+\Field@Width=\dimen145
+\Fld@charsize=\dimen146
+Package hyperref Info: Hyper figures OFF on input line 6347.
+Package hyperref Info: Link nesting OFF on input line 6352.
+Package hyperref Info: Hyper index ON on input line 6355.
+Package hyperref Info: backreferencing OFF on input line 6362.
+Package hyperref Info: Link coloring OFF on input line 6367.
+Package hyperref Info: Link coloring with OCG OFF on input line 6372.
+Package hyperref Info: PDF/A mode OFF on input line 6377.
+LaTeX Info: Redefining \ref on input line 6417.
+LaTeX Info: Redefining \pageref on input line 6421.
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/atbegshi\atbegshi.sty
+Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
+)
+\Hy@abspage=\count184
+\c@Item=\count185
+\c@Hfootnote=\count186
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
-
-(d:/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2018/09/30 v6.88a Hyperref driver for pdfTeX
-\Fld@listcount=\count100
-\c@bookmark@seq@number=\count101
-
-(d:/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
-Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
-82.
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2020-05-15 v7.00e Hyperref driver for pdfTeX
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/atveryend\atveryend.sty
+Package: atveryend 2019-12-11 v1.11 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
 )
-\Hy@SectionHShift=\skip47
+\Fld@listcount=\count187
+\c@bookmark@seq@number=\count188
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/rerunfilecheck\rerunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/uniquecounter\uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-(d:/texlive/2018/texmf-dist/tex/latex/booktabs/booktabs.sty
-Package: booktabs 2016/04/27 v1.618033 publication quality tables
-\heavyrulewidth=\dimen115
-\lightrulewidth=\dimen116
-\cmidrulewidth=\dimen117
-\belowrulesep=\dimen118
-\belowbottomsep=\dimen119
-\aboverulesep=\dimen120
-\abovetopsep=\dimen121
-\cmidrulesep=\dimen122
-\cmidrulekern=\dimen123
-\defaultaddspace=\dimen124
-\@cmidla=\count102
-\@cmidlb=\count103
-\@aboverulesep=\dimen125
-\@belowrulesep=\dimen126
-\@thisruleclass=\count104
-\@lastruleclass=\count105
-\@thisrulewidth=\dimen127
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 286.
 )
-(d:/texlive/2018/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+\Hy@SectionHShift=\skip53
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen147
+\lightrulewidth=\dimen148
+\cmidrulewidth=\dimen149
+\belowrulesep=\dimen150
+\belowbottomsep=\dimen151
+\aboverulesep=\dimen152
+\abovetopsep=\dimen153
+\cmidrulesep=\dimen154
+\cmidrulekern=\dimen155
+\defaultaddspace=\dimen156
+\@cmidla=\count189
+\@cmidlb=\count190
+\@aboverulesep=\dimen157
+\@belowrulesep=\dimen158
+\@thisruleclass=\count191
+\@lastruleclass=\count192
+\@thisrulewidth=\dimen159
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/amsfonts\amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
-\@emptytoks=\toks19
+\@emptytoks=\toks20
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)
-(d:/texlive/2018/texmf-dist/tex/latex/units/nicefrac.sty
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/units\nicefrac.sty
 Package: nicefrac 1998/08/04 v0.9b Nice fractions
-\L@UnitsRaiseDisplaystyle=\skip48
-\L@UnitsRaiseTextstyle=\skip49
-\L@UnitsRaiseScriptstyle=\skip50
-
-(d:/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+\L@UnitsRaiseDisplaystyle=\skip54
+\L@UnitsRaiseTextstyle=\skip55
+\L@UnitsRaiseScriptstyle=\skip56
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/base\ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-))
-(d:/texlive/2018/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2018/01/14 v2.7a Micro-typographical refinements (RS)
-\MT@toks=\toks20
-\MT@count=\count106
-LaTeX Info: Redefining \textls on input line 793.
-\MT@outer@kern=\dimen128
-LaTeX Info: Redefining \textmicrotypecontext on input line 1339.
-\MT@listname@count=\count107
-
-(d:/texlive/2018/texmf-dist/tex/latex/microtype/microtype-pdftex.def
-File: microtype-pdftex.def 2018/01/14 v2.7a Definitions specific to pdftex (RS)
-
-LaTeX Info: Redefining \lsstyle on input line 913.
-LaTeX Info: Redefining \lslig on input line 913.
-\MT@outer@space=\skip51
+)) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/microtype\microtype.sty
+Package: microtype 2019/11/18 v2.7d Micro-typographical refinements (RS)
+\MT@toks=\toks21
+\MT@count=\count193
+LaTeX Info: Redefining \textls on input line 790.
+\MT@outer@kern=\dimen160
+LaTeX Info: Redefining \textmicrotypecontext on input line 1354.
+\MT@listname@count=\count194
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/microtype\microtype-pdftex.def
+File: microtype-pdftex.def 2019/11/18 v2.7d Definitions specific to pdftex (RS)
+LaTeX Info: Redefining \lsstyle on input line 914.
+LaTeX Info: Redefining \lslig on input line 914.
+\MT@outer@space=\skip57
 )
 Package microtype Info: Loading configuration file microtype.cfg.
-
-(d:/texlive/2018/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2018/01/14 v2.7a microtype main configuration file (RS)
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/microtype\microtype.cfg
+File: microtype.cfg 2019/11/18 v2.7d microtype main configuration file (RS)
+)) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/listings\listings.sty
+\lst@mode=\count195
+\lst@gtempboxa=\box45
+\lst@token=\toks22
+\lst@length=\count196
+\lst@currlwidth=\dimen161
+\lst@column=\count197
+\lst@pos=\count198
+\lst@lostspace=\dimen162
+\lst@width=\dimen163
+\lst@newlines=\count199
+\lst@lineno=\count266
+\lst@maxwidth=\dimen164
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/listings\lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count267
+\lst@skipnumbers=\count268
+\lst@framebox=\box46
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/listings\listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
 ))
-(d:/texlive/2018/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count108
-\lst@gtempboxa=\box26
-\lst@token=\toks21
-\lst@length=\count109
-\lst@currlwidth=\dimen129
-\lst@column=\count110
-\lst@pos=\count111
-\lst@lostspace=\dimen130
-\lst@width=\dimen131
-\lst@newlines=\count112
-\lst@lineno=\count113
-\lst@maxwidth=\dimen132
-
-(d:/texlive/2018/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
-\c@lstnumber=\count114
-\lst@skipnumbers=\count115
-\lst@framebox=\box27
-)
-(d:/texlive/2018/texmf-dist/tex/latex/listings/listings.cfg
-File: listings.cfg 2018/09/02 1.7 listings configuration
-))
-Package: listings 2018/09/02 1.7 (Carsten Heinz)
-
-(d:/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
-
-(d:/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
-
-(d:/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/graphics\graphicx.sty
+Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/graphics\graphics.sty
+Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/graphics\trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-)
-(d:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/graphics-cfg\graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 99.
-
-(d:/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+Package graphics Info: Driver file: pdftex.def on input line 105.
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/graphics-def\pdftex.def
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen133
-\Gin@req@width=\dimen134
-)
-(d:/texlive/2018/texmf-dist/tex/latex/subfigure/subfigure.sty
-Package: subfigure 2002/03/15 v2.1.5 subfigure package
-\subfigtopskip=\skip52
-\subfigcapskip=\skip53
-\subfigcaptopadj=\dimen135
-\subfigbottomskip=\skip54
-\subfigcapmargin=\dimen136
-\subfiglabelskip=\skip55
-\c@subfigure=\count116
-\c@lofdepth=\count117
-\c@subtable=\count118
-\c@lotdepth=\count119
+\Gin@req@height=\dimen165
+\Gin@req@width=\dimen166
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/subfigure\subfigure.sty
+Package: subfigure 2002/07/30 v2.1.4 subfigure package
+\subfigtopskip=\skip58
+\subfigcapskip=\skip59
+\subfigcaptopadj=\dimen167
+\subfigbottomskip=\skip60
+\subfigcapmargin=\dimen168
+\subfiglabelskip=\skip61
+\c@subfigure=\count269
+\c@lofdepth=\count270
+\c@subtable=\count271
+\c@lotdepth=\count272
 
 ****************************************
 * Local config file subfigure.cfg used *
 ****************************************
-(d:/texlive/2018/texmf-dist/tex/latex/subfigure/subfigure.cfg)
-\subfig@top=\skip56
-\subfig@bottom=\skip57
-) (./Report1.aux
-
-LaTeX Warning: Label `fig:3' multiply defined.
-
-)
+(C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/subfigure\subfigure.cfg)
+\subfig@top=\skip62
+\subfig@bottom=\skip63
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/l3backend\l3backend-pdfmode.def
+File: l3backend-pdfmode.def 2020-05-05 L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count273
+\l__pdf_internal_box=\box47
+) (e:/Onedrive_backup\CSE251B\PA\PA1\Report\Report1.aux)
 \openout1 = `Report1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 57.
- (d:/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd
-File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
-)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -409,230 +359,184 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\AtBeginShipoutBox=\box28
-Package hyperref Info: Link coloring OFF on input line 57.
-(d:/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
-Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
-
-(d:/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
-Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+\AtBeginShipoutBox=\box48
+Package hyperref Info: Link coloring OFF on input line 51.
+(C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/hyperref\nameref.sty
+Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/refcount\refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/generic/gettitlestring\gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count120
+\c@section@level=\count274
 )
-LaTeX Info: Redefining \ref on input line 57.
-LaTeX Info: Redefining \pageref on input line 57.
-LaTeX Info: Redefining \nameref on input line 57.
-
-(./Report1.out) (./Report1.out)
+LaTeX Info: Redefining \ref on input line 51.
+LaTeX Info: Redefining \pageref on input line 51.
+LaTeX Info: Redefining \nameref on input line 51.
+ (e:/Onedrive_backup\CSE251B\PA\PA1\Report\Report1.out) (e:/Onedrive_backup\CSE251B\PA\PA1\Report\Report1.out)
 \@outlinefile=\write3
 \openout3 = `Report1.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 57.
+LaTeX Info: Redefining \microtypecontext on input line 51.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
+LaTeX Info: Redefining \showhyphens on input line 51.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
-
-(d:/texlive/2018/texmf-dist/tex/latex/microtype/mt-ptm.cfg
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/microtype\mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
-\c@lstlisting=\count121
-
-(d:/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+\c@lstlisting=\count275
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count122
-\scratchdimen=\dimen137
-\scratchbox=\box29
-\nofMPsegments=\count123
-\nofMParguments=\count124
-\everyMPshowfont=\toks22
-\MPscratchCnt=\count125
-\MPscratchDim=\dimen138
-\MPnumerator=\count126
-\makeMPintoPDFobject=\count127
-\everyMPtoPDFconversion=\toks23
-) (d:/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
-Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
-
-(d:/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
-Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+\scratchcounter=\count276
+\scratchdimen=\dimen169
+\scratchbox=\box49
+\nofMPsegments=\count277
+\nofMParguments=\count278
+\everyMPshowfont=\toks23
+\MPscratchCnt=\count279
+\MPscratchDim=\dimen170
+\MPnumerator=\count280
+\makeMPintoPDFobject=\count281
+\everyMPtoPDFconversion=\toks24
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/epstopdf-pkg\epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/microtype\mt-cmr.cfg
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 )
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-38.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 456.
-
-(d:/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-))
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 60.
-
-(d:/texlive/2018/texmf-dist/tex/latex/microtype/mt-cmr.cfg
-File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
-(RS)
-)
-LaTeX Font Info:    Try loading font information for U+msa on input line 60.
-
-(d:/texlive/2018/texmf-dist/tex/latex/amsfonts/umsa.fd
+LaTeX Font Info:    Trying to load font information for U+msa on input line 54.
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-(d:/texlive/2018/texmf-dist/tex/latex/microtype/mt-msa.cfg
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/microtype\mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 60.
-
-(d:/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
+LaTeX Font Info:    Trying to load font information for U+msb on input line 54.
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-(d:/texlive/2018/texmf-dist/tex/latex/microtype/mt-msb.cfg
+) (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/microtype\mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 60.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 60.
-
-(d:/texlive/2018/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 54.
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/base\t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 61.
  [1
 
 
-{d:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-(d:/texlive/2018/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2018/09/02 1.7 listings language file
+{C:/Users/arboo/scoop/apps/latex/current/texmfs/data/pdftex/config/pdftex.map}] (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 107.
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 108.
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 112.
-
-
-(d:/texlive/2018/texmf-dist/tex/latex/psnfss/omsptm.fd
-File: omsptm.fd 
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 123.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 128.
+ (C:\Users\arboo\scoop\apps\latex\current\texmfs\install\tex/latex/psnfss\ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-LaTeX Font Info:    Font shape `OMS/ptm/m/it' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 112.
-Package epstopdf Info: Source file: <LR(b)00.eps>
-(epstopdf)                    date: 2021-01-16 19:41:37
-(epstopdf)                    size: 46110 bytes
-(epstopdf)             Output file: <LR(b)00-eps-converted-to.pdf>
-(epstopdf)                    date: 2021-01-16 19:43:00
-(epstopdf)                    size: 27750 bytes
-(epstopdf)             Command: <repstopdf --outfile=LR(b)00-eps-converted-to.p
-df LR(b)00.eps>
-(epstopdf)             \includegraphics on input line 126.
-Package epstopdf Info: Output file is already uptodate.
-<LR(b)00-eps-converted-to.pdf, id=58, 421.575pt x 316.18124pt>
-File: LR(b)00-eps-converted-to.pdf Graphic file (type pdf)
-<use LR(b)00-eps-converted-to.pdf>
-Package pdftex.def Info: LR(b)00-eps-converted-to.pdf  used on input line 126.
-(pdftex.def)             Requested size: 227.62204pt x 170.72084pt.
-<LR(b)01.png, id=59, 367.3725pt x 252.945pt>
-File: LR(b)01.png Graphic file (type png)
-<use LR(b)01.png>
-Package pdftex.def Info: LR(b)01.png  used on input line 138.
-(pdftex.def)             Requested size: 178.86702pt x 123.15677pt.
-<LR(b)02.png, id=61, 367.3725pt x 252.945pt>
-File: LR(b)02.png Graphic file (type png)
-<use LR(b)02.png>
-Package pdftex.def Info: LR(b)02.png  used on input line 138.
-(pdftex.def)             Requested size: 178.86702pt x 123.15677pt.
-<LR(b)03.png, id=62, 367.3725pt x 252.945pt>
-File: LR(b)03.png Graphic file (type png)
-<use LR(b)03.png>
-Package pdftex.def Info: LR(b)03.png  used on input line 143.
-(pdftex.def)             Requested size: 178.86702pt x 123.15677pt.
-<LR(b)04.png, id=63, 367.3725pt x 252.945pt>
-File: LR(b)04.png Graphic file (type png)
-<use LR(b)04.png>
-Package pdftex.def Info: LR(b)04.png  used on input line 143.
-(pdftex.def)             Requested size: 178.86702pt x 123.15677pt.
-<LR(c)01.png, id=64, 715.67375pt x 497.86pt>
-File: LR(c)01.png Graphic file (type png)
-<use LR(c)01.png>
-Package pdftex.def Info: LR(c)01.png  used on input line 157.
-(pdftex.def)             Requested size: 198.7425pt x 138.25273pt.
-<LR(c)02.png, id=65, 709.65125pt x 497.86pt>
-File: LR(c)02.png Graphic file (type png)
-<use LR(c)02.png>
-Package pdftex.def Info: LR(c)02.png  used on input line 157.
-(pdftex.def)             Requested size: 198.7425pt x 139.43024pt.
-
-Overfull \hbox (7.5pt too wide) in paragraph at lines 157--159
- [][] 
- []
-
-<LR(c)DiffLR.png, id=66, 713.66624pt x 497.86pt>
+<4.2_loss.png, id=71, 674.52pt x 516.93124pt>
+File: 4.2_loss.png Graphic file (type png)
+<use 4.2_loss.png>
+Package pdftex.def Info: 4.2_loss.png  used on input line 149.
+(pdftex.def)             Requested size: 190.79109pt x 146.21475pt.
+<4.2_acc.png, id=73, 674.52pt x 516.93124pt>
+File: 4.2_acc.png Graphic file (type png)
+<use 4.2_acc.png>
+Package pdftex.def Info: 4.2_acc.png  used on input line 149.
+(pdftex.def)             Requested size: 190.79109pt x 146.21475pt.
+<4.2_pca.png, id=74, 939.51pt x 643.40375pt>
+File: 4.2_pca.png Graphic file (type png)
+<use 4.2_pca.png>
+Package pdftex.def Info: 4.2_pca.png  used on input line 156.
+(pdftex.def)             Requested size: 381.58824pt x 261.32323pt.
+<4.3_loss.png, id=77, 674.52pt x 516.93124pt>
+File: 4.3_loss.png Graphic file (type png)
+<use 4.3_loss.png>
+Package pdftex.def Info: 4.3_loss.png  used on input line 173.
+(pdftex.def)             Requested size: 190.79109pt x 146.21475pt.
+<4.3_acc.png, id=78, 665.48625pt x 516.93124pt>
+File: 4.3_acc.png Graphic file (type png)
+<use 4.3_acc.png>
+Package pdftex.def Info: 4.3_acc.png  used on input line 173.
+(pdftex.def)             Requested size: 190.79109pt x 148.19458pt.
+<LR(c)DiffLR.png, id=79, 713.66624pt x 497.86pt>
 File: LR(c)DiffLR.png Graphic file (type png)
 <use LR(c)DiffLR.png>
-Package pdftex.def Info: LR(c)DiffLR.png  used on input line 164.
-(pdftex.def)             Requested size: 317.9892pt x 221.83188pt.
-[2] [3 <./LR(b)00-eps-converted-to.pdf> <./LR(b)01.png> <./LR(b)02.png> <./LR(b
-)03.png> <./LR(b)04.png>]
-<LR(c)03.png, id=109, 715.67375pt x 497.86pt>
-File: LR(c)03.png Graphic file (type png)
-<use LR(c)03.png>
-Package pdftex.def Info: LR(c)03.png  used on input line 178.
-(pdftex.def)             Requested size: 198.7425pt x 138.25273pt.
-<LR(c)04.png, id=110, 709.65125pt x 497.86pt>
-File: LR(c)04.png Graphic file (type png)
-<use LR(c)04.png>
-Package pdftex.def Info: LR(c)04.png  used on input line 178.
-(pdftex.def)             Requested size: 198.7425pt x 139.43024pt.
-
-Overfull \hbox (7.5pt too wide) in paragraph at lines 178--180
- [][] 
- []
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 196.
-[4 <./LR(c)01.png> <./LR(c)02.png> <./LR(c)DiffLR.png>] [5 <./LR(c)03.png> <./L
-R(c)04.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 196.
- (./Report1.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 196.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 196.
+Package pdftex.def Info: LR(c)DiffLR.png  used on input line 180.
+(pdftex.def)             Requested size: 381.58824pt x 266.19673pt.
+ [2] [3 <e:/Onedrive_backup/CSE251B/PA/PA1/Report/4.2_loss.png> <e:/Onedrive_backup/CSE251B/PA/PA1/Report/4.2_acc.png> <e:/Onedrive_backup/CSE251B/PA/PA1/Report/4.2_pca.png> <e:/Onedrive_backup/CSE251B/PA/PA1/Report/4.3_loss.png> <e:/Onedrive_backup/CSE251B/PA/PA1/Report/4.3_acc.png>]
+<4.4_loss.png, id=119, 674.52pt x 516.93124pt>
+File: 4.4_loss.png Graphic file (type png)
+<use 4.4_loss.png>
+Package pdftex.def Info: 4.4_loss.png  used on input line 196.
+(pdftex.def)             Requested size: 190.79109pt x 146.21475pt.
+<4.4_acc.png, id=120, 665.48625pt x 516.93124pt>
+File: 4.4_acc.png Graphic file (type png)
+<use 4.4_acc.png>
+Package pdftex.def Info: 4.4_acc.png  used on input line 196.
+(pdftex.def)             Requested size: 190.79109pt x 148.19458pt.
+ [4 <e:/Onedrive_backup/CSE251B/PA/PA1/Report/LR(c)DiffLR.png> <e:/Onedrive_backup/CSE251B/PA/PA1/Report/4.4_loss.png> <e:/Onedrive_backup/CSE251B/PA/PA1/Report/4.4_acc.png>]
+<5.1_pca.png, id=135, 939.51pt x 643.40375pt>
+File: 5.1_pca.png Graphic file (type png)
+<use 5.1_pca.png>
+Package pdftex.def Info: 5.1_pca.png  used on input line 240.
+(pdftex.def)             Requested size: 381.58824pt x 261.32323pt.
+<5.1_cm.png, id=136, 787.94376pt x 643.40375pt>
+File: 5.1_cm.png Graphic file (type png)
+<use 5.1_cm.png>
+Package pdftex.def Info: 5.1_cm.png  used on input line 247.
+(pdftex.def)             Requested size: 381.58824pt x 311.58902pt.
+<5.1_loss.png, id=137, 674.52pt x 516.93124pt>
+File: 5.1_loss.png Graphic file (type png)
+<use 5.1_loss.png>
+Package pdftex.def Info: 5.1_loss.png  used on input line 257.
+(pdftex.def)             Requested size: 190.79109pt x 146.21475pt.
+<5.1_acc.png, id=138, 674.52pt x 516.93124pt>
+File: 5.1_acc.png Graphic file (type png)
+<use 5.1_acc.png>
+Package pdftex.def Info: 5.1_acc.png  used on input line 257.
+(pdftex.def)             Requested size: 190.79109pt x 146.21475pt.
+<5.2_loss.png, id=140, 665.48625pt x 516.93124pt>
+File: 5.2_loss.png Graphic file (type png)
+<use 5.2_loss.png>
+Package pdftex.def Info: 5.2_loss.png  used on input line 271.
+(pdftex.def)             Requested size: 190.79109pt x 148.19458pt.
+<5.3_weight.png, id=142, 939.51pt x 643.40375pt>
+File: 5.3_weight.png Graphic file (type png)
+<use 5.3_weight.png>
+Package pdftex.def Info: 5.3_weight.png  used on input line 283.
+(pdftex.def)             Requested size: 381.58824pt x 261.32323pt.
+ [5 <e:/Onedrive_backup/CSE251B/PA/PA1/Report/5.1_pca.png>] [6 <e:/Onedrive_backup/CSE251B/PA/PA1/Report/5.1_cm.png> <e:/Onedrive_backup/CSE251B/PA/PA1/Report/5.1_loss.png> <e:/Onedrive_backup/CSE251B/PA/PA1/Report/5.1_acc.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 295.
+ [7 <e:/Onedrive_backup/CSE251B/PA/PA1/Report/5.2_loss.png> <e:/Onedrive_backup/CSE251B/PA/PA1/Report/5.3_weight.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 295.
+ (e:/Onedrive_backup\CSE251B\PA\PA1\Report\Report1.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 295.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 295.
 Package rerunfilecheck Info: File `Report1.out' has not changed.
-(rerunfilecheck)             Checksum: 5D8239C15D6F52231B09708BEC990671;586.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 196.
+(rerunfilecheck)             Checksum: A5AFF010C52033B287002049D4056BCF;751.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 295.
  ) 
 Here is how much of TeX's memory you used:
- 10026 strings out of 492639
- 148624 string characters out of 6133088
- 477415 words of memory out of 5000000
- 13648 multiletter control sequences out of 15000+600000
- 35489 words of font info for 98 fonts, out of 8000000 for 9000
+ 10313 strings out of 480765
+ 160776 string characters out of 2891320
+ 654923 words of memory out of 3000000
+ 25985 multiletter control sequences out of 15000+200000
+ 560969 words of font info for 97 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 32i,8n,40p,817b,1484s stack positions out of 5000i,500n,10000p,200000b,80000s
-{d:/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{d:/texlive/2018/texm
-f-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<d:/texlive/2018/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy9.pfb><d:/texlive/2018/texmf-dist/fonts/type1/p
-ublic/cm-super/sftt1000.pfb><d:/texlive/2018/texmf-dist/fonts/type1/urw/times/u
-tmb8a.pfb><d:/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><d:/texl
-ive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Report1.pdf (5 pages, 515450 bytes).
+ 38i,8n,42p,288b,1834s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/arboo/scoop/apps/latex/current/texmfs/install/fonts/enc/dvips/base/8r.enc} <C:\Users\arboo\scoop\apps\latex\current\texmfs/data\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk><C:/Users/arboo/scoop/apps/latex/current/texmfs/install/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/arboo/scoop/apps/latex/current/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/arboo/scoop/apps/latex/current/texmfs/install/fonts/type1/urw/times/utmb8a.pfb><C:/Users/arboo/scoop/apps/latex/current/texmfs/install/fonts/type1/urw/times/utmr8a.pfb><C:/Users/arboo/scoop/apps/latex/current/texmfs/install/fonts/type1/urw/times/utmri8a.pfb>
+Output written on e:/Onedrive_backup\CSE251B\PA\PA1\Report\Report1.pdf (7 pages, 2019712 bytes).
 PDF statistics:
- 162 PDF objects out of 1000 (max. 8388607)
- 127 compressed objects within 2 object streams
- 45 named destinations out of 1000 (max. 500000)
- 20099 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 244 PDF objects out of 1000 (max. 8388607)
+ 75 named destinations out of 1000 (max. 500000)
+ 20143 words of extra memory for PDF output out of 20736 (max. 10000000)
 
