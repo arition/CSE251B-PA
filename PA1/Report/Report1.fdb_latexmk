@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1611031240 "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.tex" "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.pdf" "Report1" 1611031242
+["pdflatex"] 1611031405 "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.tex" "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.pdf" "Report1" 1611031407
   "4.2_acc.png" 1611025178 38810 1accc45dc9cb3b0d547192b027e4847a ""
   "4.2_loss.png" 1611025144 33711 7d91e599e7fef0c603e5ad69b7fcca05 ""
   "4.2_pca.png" 1611026227 611705 e03be6eedce2a19b44651d6051835dd3 ""
@@ -111,16 +111,16 @@
   "C:/Users/arboo/scoop/apps/latex/current/texmfs/install/tex/latex/units/nicefrac.sty" 1469025550 4163 0462ee5ab265cf59dc15a41a3b883101 ""
   "C:/Users/arboo/scoop/apps/latex/current/texmfs/install/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "LR(c)DiffLR.png" 1611020527 34122 8695581fa7c6954645a8f5f210a9f52d ""
-  "Report1.aux" 1611031242 6405 2a655a9a3dc2c1011fa2d8781b2da199 "pdflatex"
-  "Report1.out" 1611031242 751 a5aff010c52033b287002049d4056bcf "pdflatex"
-  "Report1.tex" 1611031239 12079 fc7fef076b336215635ac40d3fa53545 ""
-  "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.aux" 1611031242 6405 2a655a9a3dc2c1011fa2d8781b2da199 ""
-  "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.tex" 1611031239 12079 fc7fef076b336215635ac40d3fa53545 ""
+  "Report1.aux" 1611031407 6405 2a655a9a3dc2c1011fa2d8781b2da199 "pdflatex"
+  "Report1.out" 1611031407 751 a5aff010c52033b287002049d4056bcf "pdflatex"
+  "Report1.tex" 1611031400 12079 fc7fef076b336215635ac40d3fa53545 ""
+  "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.aux" 1611031407 6405 2a655a9a3dc2c1011fa2d8781b2da199 ""
+  "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.tex" 1611031400 12079 fc7fef076b336215635ac40d3fa53545 ""
   "neurips_2020.sty" 1611020527 10764 2292d46d3944eaea58344e9f679d3369 ""
   (generated)
-  "Report1.pdf"
-  "Report1.out"
-  "Report1.log"
   "Report1.aux"
-  "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.log"
+  "Report1.out"
+  "Report1.pdf"
   "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.pdf"
+  "e:/Onedrive_backup/CSE251B/PA/PA1/Report/Report1.log"
+  "Report1.log"
