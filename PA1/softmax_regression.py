@@ -6,7 +6,7 @@ class SoftmaxRegression():
     Softmax Regression
     '''
 
-    def __init__(self, size, class_size=4, lr=1e-3):
+    def __init__(self, size, class_size=4, lr=1e-2):
         '''
         Args
 
