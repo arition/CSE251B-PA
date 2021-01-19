@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.11.6)  18 JAN 2021 11:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2018.11.6)  18 JAN 2021 23:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -529,10 +529,10 @@ File: omsptm.fd
 LaTeX Font Info:    Font shape `OMS/ptm/m/it' in size <9> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 112.
 Package epstopdf Info: Source file: <LR(b)00.eps>
-(epstopdf)                    date: 2021-01-16 19:41:37
+(epstopdf)                    date: 2021-01-18 12:16:38
 (epstopdf)                    size: 46110 bytes
 (epstopdf)             Output file: <LR(b)00-eps-converted-to.pdf>
-(epstopdf)                    date: 2021-01-16 19:43:00
+(epstopdf)                    date: 2021-01-18 12:16:38
 (epstopdf)                    size: 27750 bytes
 (epstopdf)             Command: <repstopdf --outfile=LR(b)00-eps-converted-to.p
 df LR(b)00.eps>
@@ -600,20 +600,20 @@ Overfull \hbox (7.5pt too wide) in paragraph at lines 178--180
  [][] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 196.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 197.
 [4 <./LR(c)01.png> <./LR(c)02.png> <./LR(c)DiffLR.png>] [5 <./LR(c)03.png> <./L
 R(c)04.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 196.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 197.
  (./Report1.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 196.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 196.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 197.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 197.
 Package rerunfilecheck Info: File `Report1.out' has not changed.
 (rerunfilecheck)             Checksum: 5D8239C15D6F52231B09708BEC990671;586.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 196.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 197.
  ) 
 Here is how much of TeX's memory you used:
  10026 strings out of 492639
@@ -629,7 +629,7 @@ ts/type1/public/amsfonts/cm/cmsy9.pfb><d:/texlive/2018/texmf-dist/fonts/type1/p
 ublic/cm-super/sftt1000.pfb><d:/texlive/2018/texmf-dist/fonts/type1/urw/times/u
 tmb8a.pfb><d:/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><d:/texl
 ive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Report1.pdf (5 pages, 515450 bytes).
+Output written on Report1.pdf (5 pages, 515856 bytes).
 PDF statistics:
  162 PDF objects out of 1000 (max. 8388607)
  127 compressed objects within 2 object streams
