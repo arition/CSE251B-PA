@@ -137,9 +137,9 @@ is naturally 1 - p.
 \end{lstlisting}
 
 \subsection{(b)}
-The loss of the validation set is shown in \ref{fig:1}. And the accuracy on test set is around 63.33\%, the validation loss
+The loss of the validation set is shown in \autoref{fig:1}. And the accuracy on test set is around 63.33\%, the validation loss
 clearly shows the overfiting problem here that loss goes down quickly at first then goes up. Here we have 29 PCA
-components. Looking at the PCA components(the first 4 are shown in \ref{fig:2}), we found that since the objects are not
+components. Looking at the PCA components(the first 4 are shown in \autoref{fig:2}), we found that since the objects are not
 aligned, it's very hard for PCA to get accurate car's shape, thus not able to achieve high accuracy.
 \begin{figure}
 	\centering
@@ -147,22 +147,22 @@ aligned, it's very hard for PCA to get accurate car's shape, thus not able to ac
 		\includegraphics[width=0.48\linewidth]{4.2_loss.png}\hfill
 		\includegraphics[width=0.48\linewidth]{4.2_acc.png}
 	}
-	\label{fig:1}
 	\caption{Loss and accuracy on training set and holdout set}
+	\label{fig:1}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.96\linewidth]{4.2_pca.png}
+	\caption{First 4 PCA components}
 	\label{fig:2}
-	\caption{First 4 PCA components.}
 \end{figure}
 
 \subsection{(c)}
 By alternating the data source from resized to aligned, we see a a huge improvement on accuracy, the accuracy we
-achieved here is 83.5\% with 300 epochs. The mean and std of accuracy and loss is shown in \ref{fig:3}. We also try
+achieved here is 83.5\% with 300 epochs. The mean and std of accuracy and loss is shown in \autoref{fig:3}. We also try
 different laearning rate here, one is too large, one is too small and a normal one, the difference is shown in
-\ref{fig:4}. As we can see that a large learning rate may lead to strong oscillation while a small one would lead to
+\autoref{fig:4}. As we can see that a large learning rate may lead to strong oscillation while a small one would lead to
 a slow converging speed.
 
 \begin{figure}
@@ -171,14 +171,14 @@ a slow converging speed.
 		\includegraphics[width=0.48\linewidth]{4.3_loss.png}
 		\includegraphics[width=0.48\linewidth]{4.3_acc.png}
 	}
+	\caption{Mean and std of accuracy and loss, classification between Convertible and Minivan}
 	\label{fig:3}
-	\caption{Mean and std of accuracy and loss, classification between Convertible and Minivan.}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width = 0.96\linewidth]{LR(c)DiffLR.png}
-	\caption{Different learning rate effects on training loss.}
+	\caption{Different learning rate effects on training loss}
 	\label{fig:4}
 \end{figure}
 
@@ -186,7 +186,7 @@ a slow converging speed.
 \subsection{(d)}
 The classification accuracy between category Pickup and Sedan is 82.67\%, namely, we didn't notice any significant
 differences between different category classification tasks, Which is reasonable since this logistic model is simple yet
-powerful enough to generalized to similar objects. The mean and std of training loss is shown in \ref{fig:5}.
+powerful enough to generalized to similar objects. The mean and std of training loss is shown in \autoref{fig:5}.
 
 \begin{figure}
 	\centering
@@ -194,8 +194,8 @@ powerful enough to generalized to similar objects. The mean and std of training 
 		\includegraphics[width=0.48\linewidth]{4.4_loss.png}
 		\includegraphics[width=0.48\linewidth]{4.4_acc.png}
 	}
+	\caption{Mean and std of accuracy and loss, classification between Pickup and Sedan}
 	\label{fig:5}
-	\caption{Mean and std of accuracy and loss, classification between Pickup and Sedan.}
 \end{figure}
 
 \section{Softmax regression}
@@ -230,23 +230,23 @@ multiple classes, we use one hot encoding to encode the labels. The forward part
 
 \subsection{(a)}
 
-The top four principal components is shown in \ref{fig:6}. From the principal components we can see that they are
-different kinds of cars. The confusion matrix of the test set is shown in \ref{fig:7}. From the confusion matrix we
+The top four principal components is shown in \autoref{fig:6}. From the principal components we can see that they are
+different kinds of cars. The confusion matrix of the test set is shown in \autoref{fig:7}. From the confusion matrix we
 can see that our classfier is not very accurate. We archived 58\% accuracy on the test set. Loss and accuracy for
-training and holdout data is shown \ref{fig:8}.
+training and holdout data is shown \autoref{fig:8}.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.96\linewidth]{5.1_pca.png}
+	\caption{First 4 PCA components}
 	\label{fig:6}
-	\caption{First 4 PCA components.}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.96\linewidth]{5.1_cm.png}
-	\label{fig:7}
 	\caption{Confusion matrix for test set}
+	\label{fig:7}
 \end{figure}
 
 \begin{figure}
@@ -255,34 +255,34 @@ training and holdout data is shown \ref{fig:8}.
 		\includegraphics[width=0.48\linewidth]{5.1_loss.png}
 		\includegraphics[width=0.48\linewidth]{5.1_acc.png}
 	}
-	\label{fig:8}
 	\caption{Mean and std of accuracy and loss, classification between all four classes.}
+	\label{fig:8}
 \end{figure}
 
 \subsection{(b)}
 
 Stochastic gradient descent is a common technique to accelerate the converge of the gradient decent. The comparsion of
-the loss curve of batch gradient decent and stochastic gradient descent is shown in \ref{fig:9}. From our result there
+the loss curve of batch gradient decent and stochastic gradient descent is shown in \autoref{fig:9}. From our result there
 is no much difference between batch gradient decent and stochastic gradient decent. One of the reasons may be that the
 problem is too easy to show the difference between batch gradient decent and stochastic gradient decent.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.48\linewidth]{5.2_loss.png}
-	\label{fig:9}
 	\caption{Mean and std of loss, batch gradient decent and stochastic gradient descent}
+	\label{fig:9}
 \end{figure}
 
 \subsection{(c)}
 
-The weights for four car types are shown in \ref{fig:10}. The images of four weights roughly shows the outline of each
+The weights for four car types are shown in \autoref{fig:10}. The images of four weights roughly shows the outline of each
 car type. This is reasonable since that is how the softmax regression works.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.96\linewidth]{5.3_weight.png}
-	\label{fig:10}
 	\caption{Weights for four car types}
+	\label{fig:10}
 \end{figure}
 
 \section{Individual contributions to the project}
