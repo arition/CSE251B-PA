@@ -129,25 +129,25 @@ class Activation():
         """
         TODO: Implement the sigmoid activation here.
         """
-        raise NotImplementedError("Sigmoid not implemented")
+        return 1/(1+(np.exp((-x))))
 
     def tanh(self, x):
         """
         TODO: Implement tanh here.
         """
-        raise NotImplementedError("Tanh not implemented")
+        return np.tanh(x)
 
     def ReLU(self, x):
         """
         TODO: Implement ReLU here.
         """
-        raise NotImplementedError("ReLu not implemented")
+        return np.maximum(0,x)
 
     def leakyReLU(self, x):
         """
         TODO: Implement leaky ReLU here.
         """
-        raise NotImplementedError("leakyReLu not implemented")
+        raise np.where(x > 0, x, x * 0.01)
 
     def grad_sigmoid(self):
         """
