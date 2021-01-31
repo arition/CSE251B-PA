@@ -206,6 +206,12 @@ class Layer():
         self.d_w = None  # Save the gradient w.r.t w in this
         self.d_b = None  # Save the gradient w.r.t b in this
 
+        self.delta_w_old = 0 # Save delta w
+        self.delta_b_old = 0 # Save delta b
+
+        self.w_min = self.w # Store the weight matrix
+        self.b_min = self.b # Store the bias
+
     def __call__(self, x):
         """
         Make layer callable.
@@ -214,19 +220,50 @@ class Layer():
 
     def forward(self, x):
         """
-        TODO: Compute the forward pass through the layer here.
+        Compute the forward pass through the layer here.
         DO NOT apply activation here.
         Return self.a
         """
-        raise NotImplementedError("Layer forward pass not implemented.")
+        self.x = x
+        self.a = np.dot(x, self.w) + self.b
+        return self.a
 
-    def backward(self, delta):
+    def backward(self, delta, l2_penalty = 0):
         """
         TODO: Write the code for backward pass. This takes in gradient from its next layer as input,
         computes gradient for its weights and the delta to pass to its previous layers.
         Return self.dx
         """
-        raise NotImplementedError("Backprop for Layer not implemented.")
+        Num = self.x.shape[0]
+
+        self.d_x = delta.dot(self.w.T)
+        self.d_w = self.x.T.dot(delta) / Num - l2_penalty * self.w
+        self.d_b = delta.sum(axis = 0) / Num
+
+        return self.d_x
+
+    def update_para(self, lr, momentum_En = False, gamma = None):
+        if momentum_En:
+            w_delta = lr * self.d_w + gamma * self.delta_w_old
+            b_delta = lr * self.d_b + gamma * self.delta_b_old
+
+            self.w += w_delta
+            self.b += b_delta
+
+            self.delta_w_old = w_delta
+            self.delta_b_old = b_delta
+
+        else:
+            self.w += lr * self.d_w
+            self.b += lr * self.d_b
+
+    def store_para(self):
+        self.w_min = self.w
+        self.b_min = self.b
+
+    def load_para(self):
+        self.w = self.w_min
+        self.b = self.b_min
 
 
 class Neuralnetwork():
@@ -247,6 +284,7 @@ class Neuralnetwork():
         self.x = None        # Save the input to forward in this
         self.y = None        # Save the output vector of model in this
         self.targets = None  # Save the targets in forward in this variable
+        self.l2_penalty = None # For l2 penalty
 
         # Add layers specified by layer_specs.
         for i in range(len(config['layer_specs']) - 1):
@@ -262,24 +300,75 @@ class Neuralnetwork():
 
     def forward(self, x, targets=None):
         """
-        TODO: Compute forward pass through all the layers in the network and return it.
+        Compute forward pass through all the layers in the network and return it.
         If targets are provided, return loss as well.
         """
-        raise NotImplementedError("Forward not implemented for NeuralNetwork")
+        self.x = x
+        self.targets = targets
+
+        # Forward Path
+        Input = x
+        for layer in self.layers:
+            Input = layer.forward(Input)
+
+        # Softmax Activation
+        self.y = softmax(Input)
+
+        # Loss
+        loss = self.loss(self.y, targets)
+
+        # l2 penalty
+        if l2_penalty:
+            for layer in layers:
+                if isinstance(layer, Layer):
+                    loss += (np.sum(layer.w ** 2)) * l2_penalty / 2
+
+        return loss
 
     def loss(self, logits, targets):
         '''
-        TODO: compute the categorical cross-entropy loss and return it.
+        compute the categorical cross-entropy loss and return it.
         '''
-        raise NotImplementedError("Loss not implemented for NeuralNetwork")
+        Num = targets.shape[0]
 
-    def backward(self):
+        return - np.sum(np.multiply(targets, np.log(logits))) / Num
+
+    def backward(self, l2_penalty = 0):
         '''
-        TODO: Implement backpropagation here.
+        Implement backpropagation here.
         Call backward methods of individual layers.
         '''
-        raise NotImplementedError("Backprop not implemented for NeuralNetwork")
+        delta = self.targets - self.y
+        for layer in self.layers[::-1]:
+            if isinstance(layer, Layer):
+                delta = layer.backward(delta, l2_penalty)
+            else:
+                delta = layer.backward(delta)
 
+    def updata_para(self, lr, momentum_En = False, gamma = None):
+        for layer in self.layers[::-1]:
+            if isinstance(layer, Layer):
+                layer.update_para(lr, momentum_En, gamma)
+
+    def store_para(self):
+        for layer in self.layers:
+            if isinstance(layer, Layer):
+                layer.store_para()
+
+    def load_para(self):
+        for layer in self.layers:
+            if isinstance(layer, Layer):
+                layer.load_para()
+
+    def predict(self, x, targets):
+        Input = x
+        for layer in self.layers:
+            Input = layer.forward(Input)
+
+        predictions = np.argmax(softmax(Input))
+        targets = np.argmax(targets)
+
+        return np.mean(predictions == targets)
 
 def train(model, x_train, y_train, x_valid, y_valid, config):
     """
@@ -292,12 +381,12 @@ def train(model, x_train, y_train, x_valid, y_valid, config):
     raise NotImplementedError("Train method not implemented")
 
 
-def test(model, X_test, y_test):
+def test(model, x_test, y_test):
     """
-    TODO: Calculate and return the accuracy on the test set.
+    Calculate and return the accuracy on the test set.
     """
 
-    raise NotImplementedError("Test method not implemented")
+    model.predict(x_test, y_test)
 
 
 if __name__ == "__main__":
