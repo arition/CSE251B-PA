@@ -457,7 +457,7 @@ def train(model, x_train, y_train, x_valid, y_valid, config):
         valid_accuracy = model.predict(x_valid, targets=y_valid)
 
         print('Epoch {}, Time {} seconds'.format(epoch + 1, time.time() - start_time))
-        print('Train_loss = {}, Valid_loss = {}, Valid_accuracy = {}'.format(train_loss, valid_loss, valid_accuracy))
+        print('Train_loss = {:.4f}, Valid_loss = {:.4f}, Valid_accuracy = {:.4f}'.format(train_loss, valid_loss, valid_accuracy))
 
         recording['epoches'].append(epoch + 1)
         recording['train_loss'].append(train_loss)
@@ -492,7 +492,7 @@ if __name__ == "__main__":
     config = load_config("./")
 
     # Create the model
-    model = Neuralnetwork(config)
+    model  = Neuralnetwork(config)
 
     # Load the data
     x_train, y_train = load_data(path="./", mode="train")
