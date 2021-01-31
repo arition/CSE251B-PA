@@ -249,11 +249,11 @@ class Layer():
 
     def update_para(self, lr, momentum=None):
         if momentum:
-            w_delta = lr * self.d_w + momentum * self.delta_w_old
-            b_delta = lr * self.d_b + momentum * self.delta_b_old
+            w_delta = self.d_w + momentum * self.delta_w_old
+            b_delta = self.d_b + momentum * self.delta_b_old
 
-            self.w += w_delta
-            self.b += b_delta
+            self.w += lr * w_delta
+            self.b += lr * b_delta
 
             self.delta_w_old = w_delta
             self.delta_b_old = b_delta
