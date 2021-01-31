@@ -13,6 +13,9 @@ import os
 import gzip
 import yaml
 import numpy as np
+import random
+from matplotlib import pyplot as plt
+import time
 
 
 def load_config(path):
@@ -62,8 +65,10 @@ def softmax(x):
     """
     Implement the softmax function here.
     Remember to take care of the overflow condition.
+    TODO: Overflow !
     """
-    return (np.exp(x) / np.sum(np.exp(x), axis=0)).T
+    exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))
+    return (exp_x / np.sum(exp_x, axis=1, keepdims=True))
 
 
 class Activation():
@@ -197,8 +202,8 @@ class Layer():
         Define the architecture and create placeholder.
         """
         np.random.seed(42)
-        self.w = None    # Declare the Weight matrix
-        self.b = None    # Create a placeholder for Bias
+        self.w = np.random.randn(in_units, out_units) / 100    # Declare the Weight matrix
+        self.b = np.zeros((1, out_units)).astype(np.float32)    # Create a placeholder for Bias
         self.x = None    # Save the input to forward in this
         self.a = None    # Save the output of forward pass in this (without activation)
 
@@ -230,7 +235,7 @@ class Layer():
 
     def backward(self, delta, l2_penalty = 0):
         """
-        TODO: Write the code for backward pass. This takes in gradient from its next layer as input,
+        Write the code for backward pass. This takes in gradient from its next layer as input,
         computes gradient for its weights and the delta to pass to its previous layers.
         Return self.dx
         """
@@ -298,7 +303,7 @@ class Neuralnetwork():
         """
         return self.forward(x, targets)
 
-    def forward(self, x, targets=None):
+    def forward(self, x, targets=None, l2_penalty = 0):
         """
         Compute forward pass through all the layers in the network and return it.
         If targets are provided, return loss as well.
@@ -319,7 +324,7 @@ class Neuralnetwork():
 
         # l2 penalty
         if l2_penalty:
-            for layer in layers:
+            for layer in self.layers:
                 if isinstance(layer, Layer):
                     loss += (np.sum(layer.w ** 2)) * l2_penalty / 2
 
@@ -365,20 +370,103 @@ class Neuralnetwork():
         for layer in self.layers:
             Input = layer.forward(Input)
 
-        predictions = np.argmax(softmax(Input))
-        targets = np.argmax(targets)
+        predictions = np.argmax(softmax(Input), axis=1)
+        targets = np.argmax(targets,axis=1)
 
         return np.mean(predictions == targets)
 
+def data_spliter(x, y, percentage = 0.1):
+    """
+
+    :param x: Input data
+    :param y: Input Label
+    :param percentage: Train Validation Split Preventage
+    :return: x_train, y_train, x_val, y_val
+    """
+    val_num = int(np.floor(x.shape[0] * percentage))
+
+    alllist = list(range(x.shape[0]))
+
+    val_list = random.sample(alllist, val_num)
+
+    train_list = [idx for idx in alllist if (idx not in val_list)]
+
+    x_train = x[train_list]
+    y_train = y[train_list]
+    x_val = x[val_list]
+    y_val = y[val_list]
+
+    return x_train, y_train, x_val, y_val
+
+def batch_generator(x, y, bs = 1, shuffle_En = True):
+    if shuffle_En:
+        index = np.random.permutation(len(x))
+    else:
+        index = list(range(len(x)))
+    for idx in range(0, len(x) - bs + 1, bs):
+        index_final = index[idx:idx+bs]
+        yield x[index_final], y[index_final]
+
 def train(model, x_train, y_train, x_valid, y_valid, config):
     """
-    TODO: Train your model here.
+    Train your model here.
     Implement batch SGD to train the model.
     Implement Early Stopping.
     Use config to set parameters for training like learning rate, momentum, etc.
     """
+    epoches = config['epochs']
+    bs = config['batch_size']
+    momentum_En = config['momentum']
+    gamma = config['momentum_gamma']
+    lr = config['learning_rate']
+    l2_penalty = config['L2_penalty']
+    early_stop_En = config['early_stop']
+    epoch_threshold = config['early_stop_epoch']
 
-    raise NotImplementedError("Train method not implemented")
+    valid_loss_min = float('inf')
+    valid_loss_increase = 0
+    recording = {}
+    recording['epoches'] = []
+    recording['train_loss'] = []
+    recording['train_accuracy'] = []
+    recording['valid_loss'] = []
+    recording['valid_accuracy'] = []
+
+    start_time = time.time()
+    for epoch in range(epoches):
+        train_loss_batch, train_accuracy_batch = [], []
+        for x, y in batch_generator(x_train, y_train, bs = bs, shuffle_En=True):
+            train_loss_batch.append(model.forward(x, targets = y, l2_penalty = l2_penalty))
+            model.backward(l2_penalty = l2_penalty)
+            model.updata_para(lr = lr, momentum_En = momentum_En, gamma = gamma)
+            train_accuracy_batch.append(model.predict(x, targets = y))
+
+        train_loss = np.mean(np.array(train_loss_batch))
+        train_accuracy = np.mean(np.array(train_accuracy_batch))
+        valid_loss = model.forward(x_valid, targets = y_valid)
+        valid_accuracy = model.predict(x_valid, targets = y_valid)
+
+        print('Epoch {}, Time {} seconds'.format(epoch + 1, time.time() - start_time))
+        print('Train_loss = {}, Valid_loss = {}, Valid_accuracy = {}'.format(train_loss, valid_loss, valid_accuracy))
+
+        recording['epoches'].append(epoch+1)
+        recording['train_loss'].append(train_loss)
+        recording['train_accuracy'].append(train_accuracy)
+        recording['valid_loss'].append(valid_loss)
+        recording['valid_accuracy'].append(valid_accuracy)
+
+        if valid_loss < valid_loss_min:
+            model.store_para()
+            valid_loss_min = valid_loss
+            valid_loss_increase = 0
+        else:
+            valid_loss_increase += 1
+
+        if early_stop_En:
+            if valid_loss_increase > epoch_threshold:
+                break
+
+    return recording
 
 
 def test(model, x_test, y_test):
@@ -386,7 +474,7 @@ def test(model, x_test, y_test):
     Calculate and return the accuracy on the test set.
     """
 
-    model.predict(x_test, y_test)
+    return model.predict(x_test, y_test)
 
 
 if __name__ == "__main__":
@@ -397,16 +485,39 @@ if __name__ == "__main__":
     model = Neuralnetwork(config)
 
     # Load the data
-    x_train, y_train = load_data(path="./", mode="train")
+    X_train, Y_train = load_data(path="./", mode="train")
     x_test, y_test = load_data(path="./", mode="t10k")
 
-    # TODO: Create splits for validation data here.
-    # x_val, y_val = ...
+    X_train = normalize_data(X_train)
+    # Y_train = one_hot_encoding(labels=Y_train)
+    x_test = normalize_data(x_test)
+    # y_test = one_hot_encoding(labels=y_test)
 
-    # TODO: train the model
-    train(model, x_train, y_train, x_valid, y_valid, config)
+    # Create splits for validation data here.
+    x_train, y_train, x_valid, y_valid = data_spliter(X_train, Y_train, percentage = 0.2)
+    # train the model
+    recording = train(model, x_train, y_train, x_valid, y_valid, config)
 
-    test_acc = test(model, x_test, y_test)
+    # Recall parameters with minimum validation loss
+    model.load_para()
 
-    # TODO: Plots
-    # plt.plot(...)
+    test_accuracy = test(model, x_test, y_test)
+
+    print('Test_accuracy: {}'.format(test_accuracy))
+
+    # Plots
+    plt.figure(1)
+    plt.plot(recording['epoches'], recording['train_loss'], label = 'train')
+    plt.plot(recording['epoches'], recording['valid_loss'], label = 'validation')
+    plt.xlabel('Epoches')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.show()
+
+    plt.figure(2)
+    plt.plot(recording['epoches'], recording['train_accuracy'], label='train')
+    plt.plot(recording['epoches'], recording['valid_accuracy'], label='validation')
+    plt.xlabel('Epoches')
+    plt.ylabel('Accuracy')
+    plt.legend()
+    plt.show()
