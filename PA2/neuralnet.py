@@ -9,7 +9,8 @@
 # https://scipy.org/install.html
 ################################################################################
 
-import os, gzip
+import os
+import gzip
 import yaml
 import numpy as np
 
@@ -23,16 +24,17 @@ def load_config(path):
 
 def normalize_data(inp):
     """
-    TODO: Normalize your inputs here to have 0 mean and unit variance.
+    Normalize your inputs here to have 0 mean and unit variance.
     """
-    return inp
+    return (inp - inp.mean()) / inp.std()
 
 
 def one_hot_encoding(labels, num_classes=10):
     """
-    TODO: Encode labels using one hot encoding and return them.
+    Encode labels using one hot encoding and return them.
     """
-    return labels
+    encoded_labels = np.array([[1 if label == i else 0 for i in range(num_classes)] for label in labels])
+    return encoded_labels
 
 
 def load_data(path, mode='train'):
@@ -51,17 +53,17 @@ def load_data(path, mode='train'):
         images = np.frombuffer(imgpath.read(), dtype=np.uint8, offset=16).reshape(len(labels), 784)
 
     normalized_images = normalize_data(images)
-    one_hot_labels    = one_hot_encoding(labels, num_classes=10)
+    one_hot_labels = one_hot_encoding(labels, num_classes=10)
 
     return normalized_images, one_hot_labels
 
 
 def softmax(x):
     """
-    TODO: Implement the softmax function here.
+    Implement the softmax function here.
     Remember to take care of the overflow condition.
     """
-    raise NotImplementedError("Softmax not implemented")
+    return (np.exp(x) / np.sum(np.exp(x), axis=0)).T
 
 
 class Activation():
@@ -75,7 +77,7 @@ class Activation():
         >>> gradient = sigmoid_layer.backward(delta=1.0)
     """
 
-    def __init__(self, activation_type = "sigmoid"):
+    def __init__(self, activation_type="sigmoid"):
         """
         TODO: Initialize activation type and placeholders here.
         """
@@ -98,6 +100,7 @@ class Activation():
         """
         Compute the forward pass.
         """
+        self.x = a
         if self.activation_type == "sigmoid":
             return self.sigmoid(a)
 
@@ -114,6 +117,8 @@ class Activation():
         """
         Compute the backward pass.
         """
+        grad = None
+
         if self.activation_type == "sigmoid":
             grad = self.grad_sigmoid()
 
@@ -123,55 +128,58 @@ class Activation():
         elif self.activation_type == "ReLU":
             grad = self.grad_ReLU()
 
+        elif self.activation_type == "leakyReLU":
+            grad = self.grad_leakyReLU()
+
         return grad * delta
 
     def sigmoid(self, x):
         """
-        TODO: Implement the sigmoid activation here.
+        Implement the sigmoid activation here.
         """
-        return 1/(1+(np.exp((-x))))
+        return 1 / (1 + np.exp(-x))
 
     def tanh(self, x):
         """
-        TODO: Implement tanh here.
+        Implement tanh here.
         """
         return np.tanh(x)
 
     def ReLU(self, x):
         """
-        TODO: Implement ReLU here.
+        Implement ReLU here.
         """
-        return np.maximum(0,x)
+        return np.maximum(0, x)
 
     def leakyReLU(self, x):
         """
-        TODO: Implement leaky ReLU here.
+        Implement leaky ReLU here.
         """
-        raise np.where(x > 0, x, x * 0.01)
+        return np.maximum(0.1 * x, x)
 
     def grad_sigmoid(self):
         """
-        TODO: Compute the gradient for sigmoid here.
+        Compute the gradient for sigmoid here.
         """
-        raise NotImplementedError("Sigmoid gradient not implemented")
+        return self.sigmoid(self.x) * (1 - self.sigmoid(self.x))
 
     def grad_tanh(self):
         """
-        TODO: Compute the gradient for tanh here.
+        Compute the gradient for tanh here.
         """
-        raise NotImplementedError("tanh gradient not implemented")
+        return 1 - np.power(self.tanh(self.x), 2)
 
     def grad_ReLU(self):
         """
-        TODO: Compute the gradient for ReLU here.
+        Compute the gradient for ReLU here.
         """
-        raise NotImplementedError("ReLU gradient not implemented")
+        return 1 if self.x > 0 else 0
 
     def grad_leakyReLU(self):
         """
-        TODO: Compute the gradient for leaky ReLU here.
+        Compute the gradient for leaky ReLU here.
         """
-        raise NotImplementedError("leakyReLU gradient not implemented")
+        return 1 if self.x > 0 else 0.1
 
 
 class Layer():
@@ -242,7 +250,7 @@ class Neuralnetwork():
 
         # Add layers specified by layer_specs.
         for i in range(len(config['layer_specs']) - 1):
-            self.layers.append(Layer(config['layer_specs'][i], config['layer_specs'][i+1]))
+            self.layers.append(Layer(config['layer_specs'][i], config['layer_specs'][i + 1]))
             if i < len(config['layer_specs']) - 2:
                 self.layers.append(Activation(config['activation']))
 
@@ -297,11 +305,11 @@ if __name__ == "__main__":
     config = load_config("./")
 
     # Create the model
-    model  = Neuralnetwork(config)
+    model = Neuralnetwork(config)
 
     # Load the data
     x_train, y_train = load_data(path="./", mode="train")
-    x_test,  y_test  = load_data(path="./", mode="t10k")
+    x_test, y_test = load_data(path="./", mode="t10k")
 
     # TODO: Create splits for validation data here.
     # x_val, y_val = ...
