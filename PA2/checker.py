@@ -111,7 +111,7 @@ def sanity_network(data, default_config):
     random_image = np.random.randn(1, 784)
 
     # Initialize the network using the default configuration
-    nnet = neuralnet.Neuralnetwork(default_config)
+    nnet = neuralnet.Neuralnetwork(data["config"])
 
     # Compute the forward pass.
     nnet(random_image, targets = np.array([1, 0, 0, 0, 0, 0, 0, 0, 0, 0]))
