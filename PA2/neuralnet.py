@@ -203,7 +203,7 @@ class Layer():
         """
         np.random.seed(42)
         self.w = np.random.randn(in_units, out_units) / 100    # Declare the Weight matrix
-        self.b = np.zeros((1, out_units)).astype(np.float32)    # Create a placeholder for Bias
+        self.b = np.zeros((1, out_units), dtype=np.float32)    # Create a placeholder for Bias
         self.x = None    # Save the input to forward in this
         self.a = None    # Save the output of forward pass in this (without activation)
 
@@ -211,11 +211,11 @@ class Layer():
         self.d_w = None  # Save the gradient w.r.t w in this
         self.d_b = None  # Save the gradient w.r.t b in this
 
-        self.delta_w_old = 0 # Save delta w
-        self.delta_b_old = 0 # Save delta b
+        self.delta_w_old = 0  # Save delta w
+        self.delta_b_old = 0  # Save delta b
 
-        self.w_min = self.w # Store the weight matrix
-        self.b_min = self.b # Store the bias
+        self.w_min = self.w  # Store the weight matrix
+        self.b_min = self.b  # Store the bias
 
     def __call__(self, x):
         """
@@ -233,24 +233,24 @@ class Layer():
         self.a = np.dot(x, self.w) + self.b
         return self.a
 
-    def backward(self, delta, l2_penalty = 0):
+    def backward(self, delta, l2_penalty=0):
         """
         Write the code for backward pass. This takes in gradient from its next layer as input,
         computes gradient for its weights and the delta to pass to its previous layers.
         Return self.dx
         """
-        Num = self.x.shape[0]
+        batch_size = self.x.shape[0]
 
         self.d_x = delta.dot(self.w.T)
-        self.d_w = self.x.T.dot(delta) / Num - l2_penalty * self.w
-        self.d_b = delta.sum(axis = 0) / Num
+        self.d_w = self.x.T.dot(delta) / batch_size + l2_penalty * self.w
+        self.d_b = delta.sum(axis=0) / batch_size
 
         return self.d_x
 
-    def update_para(self, lr, momentum_En = False, gamma = None):
-        if momentum_En:
-            w_delta = lr * self.d_w + gamma * self.delta_w_old
-            b_delta = lr * self.d_b + gamma * self.delta_b_old
+    def update_para(self, lr, momentum=None):
+        if momentum:
+            w_delta = lr * self.d_w + momentum * self.delta_w_old
+            b_delta = lr * self.d_b + momentum * self.delta_b_old
 
             self.w += w_delta
             self.b += b_delta
@@ -289,7 +289,9 @@ class Neuralnetwork():
         self.x = None        # Save the input to forward in this
         self.y = None        # Save the output vector of model in this
         self.targets = None  # Save the targets in forward in this variable
-        self.l2_penalty = None # For l2 penalty
+        self.l2_penalty = config['L2_penalty']  # For l2 penalty
+        self.momentum = config['momentum_gamma'] if config['momentum'] else None  # momentum
+        self.lr = config['learning_rate'] # learning rate
 
         # Add layers specified by layer_specs.
         for i in range(len(config['layer_specs']) - 1):
@@ -303,7 +305,7 @@ class Neuralnetwork():
         """
         return self.forward(x, targets)
 
-    def forward(self, x, targets=None, l2_penalty = 0):
+    def forward(self, x, targets=None):
         """
         Compute forward pass through all the layers in the network and return it.
         If targets are provided, return loss as well.
@@ -319,26 +321,29 @@ class Neuralnetwork():
         # Softmax Activation
         self.y = softmax(Input)
 
-        # Loss
-        loss = self.loss(self.y, targets)
-
-        # l2 penalty
-        if l2_penalty:
-            for layer in self.layers:
-                if isinstance(layer, Layer):
-                    loss += (np.sum(layer.w ** 2)) * l2_penalty / 2
-
-        return loss
+        if targets is None:
+            return self.y
+        else:
+            loss = self.loss(self.y, targets)
+            return self.y, loss
 
     def loss(self, logits, targets):
         '''
         compute the categorical cross-entropy loss and return it.
         '''
-        Num = targets.shape[0]
+        batch_size = targets.shape[0]
 
-        return - np.sum(np.multiply(targets, np.log(logits))) / Num
+        loss = -np.sum(np.multiply(targets, np.log(logits))) / batch_size
 
-    def backward(self, l2_penalty = 0):
+        # l2 penalty
+        if self.l2_penalty:
+            for layer in self.layers:
+                if isinstance(layer, Layer):
+                    loss += (np.sum(layer.w ** 2)) * self.l2_penalty / 2
+
+        return loss
+
+    def backward(self):
         '''
         Implement backpropagation here.
         Call backward methods of individual layers.
@@ -346,14 +351,14 @@ class Neuralnetwork():
         delta = self.targets - self.y
         for layer in self.layers[::-1]:
             if isinstance(layer, Layer):
-                delta = layer.backward(delta, l2_penalty)
+                delta = layer.backward(delta, self.l2_penalty)
             else:
                 delta = layer.backward(delta)
 
-    def updata_para(self, lr, momentum_En = False, gamma = None):
+    def updata_para(self):
         for layer in self.layers[::-1]:
             if isinstance(layer, Layer):
-                layer.update_para(lr, momentum_En, gamma)
+                layer.update_para(self.lr, self.momentum)
 
     def store_para(self):
         for layer in self.layers:
@@ -366,16 +371,14 @@ class Neuralnetwork():
                 layer.load_para()
 
     def predict(self, x, targets):
-        Input = x
-        for layer in self.layers:
-            Input = layer.forward(Input)
-
-        predictions = np.argmax(softmax(Input), axis=1)
-        targets = np.argmax(targets,axis=1)
+        y = self.forward(x)
+        predictions = np.argmax(y, axis=1)
+        targets = np.argmax(targets, axis=1)
 
         return np.mean(predictions == targets)
 
-def data_spliter(x, y, percentage = 0.1):
+
+def data_spliter(x, y, percentage=0.1):
     """
 
     :param x: Input data
@@ -398,14 +401,16 @@ def data_spliter(x, y, percentage = 0.1):
 
     return x_train, y_train, x_val, y_val
 
-def batch_generator(x, y, bs = 1, shuffle_En = True):
+
+def batch_generator(x, y, bs=1, shuffle_En=True):
     if shuffle_En:
         index = np.random.permutation(len(x))
     else:
         index = list(range(len(x)))
     for idx in range(0, len(x) - bs + 1, bs):
-        index_final = index[idx:idx+bs]
+        index_final = index[idx:idx + bs]
         yield x[index_final], y[index_final]
+
 
 def train(model, x_train, y_train, x_valid, y_valid, config):
     """
@@ -416,10 +421,6 @@ def train(model, x_train, y_train, x_valid, y_valid, config):
     """
     epoches = config['epochs']
     bs = config['batch_size']
-    momentum_En = config['momentum']
-    gamma = config['momentum_gamma']
-    lr = config['learning_rate']
-    l2_penalty = config['L2_penalty']
     early_stop_En = config['early_stop']
     epoch_threshold = config['early_stop_epoch']
 
@@ -435,21 +436,21 @@ def train(model, x_train, y_train, x_valid, y_valid, config):
     start_time = time.time()
     for epoch in range(epoches):
         train_loss_batch, train_accuracy_batch = [], []
-        for x, y in batch_generator(x_train, y_train, bs = bs, shuffle_En=True):
-            train_loss_batch.append(model.forward(x, targets = y, l2_penalty = l2_penalty))
-            model.backward(l2_penalty = l2_penalty)
-            model.updata_para(lr = lr, momentum_En = momentum_En, gamma = gamma)
-            train_accuracy_batch.append(model.predict(x, targets = y))
+        for x, y in batch_generator(x_train, y_train, bs=bs, shuffle_En=True):
+            train_loss_batch.append(model.forward(x, targets=y)[1])
+            model.backward()
+            model.updata_para()
+            train_accuracy_batch.append(model.predict(x, targets=y))
 
         train_loss = np.mean(np.array(train_loss_batch))
         train_accuracy = np.mean(np.array(train_accuracy_batch))
-        valid_loss = model.forward(x_valid, targets = y_valid)
-        valid_accuracy = model.predict(x_valid, targets = y_valid)
+        valid_loss = model.forward(x_valid, targets=y_valid)[1]
+        valid_accuracy = model.predict(x_valid, targets=y_valid)
 
         print('Epoch {}, Time {} seconds'.format(epoch + 1, time.time() - start_time))
         print('Train_loss = {}, Valid_loss = {}, Valid_accuracy = {}'.format(train_loss, valid_loss, valid_accuracy))
 
-        recording['epoches'].append(epoch+1)
+        recording['epoches'].append(epoch + 1)
         recording['train_loss'].append(train_loss)
         recording['train_accuracy'].append(train_accuracy)
         recording['valid_loss'].append(valid_loss)
@@ -485,16 +486,16 @@ if __name__ == "__main__":
     model = Neuralnetwork(config)
 
     # Load the data
-    X_train, Y_train = load_data(path="./", mode="train")
+    x_train, y_train = load_data(path="./", mode="train")
     x_test, y_test = load_data(path="./", mode="t10k")
 
-    X_train = normalize_data(X_train)
+    x_train = normalize_data(x_train)
     # Y_train = one_hot_encoding(labels=Y_train)
     x_test = normalize_data(x_test)
     # y_test = one_hot_encoding(labels=y_test)
 
     # Create splits for validation data here.
-    x_train, y_train, x_valid, y_valid = data_spliter(X_train, Y_train, percentage = 0.2)
+    x_train, y_train, x_valid, y_valid = data_spliter(x_train, y_train, percentage=0.2)
     # train the model
     recording = train(model, x_train, y_train, x_valid, y_valid, config)
 
@@ -507,8 +508,8 @@ if __name__ == "__main__":
 
     # Plots
     plt.figure(1)
-    plt.plot(recording['epoches'], recording['train_loss'], label = 'train')
-    plt.plot(recording['epoches'], recording['valid_loss'], label = 'validation')
+    plt.plot(recording['epoches'], recording['train_loss'], label='train')
+    plt.plot(recording['epoches'], recording['valid_loss'], label='validation')
     plt.xlabel('Epoches')
     plt.ylabel('Loss')
     plt.legend()
