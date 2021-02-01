@@ -65,7 +65,7 @@ def softmax(x):
     """
     Implement the softmax function here.
     Remember to take care of the overflow condition.
-    Handle Overflow !
+    TODO: Overflow !
     """
     exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))
     return (exp_x / np.sum(exp_x, axis=1, keepdims=True))
@@ -84,7 +84,7 @@ class Activation():
 
     def __init__(self, activation_type="sigmoid"):
         """
-        Initialize activation type and placeholders here.
+        TODO: Initialize activation type and placeholders here.
         """
         if activation_type not in ["sigmoid", "tanh", "ReLU", "leakyReLU"]:
             raise NotImplementedError(f"{activation_type} is not implemented.")
@@ -341,6 +341,7 @@ class Neuralnetwork():
         compute the categorical cross-entropy loss and return it.
         '''
         scale_size = targets.shape[0]
+
         loss = -np.sum(np.multiply(targets, np.log(logits))) / scale_size
 
         # l2 penalty
@@ -454,7 +455,8 @@ def train(model, x_train, y_train, x_valid, y_valid, config):
         train_accuracy = np.mean(np.array(train_accuracy_batch))
         valid_loss = model.forward(x_valid, targets=y_valid)[1]
         valid_accuracy = model.predict(x_valid, targets=y_valid)
-        if (epoch+1) % 5 == 0:
+
+        if epoch % 10 == 0:
             print('Epoch {}, Time {} seconds'.format(epoch + 1, time.time() - start_time))
             print('Train_loss = {:.4f}, Valid_loss = {:.4f}, Valid_accuracy = {:.4f}'.format(train_loss, valid_loss, valid_accuracy))
 

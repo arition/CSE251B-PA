@@ -7,13 +7,13 @@ layer_specs: [784, 50, 50, 10]
 activation: "tanh"
 
 # The learning rate to be used for training.
-learning_rate: 0.005
+learning_rate: 0.05
 
 # Number of training samples per batch to be passed to network
-batch_size: 128
+batch_size: 256
 
 # Number of epochs to train the model
-epochs: 100
+epochs: 300
 
 # Flag to enable early stopping
 early_stop: True
