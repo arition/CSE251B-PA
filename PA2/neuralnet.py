@@ -433,8 +433,8 @@ def train(model, x_train, y_train, x_valid, y_valid, config):
     early_stop_En = config['early_stop']
     epoch_threshold = config['early_stop_epoch']
 
-    valid_loss_min = float('inf')
-    valid_loss_increase = 0
+    valid_accuracy_max = -float('inf')
+    valid_accuracy_decrease = 0
     recording = {}
     recording['epoches'] = []
     recording['train_loss'] = []
@@ -466,15 +466,15 @@ def train(model, x_train, y_train, x_valid, y_valid, config):
         recording['valid_loss'].append(valid_loss)
         recording['valid_accuracy'].append(valid_accuracy)
 
-        if valid_loss < valid_loss_min:
+        if valid_accuracy > valid_accuracy_max:
             model.store_para()
-            valid_loss_min = valid_loss
-            valid_loss_increase = 0
+            valid_accuracy_max = valid_accuracy
+            valid_accuracy_decrease = 0
         else:
-            valid_loss_increase += 1
+            valid_accuracy_decrease += 1
 
         if early_stop_En:
-            if valid_loss_increase > epoch_threshold:
+            if valid_accuracy_decrease > epoch_threshold:
                 break
 
     return recording
