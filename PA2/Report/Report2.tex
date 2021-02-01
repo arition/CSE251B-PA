@@ -58,7 +58,11 @@
 \maketitle
 
 \begin{abstract}
-	This paper is a report for the programming assignment 2 for Lecture CSE 251B. In this report we build a simple neural network only relies on simple libraries like Numpy without any higher level machine-learning libraries invoked. This naive neural network can support multiple fully-connect layers and within each layer we can implement different activation functions, moreover, we also support regularization to prevent over-fitting from happening. We apply our model to the Fashion MNIST data-set and achieve expected precision.
+    This paper is a report for the programming assignment 2 for Lecture CSE 251B. In this report we build a simple
+    neural network only relies on simple libraries like Numpy without any higher level machine-learning libraries
+    invoked. This naive neural network can support multiple fully-connect layers and within each layer we can implement
+    different activation functions, moreover, we also support regularization to prevent over-fitting from happening. We
+    apply our model to the Fashion MNIST data-set and achieve expected precision.
 \end{abstract}
 
 \section{Gradient check}
@@ -69,8 +73,82 @@
 
 \section{Experiment with regularization}
 
+We tried three different L2 penalty value: $0.01$, $0.001$, $0.0001$. After all, we find that $0.001$ is the best value
+for our model. The loss and accuracy can be found in \autoref{fig:regularization}. The test set accuracy can be found in
+\autoref{table:regularization}. We also find that with a smaller regularization value, more epoches are needed for
+converge.
+
+\begin{table}[ht]
+    \caption{Test set accuracy for different regularization values}
+    \label{table:regularization}
+    \centering
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        L2 penalty & Test set accuracy \\ \midrule
+        0.01       & 0.7534            \\
+        0.001      & \textbf{0.8560}   \\
+        0.0001     & 0.8027            \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[ht]
+    \centering
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{part_d_0.01.png}
+    }
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{part_d_0.001.png}
+    }
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{part_d_0.0001.png}
+    }
+    \caption{Traning and validation loss and accuracy for different regularization values}
+    \label{fig:regularization}
+\end{figure}
 
 \section{Experiment with activations}
+
+We tried four different activation functions: sigmoid, tanh, ReLU and leakyReLU. Sigmoid is a nonlinear function that
+helps the network archives nonlinearity. However, it tend to respond very less to changes of X and has a problem of
+vanishing gradients. The derivatives of tanh are steeper than The derivatives of sigmoid, but it also has the vanishing
+gradients problem. ReLU does not have vanishing gradient problem and is simplier to calculate. However, since the
+gradient of ReLU for negative values are zero, some neurons will stop responding to the error. LeakyReLU tries to fix
+the dead neurons problem, but since it introduces some kinds of linearity, it cannot be used on complex networks. In our
+model, ReLU works best. LeakyReLU has similar performance compared to ReLU since our network is not complex enough. The
+loss and accuracy can be found in \autoref{fig:activations}. The test set accuracy can be found in
+\autoref{table:activations}.
+
+\begin{table}[ht]
+    \caption{Test set accuracy for different activations}
+    \label{table:activations}
+    \centering
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        Activation & Test set accuracy \\ \midrule
+        sigmoid    & 0.7884            \\
+        tanh       & 0.8560            \\
+        ReLU       & \textbf{0.8634}   \\
+        LeakyReLU  & 0.8623            \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[ht]
+    \centering
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{part_e_sigmoid.png}
+    }
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{part_e_tanh.png}
+    }
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{part_e_ReLU.png}
+    }
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{part_e_leakyReLU.png}
+    }
+    \caption{Traning and validation loss and accuracy for different activations}
+    \label{fig:activations}
+\end{figure}
 
 
 \section{Individual contributions to the project}
@@ -79,6 +157,8 @@
 \paragraph{Fangzhou Ai}
 
 \paragraph{Yue Qiao}
+
+Experiment with Regularization and Experiment with Activations.
 
 \paragraph{Zunming Zhang}
 
