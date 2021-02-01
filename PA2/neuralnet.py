@@ -456,8 +456,9 @@ def train(model, x_train, y_train, x_valid, y_valid, config):
         valid_loss = model.forward(x_valid, targets=y_valid)[1]
         valid_accuracy = model.predict(x_valid, targets=y_valid)
 
-        print('Epoch {}, Time {} seconds'.format(epoch + 1, time.time() - start_time))
-        print('Train_loss = {:.4f}, Valid_loss = {:.4f}, Valid_accuracy = {:.4f}'.format(train_loss, valid_loss, valid_accuracy))
+        if epoch % 10 == 0:
+            print('Epoch {}, Time {} seconds'.format(epoch + 1, time.time() - start_time))
+            print('Train_loss = {:.4f}, Valid_loss = {:.4f}, Valid_accuracy = {:.4f}'.format(train_loss, valid_loss, valid_accuracy))
 
         recording['epoches'].append(epoch + 1)
         recording['train_loss'].append(train_loss)
