@@ -69,7 +69,22 @@
 
 
 \section{Implment the model}
+We implemented our model on the Fashion MNIST dataset, we have 2 hidden layers here and each of them contains 50 nodes, we apply the tanh activation function for those layers and softmax at the output layer, we spited the training set into 80/20 train/validation set, and did cross-validation making sure each part of data would be at least be the validation set for 1 time, our batch size was 256, epochs limit was 300 here and the learning rate is 0.05, we also imposed a early stop limit on our training, once the validation set error kept going up for more than 10 epochs, we stopped training prcedure and recall the best parameters we saved before during the lowest validations set error, at the end of all trainnigs, we achieved around 65.6\% accuracy. The loss and error curve are shown in \autoref{fig:loss_accuracy}.
 
+
+
+\begin{figure}[ht]
+	\centering
+	\subfigure{
+		\includegraphics[width=0.96\linewidth]{part_e_sigmoid.png}
+	}
+	\subfigure{
+		\includegraphics[width=0.96\linewidth]{part_e_tanh.png}
+	}
+
+	\caption{Traning and validation loss and accuracy for different activations}
+	\label{fig:loss_accuracy}
+\end{figure}
 
 \section{Experiment with regularization}
 
@@ -94,13 +109,13 @@ converge.
 \begin{figure}[ht]
     \centering
     \subfigure{
-        \includegraphics[width=0.96\linewidth]{part_d_0.01.png}
+        \includegraphics[width=0.96\linewidth]{{part_d_0.01}.png}
     }
     \subfigure{
-        \includegraphics[width=0.96\linewidth]{part_d_0.001.png}
+        \includegraphics[width=0.96\linewidth]{{part_d_0.001}.png}
     }
     \subfigure{
-        \includegraphics[width=0.96\linewidth]{part_d_0.0001.png}
+        \includegraphics[width=0.96\linewidth]{{part_d_0.0001}.png}
     }
     \caption{Traning and validation loss and accuracy for different regularization values}
     \label{fig:regularization}
@@ -154,7 +169,7 @@ loss and accuracy can be found in \autoref{fig:activations}. The test set accura
 \section{Individual contributions to the project}
 \label{Sec:ICP}
 
-\paragraph{Fangzhou Ai}
+\paragraph{Fangzhou Ai} Part (c)
 
 \paragraph{Yue Qiao}
 
