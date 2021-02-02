@@ -74,15 +74,13 @@ We implemented our model on the Fashion MNIST dataset, we have 2 hidden layers h
 
 
 \begin{figure}[ht]
-	\centering
-	\subfigure{
-		\includegraphics[width=0.96\linewidth]{loss_c.png}
-	}
-	\subfigure{
-		\includegraphics[width=0.96\linewidth]{accu_c.png}
-	}
-\caption{Traning and validation loss and accuracy for our model.}
-	\label{fig:loss_accuracy}
+    \centering
+    \subfigure{
+        \includegraphics[width=0.48\linewidth]{loss_c.png}
+        \includegraphics[width=0.48\linewidth]{accu_c.png}
+    }
+    \caption{Traning and validation loss and accuracy for our model.}
+    \label{fig:loss_accuracy}
 \end{figure}
 
 \section{Experiment with regularization}
@@ -108,13 +106,13 @@ converge.
 \begin{figure}[ht]
     \centering
     \subfigure{
-        \includegraphics[width=0.96\linewidth]{{part_d_0.01}.png}
+        \includegraphics[width=0.96\linewidth]{part_d_0.01.png}
     }
     \subfigure{
-        \includegraphics[width=0.96\linewidth]{{part_d_0.001}.png}
+        \includegraphics[width=0.96\linewidth]{part_d_0.001.png}
     }
     \subfigure{
-        \includegraphics[width=0.96\linewidth]{{part_d_0.0001}.png}
+        \includegraphics[width=0.96\linewidth]{part_d_0.0001.png}
     }
     \caption{Traning and validation loss and accuracy for different regularization values}
     \label{fig:regularization}
