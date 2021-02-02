@@ -25,7 +25,7 @@
 \usepackage{graphicx}
 \usepackage{subfigure}
 
-\title{Programming Assignment \#2 of WI 21 CSE 251B}
+\title{Multi-layer Neural Networks on Fashion MNIST Dataset}
 
 % The \author macro works with any number of authors. There are two commands used to separate the names and addresses of
 % multiple authors: \And and \AND.
@@ -62,14 +62,21 @@
     neural network only relies on simple libraries like Numpy without any higher level machine-learning libraries
     invoked. This naive neural network can support multiple fully-connect layers and within each layer we can implement
     different activation functions, moreover, we also support regularization to prevent over-fitting from happening. We
-    apply our model to the Fashion MNIST data-set and achieve expected precision.
+    apply our model to the Fashion MNIST data-set and achieve expected precision. In our experiments, it shows that with
+    0.001 L2 penalty and using ReLU as activation function, the network has best performance. 
 \end{abstract}
 
 \section{Gradient check}
 
 
 \section{Implment the model}
-We implemented our model on the Fashion MNIST dataset, we have 2 hidden layers here and each of them contains 50 nodes, we apply the tanh activation function for those layers and softmax at the output layer, we spited the training set into 80/20 train/validation set, and did cross-validation making sure each part of data would be at least be the validation set for 1 time, our batch size was 256, epochs limit was 300 here and the learning rate is 0.05, we also imposed a early stop limit on our training, once the validation set error kept going up for more than 10 epochs, we stopped training prcedure and recall the best parameters we saved before during the lowest validations set error, at the end of all trainnigs, we achieved around 76.37\% accuracy. The loss and error curve are shown in \autoref{fig:loss_accuracy}.
+We implemented our model on the Fashion MNIST dataset, we have 2 hidden layers here and each of them contains 50 nodes,
+we apply the tanh activation function for those layers and softmax at the output layer, we spited the training set into
+80/20 train/validation set, and did cross-validation making sure each part of data would be at least be the validation
+set for 1 time, our batch size was 256, epochs limit was 300 here and the learning rate is 0.05, we also imposed a early
+stop limit on our training, once the validation set error kept going up for more than 10 epochs, we stopped training
+prcedure and recall the best parameters we saved before during the lowest validations set error, at the end of all
+trainnigs, we achieved around 76.37\% accuracy. The loss and error curve are shown in \autoref{fig:loss_accuracy}.
 
 
 
