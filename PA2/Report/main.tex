@@ -67,7 +67,28 @@
 \end{abstract}
 
 \section{Gradient check}
+In this part, we randomly chose one output bias weight and one hidden bias weight from each hidden layer and checked the differences from what we obtained from the back-propagation and numerical approximation. For the weight, we randomly chose two input to hidden weight and two hidden to output weights and compared these from what we obtained from the back-propagation and numerical approximation. The results are shown in \autoref{table:gradient}.
 
+\begin{table}[ht]
+    \caption{Comparison of bias weight and weights from back-propagation and numerical approximation}
+    \label{table:gradient}
+    \centering
+    \begin{tabular}{@{}ll@{}ll@{}}
+        \toprule
+                                                    & Back-propagation           & Numerical approximation \\ \midrule
+        output bias weight                          & 0.2829988269               & 0.2829986440                 \\
+        bias weight from first hidden layer         & 0.0947910547               & 0.0947903741                 \\
+        bias weight from second hidden layer        & 0.1328027731               & 0.1327997287                 \\
+        weight 1 from input to hidden layer         & -0.07680517785             & -0.0768048158                \\
+        weight 2 from input to hidden layer         & 0.01531950744              & 0.0153201236                 \\
+        weight 1 from hidden to hidden layer        & -0.13117408499             & -0.1311709672                \\
+        weight 2 from hidden to hidden layer        & 0.00568704342              & 0.0056867596                 \\
+        weight 1 from hidden to output layer        & 0.26639110994              & 0.2663909043                 \\
+        weight 2 from hidden to output layer        & -0.09570147055             & -0.0957014082                \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+From \autoref{table:gradient}, we could see that the differences from the back-propagation and from numerical approximation indeed is within $O\left(\epsilon^2\right)$.
 
 \section{Implment the model}
 We implemented our model on the Fashion MNIST dataset, we have 2 hidden layers here and each of them contains 50 nodes,
@@ -165,18 +186,78 @@ loss and accuracy can be found in \autoref{fig:activations}. The test set accura
     \subfigure{
         \includegraphics[width=0.96\linewidth]{part_e_leakyReLU.png}
     }
-    \caption{Traning and validation loss and accuracy for different activations}
+    \caption{Training and validation loss and accuracy for different activation functions}
     \label{fig:activations}
 \end{figure}
 
 \section{Experiment with Network Topology}
-In this part, we used the best parameters from the previous experiment. To be specific, the parameters are listed below:
-\begin{item}
-	\itemize Learning rate = 0.01
-	\itemize Amount of regularization \gamma = 0.001
-	\itemize Activation function used: ReLU
-\end{item}
+In this part, we used the best parameters from the previous experiment. To be specific, the parameters that used in this part are listed below:
+\begin{itemize}
+	\item Learning rate = 0.01
+	\item Amount of regularization $\gamma$ = 0.001
+	\item Activation function used: ReLU
+\end{itemize}
+\subsection{Experiment with different hidden unit number in each layer}
+First, tried to vary the number of the hidden units in each layer. We tried the combination of 50 X 100, 100 X 50, 25 X 50, and 50 X 25. We tried to double/halve hidden units in one of the hidden layers. And the test set accuracy could be found in \autoref{table:unitnumber}. Basically, increasing the hidden unit number typically means that increase the network complexity and suppose to get a better performance. However, from \autoref{table:unitnumber}, we could see that the performances remain almost the same when we are trying to increase the hidden unit number of one of the hidden layers. Decreasing the hidden unit number would normally decrease the complexity of the network. We could see that the test set accuracy decrease by around $1\%-2\%$ when we reduced the network complexity. 
+\begin{table}[ht]
+    \caption{Test set accuracy for different number of hidden units in each layer}
+    \label{table:unitnumber}
+    \centering
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        Hidden unit number in each layer & Test set accuracy \\ \midrule
+        50 $X$ 50        & 0.8634             \\
+        50 $X$ 100       & 0.8622             \\
+        100 $X$ 50       & 0.8629    \\
+        25 $X$ 50        & 0.8484             \\
+        50 $X$ 25        & 0.8584             \\ \bottomrule
+    \end{tabular}
+\end{table}
 
+\begin{figure}[ht]
+    \centering
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{Part_f_01.JPG}
+    }
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{Part_f_02.JPG}
+    }
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{Part_f_03.JPG}
+    }
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{Part_f_04.JPG}
+    }
+    \caption{Training and validation loss and accuracy for different hidden units}
+    \label{fig:hiddenunit}
+\end{figure}
+
+\subsection{Experiment with different number of hidden layer}
+In this section, we were exploring the performance changes of different hidden layer number while we kept the overall weights and biases number to be roughly the same. The total weights number for the two hidden layers structure is $784*50 + 50*50 + 50*10 = 42200$ and the bias number for the hidden layers is $50 + 50 = 100$.So, for the three hidden layer, we used [50, 30, 30] hidden unit in each layer and for the one hidden layer, we used 100 hidden unit and tried to compared the results of each network. The test set accuracy can be found in \autoref{table:layernumber}. As we could see in the \autoref{table:layernumber}, the test set accuracies are comparable for the three different structures.
+
+\begin{table}[ht]
+    \caption{Test set accuracy for different number of hidden layer}
+    \label{table:layernumber}
+    \centering
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        Layer specs & Test set accuracy \\ \midrule
+        50 $X$ 50        & 0.8634             \\
+        50 $X$ 30 $X$ 30 & 0.8641             \\
+        100              & 0.8552    \\ \bottomrule
+    \end{tabular}
+\end{table}
+\begin{figure}[ht]
+    \centering
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{Part_f_3.JPG}
+    }
+    \subfigure{
+        \includegraphics[width=0.96\linewidth]{Part_f_1.JPG}
+    }
+    \caption{Training and validation loss and accuracy for different hidden layer}
+    \label{fig:hiddenlayer}
+\end{figure}
 
 \section{Individual contributions to the project}
 \label{Sec:ICP}
