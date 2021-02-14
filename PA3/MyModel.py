@@ -102,8 +102,8 @@ class MyModel(nn.Module):
         x = self.bn4(self.relu(self.deconv4(x)))
 
         x = self.bn5(self.relu(self.deconv5(x)))
-        
-        x = self.bn6(self.relu(self.deconv5(x)))
+
+        x = self.bn6(self.relu(self.deconv6(x)))
 
         x = self.MyMaxpool(x)
         score = self.classifier(x)
