@@ -37,7 +37,7 @@ class RRCNN_block(nn.Module):
 
 
 class MyModel(nn.Module):
-    def __init__(self,img_ch=3,output_ch=27,t=2):
+    def __init__(self,img_ch=3,outChannel=27,t=2):
         super(MyModel,self).__init__()
         
         self.MyMaxpool = nn.MaxPool2d(kernel_size=2,stride=2)
@@ -62,7 +62,7 @@ class MyModel(nn.Module):
 
         self.RRCNN10 = RRCNN_block(inChannel=128,outChannel=64,t=t)
 
-        self.classifier = RRCNN_block(inChannel=64,outChannel=output_ch,t=t)
+        self.classifier = RRCNN_block(inChannel=64,outChannel=outChannel,t=t)
 
 
     def forward(self,x):
