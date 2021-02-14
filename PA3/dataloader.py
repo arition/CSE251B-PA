@@ -81,6 +81,9 @@ class IddDataset(Dataset):
             img = self.flipud(img)
             label = self.fliplr(label)
             label = self.flipud(label)
+        elif self.transforms_ == 'rotate':
+            img = self.rotate(img, 1)
+            label = self.rotate(label, 1)
 
         img = self.transforms(np.asarray(img).copy()).float()  # Normalization
         label = torch.from_numpy(np.asarray(label).copy()).long()  # convert to tensor
