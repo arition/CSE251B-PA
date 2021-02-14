@@ -1,54 +1,59 @@
+import time
+
+import numpy as np
+import torch.nn.functional as F
+import torch.optim as optim
+import torchvision
+from torch.autograd import Variable
+from torch.utils.tensorboard import SummaryWriter
 from torchvision import utils
+
 from basic_fcn import *
 from dataloader import *
 from utils import *
-import torchvision
-import torch.nn.functional as F
-import torch.optim as optim
-from torch.autograd import Variable
-import time
 
-
-# TODO: Some missing values are represented by '__'. You need to fill these up.
+writer = SummaryWriter()
 
 train_dataset = IddDataset(csv_file='train.csv')
 val_dataset = IddDataset(csv_file='val.csv')
 test_dataset = IddDataset(csv_file='test.csv')
 
 
-train_loader = DataLoader(dataset=train_dataset, batch_size= __, num_workers= __, shuffle=True)
-val_loader = DataLoader(dataset=val_dataset, batch_size= __, num_workers= __, shuffle=True)
-test_loader = DataLoader(dataset=test_dataset, batch_size= __, num_workers= __, shuffle=False)
+train_loader = DataLoader(dataset=train_dataset, batch_size=8, num_workers=8, shuffle=True)
+val_loader = DataLoader(dataset=val_dataset, batch_size=8, num_workers=8, shuffle=True)
+test_loader = DataLoader(dataset=test_dataset, batch_size=8, num_workers=8, shuffle=False)
 
 
 def init_weights(m):
     if isinstance(m, nn.Conv2d) or isinstance(m, nn.ConvTranspose2d):
         torch.nn.init.xavier_uniform(m.weight.data)
-        torch.nn.init.xavier_uniform(m.bias.data)        
+        torch.nn.init.xavier_uniform(m.bias.data)
 
-epochs = __        
-criterion = # Choose an appropriate loss function from https://pytorch.org/docs/stable/_modules/torch/nn/modules/loss.html
+
+epochs = 20
+criterion = nn.CrossEntropyLoss()
 fcn_model = FCN(n_class=n_class)
-fcn_model.apply(init_weights)
+# fcn_model.apply(init_weights)
 
-optimizer = optim.Adam(fcn_model.parameters(), lr=__)
+optimizer = optim.Adam(fcn_model.parameters(), lr=0.0001)
 
 use_gpu = torch.cuda.is_available()
 if use_gpu:
     fcn_model = fcn_model.cuda()
 
-        
-def train():
-    for epoch in range(epochs):
-        ts = time.time()
-        for iter, (X, tar, Y) in enumerate(train_loader):
-            optimizer.zero_grad()
 
+def train():
+    last_iter = 0
+    for epoch in range(epochs):
+        fcn_model.train()
+        ts = time.time()
+        for iter, (X, tar, _) in enumerate(train_loader):
+            optimizer.zero_grad()
             if use_gpu:
-                inputs = # Move your inputs onto the gpu
-                labels = # Move your labels onto the gpu
+                inputs = X.cuda()
+                labels = tar.cuda()
             else:
-                inputs, labels = # Unpack variables into inputs and labels
+                inputs, labels = X, tar
 
             outputs = fcn_model(inputs)
             loss = criterion(outputs, labels)
@@ -57,25 +62,72 @@ def train():
 
             if iter % 10 == 0:
                 print("epoch{}, iter{}, loss: {}".format(epoch, iter, loss.item()))
-        
+                writer.add_scalar('Loss/train', loss.item(), last_iter)
+            last_iter += 1
+
         print("Finish epoch {}, time elapsed {}".format(epoch, time.time() - ts))
-        torch.save(fcn_model, 'best_model')
+        torch.save(fcn_model, 'latest_model')
 
         val(epoch)
-        fcn_model.train()
-    
 
 
 def val(epoch):
-    fcn_model.eval() # Don't forget to put in eval mode !
-    #Complete this function - Calculate loss, accuracy and IoU for every epoch
-    # Make sure to include a softmax after the output from your model
-    
+    print(f'Start val epoch{epoch}')
+    iouMetric = IOUMetric()
+    pixelAccMetric = PixelAccMetric()
+    fcn_model.eval()  # Don't forget to put in eval mode !
+    ts = time.time()
+    with torch.no_grad():
+        for iter, (X, _, Y) in enumerate(val_loader):
+            if use_gpu:
+                inputs = X.cuda()
+                Y = Y.cuda()
+            else:
+                inputs = X
+
+            ts = time.time()
+            outputs = F.log_softmax(fcn_model(inputs), dim=1)
+            _, pred = torch.max(outputs, dim=1)
+            iouMetric.update(pred, Y)
+            pixelAccMetric.update(pred, Y)
+
+    pixel_acc = pixelAccMetric.result()
+    iou = iouMetric.result()
+    print("Val{}, pixel acc {}, avg iou {}, time elapsed {}".format(epoch, pixel_acc, np.mean(iou), time.time() - ts))
+
+    writer.add_scalar('Pixel Accuracy/Val', pixel_acc, epoch)
+    writer.add_scalar('IOU/Average/Val', np.mean(iou), epoch)
+    writer.add_scalar('IOU/Road/Val', iou[0], epoch)
+    writer.add_scalar('IOU/Sidewalk/Val', iou[2], epoch)
+    writer.add_scalar('IOU/Car/Val', iou[9], epoch)
+    writer.add_scalar('IOU/Billboard/Val', iou[17], epoch)
+    writer.add_scalar('IOU/Sky/Val', iou[25], epoch)
+
+
 def test():
-	fcn_model.eval()
-    #Complete this function - Calculate accuracy and IoU 
-    # Make sure to include a softmax after the output from your model
-    
+    iouMetric = IOUMetric()
+    pixelAccMetric = PixelAccMetric()
+    fcn_model.eval()  # Don't forget to put in eval mode !
+    ts = time.time()
+    with torch.no_grad():
+        for X, _, Y in test_loader:
+            if use_gpu:
+                inputs = X.cuda()
+                Y = Y.cuda()
+            else:
+                inputs = X
+
+            outputs = F.log_softmax(fcn_model(inputs), dim=1)
+            _, pred = torch.max(outputs, dim=1)
+            iouMetric.update(pred, Y)
+            pixelAccMetric.update(pred, Y)
+
+    pixel_acc = pixelAccMetric.result()
+    iou = iouMetric.result()
+    print("Test, pixel acc {}, avg iou {}, time elapsed {}".format(pixel_acc, np.mean(iou), time.time() - ts))
+    print(f"ious result: {iou}")
+
+
 if __name__ == "__main__":
-    val(0)  # show the accuracy before training
+    val(-1)  # show the accuracy before training
     train()
