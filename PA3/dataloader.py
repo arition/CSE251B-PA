@@ -60,7 +60,7 @@ class IddDataset(Dataset):
         self.transforms = transforms.Compose([transforms.ToTensor(),
                                               transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)), ])
 
-        self.resize = transforms.Resize((1088, 1920), interpolation=1)  # nearest neighbour
+        self.crop = transforms.CenterCrop((1088, 1920))
 
     def __len__(self):
         return len(self.data)
@@ -72,16 +72,18 @@ class IddDataset(Dataset):
         label_name = self.data.iloc[idx, 1]
         label = Image.open(label_name)
 
-        img = self.resize(img)
-        label = self.resize(label)
+        img = self.crop(img)
+        label = self.crop(label)
 
         img = self.transforms(img).float()  # Normalization
-        label = torch.from_numpy(np.asarray(label).copy()).int()  # convert to tensor
+        label = torch.from_numpy(np.asarray(label).copy()).long()  # convert to tensor
 
-        # create one-hot encoding
-        h, w = label.shape
-        target = torch.zeros(self.n_class, h, w)
-        for c in range(self.n_class):
-            target[c][label == c] = 1
+        return img, label
 
-        return img, target, label
+        # # create one-hot encoding
+        # h, w = label.shape
+        # target = torch.zeros(self.n_class, h, w, dtype=torch.long)
+        # for c in range(self.n_class):
+        #     target[c][label == c] = 1
+
+        # return img, target, label

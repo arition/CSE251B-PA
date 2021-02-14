@@ -19,7 +19,7 @@ val_dataset = IddDataset(csv_file='val.csv')
 test_dataset = IddDataset(csv_file='test.csv')
 
 
-train_loader = DataLoader(dataset=train_dataset, batch_size=8, num_workers=8, shuffle=True)
+train_loader = DataLoader(dataset=train_dataset, batch_size=4, num_workers=8, shuffle=True)
 val_loader = DataLoader(dataset=val_dataset, batch_size=8, num_workers=8, shuffle=True)
 test_loader = DataLoader(dataset=test_dataset, batch_size=8, num_workers=8, shuffle=False)
 
@@ -47,13 +47,13 @@ def train():
     for epoch in range(epochs):
         fcn_model.train()
         ts = time.time()
-        for iter, (X, tar, _) in enumerate(train_loader):
+        for iter, (X, Y) in enumerate(train_loader):
             optimizer.zero_grad()
             if use_gpu:
                 inputs = X.cuda()
-                labels = tar.cuda()
+                labels = Y.cuda()
             else:
-                inputs, labels = X, tar
+                inputs, labels = X, Y
 
             outputs = fcn_model(inputs)
             loss = criterion(outputs, labels)
@@ -78,7 +78,7 @@ def val(epoch):
     fcn_model.eval()  # Don't forget to put in eval mode !
     ts = time.time()
     with torch.no_grad():
-        for iter, (X, _, Y) in enumerate(val_loader):
+        for iter, (X, Y) in enumerate(val_loader):
             if use_gpu:
                 inputs = X.cuda()
                 Y = Y.cuda()
@@ -110,7 +110,7 @@ def test():
     fcn_model.eval()  # Don't forget to put in eval mode !
     ts = time.time()
     with torch.no_grad():
-        for X, _, Y in test_loader:
+        for X, Y in test_loader:
             if use_gpu:
                 inputs = X.cuda()
                 Y = Y.cuda()
@@ -129,5 +129,5 @@ def test():
 
 
 if __name__ == "__main__":
-    val(-1)  # show the accuracy before training
+    # val(-1)  # show the accuracy before training
     train()
