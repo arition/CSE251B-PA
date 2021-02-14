@@ -96,8 +96,8 @@ class MyModel(nn.Module):
         x = self.RRCNN10(x)
 
         x = self.MyMaxpool(x)
-        x = self.classifier(x)
+        score = self.classifier(x)
 
        
 
-        return d1
+        return score
