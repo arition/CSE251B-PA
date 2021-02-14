@@ -7,6 +7,7 @@ import torchvision
 from torch.autograd import Variable
 from torch.utils.tensorboard import SummaryWriter
 from torchvision import utils
+from collections import Counter
 
 from basic_fcn import *
 from dataloader import *
@@ -14,7 +15,7 @@ from utils import *
 
 writer = SummaryWriter()
 
-train_dataset = IddDataset(csv_file='train.csv')
+train_dataset = IddDataset(csv_file='train.csv', transforms_='flip')
 val_dataset = IddDataset(csv_file='val.csv')
 test_dataset = IddDataset(csv_file='test.csv')
 
@@ -23,6 +24,8 @@ train_loader = DataLoader(dataset=train_dataset, batch_size=4, num_workers=8, sh
 val_loader = DataLoader(dataset=val_dataset, batch_size=8, num_workers=8, shuffle=True)
 test_loader = DataLoader(dataset=test_dataset, batch_size=8, num_workers=8, shuffle=False)
 
+weighted = 'True'
+
 
 def init_weights(m):
     if isinstance(m, nn.Conv2d) or isinstance(m, nn.ConvTranspose2d):
@@ -30,8 +33,16 @@ def init_weights(m):
         torch.nn.init.xavier_uniform(m.bias.data)
 
 
+nSamples = [10, 10, 1, 1, 1, 5, 5, 1, 10, 5, 5, 1, 1, 5, 1, 1, 1, 5, 1, 1, 5, 5, 10, 1, 5, 10, 1]
+normedWeights = [1 - (x / sum(nSamples)) for x in nSamples]
+normedWeights = torch.FloatTensor(normedWeights).cuda()
+
 epochs = 20
-criterion = nn.CrossEntropyLoss()
+if weighted:
+    criterion = nn.CrossEntropyLoss(weight=normedWeights)
+else:
+    criterion = nn.CrossEntropyLoss()
+
 fcn_model = FCN(n_class=n_class)
 # fcn_model.apply(init_weights)
 
