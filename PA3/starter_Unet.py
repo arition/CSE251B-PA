@@ -32,20 +32,20 @@ def init_weights(m):
 
 epochs = 20
 criterion = nn.CrossEntropyLoss()
-fcn_model = U_Net()
-# fcn_model.apply(init_weights)
+Unet_model = U_Net()
+# Unet_model.apply(init_weights)
 
-optimizer = optim.Adam(fcn_model.parameters(), lr=0.0001)
+optimizer = optim.Adam(Unet_model.parameters(), lr=0.0001)
 
 use_gpu = torch.cuda.is_available()
 if use_gpu:
-    fcn_model = fcn_model.cuda()
+    Unet_model = Unet_model.cuda()
 
 
 def train():
     last_iter = 0
     for epoch in range(epochs):
-        fcn_model.train()
+        Unet_model.train()
         ts = time.time()
         for iter, (X, Y) in enumerate(train_loader):
             optimizer.zero_grad()
@@ -55,7 +55,7 @@ def train():
             else:
                 inputs, labels = X, Y
 
-            outputs = fcn_model(inputs)
+            outputs = Unet_model(inputs)
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
@@ -66,7 +66,7 @@ def train():
             last_iter += 1
 
         print("Finish epoch {}, time elapsed {}".format(epoch, time.time() - ts))
-        torch.save(fcn_model, 'latest_model')
+        torch.save(Unet_model, 'latest_model')
 
         val(epoch)
 
@@ -75,7 +75,7 @@ def val(epoch):
     print(f'Start val epoch{epoch}')
     iouMetric = IOUMetric()
     pixelAccMetric = PixelAccMetric()
-    fcn_model.eval()  # Don't forget to put in eval mode !
+    Unet_model.eval()  # Don't forget to put in eval mode !
     ts = time.time()
     with torch.no_grad():
         for iter, (X, Y) in enumerate(val_loader):
@@ -86,7 +86,7 @@ def val(epoch):
                 inputs = X
 
             ts = time.time()
-            outputs = F.log_softmax(fcn_model(inputs), dim=1)
+            outputs = F.log_softmax(Unet_model(inputs), dim=1)
             _, pred = torch.max(outputs, dim=1)
             iouMetric.update(pred, Y)
             pixelAccMetric.update(pred, Y)
@@ -107,7 +107,7 @@ def val(epoch):
 def test():
     iouMetric = IOUMetric()
     pixelAccMetric = PixelAccMetric()
-    fcn_model.eval()  # Don't forget to put in eval mode !
+    Unet_model.eval()  # Don't forget to put in eval mode !
     ts = time.time()
     with torch.no_grad():
         for X, Y in test_loader:
@@ -117,7 +117,7 @@ def test():
             else:
                 inputs = X
 
-            outputs = F.log_softmax(fcn_model(inputs), dim=1)
+            outputs = F.log_softmax(Unet_model(inputs), dim=1)
             _, pred = torch.max(outputs, dim=1)
             iouMetric.update(pred, Y)
             pixelAccMetric.update(pred, Y)
