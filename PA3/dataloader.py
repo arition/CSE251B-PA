@@ -63,7 +63,7 @@ class IddDataset(Dataset):
         self.transforms = transforms.Compose([transforms.ToTensor(),
                                               transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)), ])
 
-        self.crop = transforms.CenterCrop((1088, 1920))
+        self.crop = transforms.CenterCrop((256, 256))
 
     def __len__(self):
         return len(self.data)
