@@ -1,15 +1,20 @@
-def iou(pred, target):
+import torch
+
+
+def iou(pred: torch.Tensor, target: torch.Tensor, n_class: int = 26):
     ious = []
     for cls in range(n_class):
         # Complete this function
-        intersection = # intersection calculation
-        union = #Union calculation
+        intersection = torch.sum((pred == cls) == (target == cls))
+        union = torch.sum(pred == cls) + torch.sum(target == cls) - intersection
         if union == 0:
-            ious.append(float('nan'))  # if there is no ground truth, do not include in evaluation
+            # if there is no ground truth, do not include in evaluation
+            ious.append(float('nan'))
         else:
-            # Append the calculated IoU to the list ious
+            ious.append(intersection / union)
     return ious
 
 
-def pixel_acc(pred, target):
-    #Complete this function
+def pixel_acc(pred: torch.Tensor, target: torch.Tensor):
+    tp = torch.sum(pred == target)
+    return tp / len(pred.flatten())
