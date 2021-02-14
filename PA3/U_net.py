@@ -63,6 +63,7 @@ class U_Net(nn.Module):
         self.classifier = nn.Conv2d(64,n_class,kernel_size=1,stride=1,padding=0)
 
 
+
     def forward(self,x):
         x1 = self.Conv1(x)
         x2 = self.UnetMaxpool(x1)
