@@ -19,7 +19,7 @@ import PIL
 
 writer = SummaryWriter()
 
-train_dataset = IddDataset(csv_file='train.csv', transforms_='flip')
+train_dataset = IddDataset(csv_file='train.csv', transforms_='rotate')
 val_dataset = IddDataset(csv_file='val.csv')
 test_dataset = IddDataset(csv_file='test.csv')
 

@@ -19,7 +19,7 @@ import PIL
 
 writer = SummaryWriter()
 
-train_dataset = IddDataset(csv_file='train.csv', transforms_='flip')
+train_dataset = IddDataset(csv_file='train.csv', transforms_='rotate')
 val_dataset = IddDataset(csv_file='val.csv')
 test_dataset = IddDataset(csv_file='test.csv')
 
@@ -27,7 +27,7 @@ train_loader = DataLoader(dataset=train_dataset, batch_size=4, num_workers=8, sh
 val_loader = DataLoader(dataset=val_dataset, batch_size=4, num_workers=8, shuffle=True)
 test_loader = DataLoader(dataset=test_dataset, batch_size=4, num_workers=8, shuffle=False)
 
-weighted = 'False'
+weighted = 'True'
 
 
 def init_weights(m):
