@@ -89,6 +89,4 @@ class U_Net(nn.Module):
         x9 = self.Up_conv2(x9)
         
         score = self.classifier(x9)
-        
-        score = self.classifier(x)
         return score

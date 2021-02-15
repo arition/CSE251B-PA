@@ -39,6 +39,7 @@ class RRCNN_block(nn.Module):
 class MyModel(nn.Module):
     def __init__(self,img_ch=3,outChannel=27,t=2):
         super(MyModel,self).__init__()
+        self.relu = nn.ReLU(inplace=True)
         
         self.MyMaxpool = nn.MaxPool2d(kernel_size=2,stride=2)
 
