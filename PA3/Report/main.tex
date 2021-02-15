@@ -84,6 +84,92 @@
 \subsection{Baseline model}
 
 \subsection{Improved baseline model}
+\subsubsection{Dataset Augmentation}
+From the baseline model, we tried to do some data augmentation on the training dataset to see whether the performance could be approved. Since training is quite time-consuming, in this report, we implemented and tested two different data augmentation algorithm and tried to compare the performance with each other.
+
+The data augmentation methods used are:
+\begin{itemize}
+    \item Mirror flip: for the training dataset, we mirror flipped the dataset and fed them into the model
+    \item Image Rotating: rotate the images slightly (for a certain degree), in this report, we tried to rotate the images by 1 degree and then fed them into the model
+\end{itemize}
+
+\autoref{table:augmentation} shows the model performance of different augmentation method. From the table, we could see that the performance was improved by ~ 10\% simply by rotating the training dataset for a small angle.
+
+\begin{table}[ht]
+    \caption{Comparison of performance of different augmentation methods}
+    \label{table:augmentation}
+    \centering
+    \begin{tabular}{@{}ll@{}ll@{}}
+        \toprule
+                                                    & Mirror flip           & Rotation       \\ \midrule
+        Validation set pivel accuracy               & 0.6953          & 0.7936   \\
+        Average IoU                                 & 0.2313          & 0.3393   \\
+        IoU for road(0)                             & 0.7477          & 0.8577   \\
+        IoU for sidewalk(2)                         & 0.0874          & 0.2483   \\
+        IoU for car(9)                              & 0.2262          & 0.4857   \\
+        IoU for billboard(17)                       & 0.2542          & 0.2755   \\
+        IoU for sky(25)                             & 0.8105          & 0.9445   \\ \bottomrule
+    \end{tabular}
+\end{table}
+The visualization of the segmented output for the first image in the test.csv overlaid on the image for mirror flip and rotation method could be seen in \autoref{fig:mirror_flip} and \autoref{fig:rotation}, respectively.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.96\linewidth]{flip_method.png}
+    \caption{Visualization of segmented output for Mirror flip augmentation method}
+    \label{fig:mirror_flip}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.96\linewidth]{rotate_method.png}
+    \caption{Visualization of segmented output for Rotation augmentation method}
+    \label{fig:rotation}
+\end{figure}
+
+\subsubsection{Imbalanced class problem}
+For the imbalanced class problem, what we usually do is to pressuring the network to categorize the infrequently seen class. We proposed to use the weighted loss method to accommodate this issue, which will weight infrequent classes more.
+
+For the weighted loss, the idea is to set the weight of the loss of each class inversely proportion to the frequency of each class in the training dataset.
+For the data pre-processing, we calculated the total pixel count of each class in all the training dataset and then use this information to help us set the weight of the loss.
+
+Suppose, the number of samples for each class is stored in nSamples, then we use $normedWeights$ = [1 - (x / sum(nSamples)) for x in nSamples] as the normalized weight of the loss for each class.
+
+For this dataset, we calculated the number of samples for each class is:
+
+$ nSamples = [2198453584,519609102,28929892,126362539,58804972,59032134,94293190,2569952, $
+
+$ 101519794,163659019,105075839,47400301,30998126,133835645,135950687,41339482,15989829, $
+
+$ 104795610,8062798,450973,94820222,341805135,557016609,71159311,1465165566,1823922767,2775322] $
+
+Then we could be able to set the weight of the loss for each class according to nSamples.
+
+The performance of the model could be seen in \autoref{table:weighted} and the visualization of the segmented output for the first image in the testdataset overlaid on the image could be seen in \autoref{fig:weighted}   % need to be changed once finishing training
+\begin{table}[ht]   
+    \caption{Performance of model after introducing the weighted loss for the imbalanced dataset}
+    \label{table:weighted}
+    \centering
+    \begin{tabular}{@{}ll@{}ll@{}}
+        \toprule
+                                                    & weighted loss w/ rotation       \\ \midrule
+        Validation set pivel accuracy               & 0.6953          \\
+        Average IoU                                 & 0.2313          \\
+        IoU for road(0)                             & 0.7477          \\
+        IoU for sidewalk(2)                         & 0.0874          \\
+        IoU for car(9)                              & 0.2262          \\
+        IoU for billboard(17)                       & 0.2542          \\
+        IoU for sky(25)                             & 0.8105          \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.96\linewidth]{rotate_method.png}  % need to be changed once finishing training
+    \caption{Visualization of segmented output after introducing weighted loss method}
+    \label{fig:weighted}
+\end{figure}
+
 
 \subsection{Custom model}
 Inspired by this \href{https://arxiv.org/ftp/arxiv/papers/1802/1802.06955.pdf}{paper}, we replace the encoder part in FCN model with the RRCNN layer instead, the RRCNN represent better abstraction ability, thus we would expect better IoU and precision. However the RRCNN is really memory-intensive, we have to crop the image to only 256 *256 size and delete 3 layers from original model's encoding part, which severly influence the performance of our model. What's worse is the RRCNN encoding part contains maxpooling operation after each RRCNN block, which means the images size would shrinks even more, since we have already started from a relative small size, maxpool will almost ruin all the details in the feature map.
@@ -109,5 +195,7 @@ Custom model, Transfer learning and U-Net model.
 Evaluation metrics, Dataset loading and Baseline Model.
 
 \paragraph{Zunming Zhang}
+
+Improved baseline model with mirror flip, rotate and weighted loss for imbalanced classes
 
 \end{document}
