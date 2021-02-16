@@ -71,9 +71,9 @@ class IddDataset(Dataset):
 
     def __getitem__(self, idx):
 
-        img_name = 'C:/Users/Zz3319/Desktop/idd20kII' + self.data.iloc[idx, 0]
+        img_name = self.data.iloc[idx, 0]
         img = Image.open(img_name).convert('RGB')
-        label_name = 'C:/Users/Zz3319/Desktop/idd20kII' + self.data.iloc[idx, 1]
+        label_name = self.data.iloc[idx, 1]
         label = Image.open(label_name)
 
         img = self.crop(img)
