@@ -10,6 +10,8 @@
 
 % to compile a camera-ready version, add the [final] option, e.g.: \usepackage[final]{neurips_2020}
 
+\PassOptionsToPackage{numbers, compress}{natbib}
+
 % to avoid loading the natbib package, add option nonatbib:
      \usepackage[preprint]{neurips_2020}
 
@@ -23,7 +25,8 @@
 \usepackage{microtype}      % microtypography
 \usepackage{listings}
 \usepackage{graphicx}
-\usepackage{subfigure}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \title{Semantic segmentation using full convolutional network}
 
@@ -58,12 +61,25 @@
 \maketitle
 
 \begin{abstract}
-    TBA
+  In this report, we explore the full convolutional network (fcn) and use full convolutional network to perform
+  semantic segmentation task on Indian driving dataset. Using our baseline dataset, we archive pixel accuracy of
+  $0.79$ and average IOU of $0.33$.
 \end{abstract}
 
 %--------------------------------------------
 
 \section{Introduction}
+
+In the report we try to solve the sematic segmentation task using full convolutional network. The goal of semantic
+segmentation is to label each pixel of an image with a corresponding class of what is being represented
+\cite{Anovervi90:online}. To solve the task, we utilize full convolutional network. In full convolutional network, there
+is no fully connected layer, only convolutional layer. In the full convolutional network structure, we use Xavier weight
+initialization. Deep neural network suffers from weight vanishing problem. If we use normal weight initialization
+methods like uniform distribution, the weight will vanish quickly during matrix calculation. Therefore, we introduces
+Xavier weight initialization \cite{pmlr-v9-glorot10a}, which can help us eliminate the problem. To further improve the
+training speed and stability of the network, we introduce batch normalization layer \cite{ioffe2015batch}. The batch
+normalization layer solves that the distribution of each layer's inputs changes during training by normalizing layer
+inputs.
 
 %--------------------------------------------
 
@@ -75,22 +91,148 @@
 
 \subsection{Baseline}
 
-\subsection{Experimentation}
+The baseline model is an encoder-decoder structure. It first encode the picture using convolution layers and then decode
+the segmentation map using deconvolution layers. In the baseline model, we use batch normalization and use ReLU as the
+activation function. For the last layer, we use softmax to get the classify results.
+
+\subsection{Improved baseline}
+
+\subsection{Custom model}
+
+Inspired by this paper\cite{alom2018recurrent}, we replace the encoder part in FCN model with the RRCNN layer instead,
+the RRCNN represent better abstraction ability, thus we would expect better IoU and precision. However the RRCNN is
+really memory-intensive, we have to crop the image to only 256 *256 size and delete 3 layers from original model's
+encoding part, which severly influence the performance of our model. What's worse is the RRCNN encoding part contains
+maxpooling operation after each RRCNN block, which means the images size would shrinks even more, since we have already
+started from a relative small size, maxpool will almost ruin all the details in the feature map.
+
+\subsection{Transfer learning}
+
+In this part we employ the DEEPLABV3-RESNET101 model, which is a default pre-trained net work in PyTorch, from the
+website\cite{Deeplabv74:online} we know that this model is constructed by a Deeplabv3 model with a ResNet-101 backbone.
+The pre-trained model has been trained on a subset of COCO train2017, on the 20 categories that are present in the
+Pascal VOC dataset. We modifier the classifier part so that it could match the number of our feature, and we freeze the
+parameters of the pretrained part to accelerate the whole procedure.
+
+\subsection{U-Net}
+
+Folowing the routine demostrated in the U-net paper \cite{ronneberger2015unet}, we build the U-net by
+our self. The obvious difference is the U-net convolution block contains 2 convolution of the same size, while the FCN
+model only contains 1 convolution operation. We notice that the U-net model is also memory intensive while the datahub
+only give us a GTX 1080 ti with  11GB memory, hence there's a trade-off of between batch size, image size and model's
+completeness. We decide to crop the image and shrink the batch size to run the whole model, though this might not be the
+best solution, but this could give us a flavor of how the complete network looks like.
 
 %--------------------------------------------
 
 \section{Results}
 
+\begin{table}[h]
+  \caption{Pixel accuracy and IOUs for different models}
+  \label{table:regularization}
+  \centering
+  \hspace*{-1.2cm}\begin{tabular}{@{}llllllll@{}}
+    \toprule
+    Model             & Pixel accuracy & Mean IOU & road IOU & sidewalk IOU & car IOU & billboard IOU & sky IOU \\ \midrule
+    Baseline          & 0.7944         & 0.3371   & 0.8632   & 0.2323       & 0.5084  & 0.2419        & 0.9403  \\
+    Improved baseline & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA     \\
+    Custom            & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA     \\
+    Transfer Learning & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA     \\
+    U-Net             & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA     \\\bottomrule
+  \end{tabular}
+\end{table}
+
 \subsection{Baseline model}
+
+Training and Validation loss for baseline model is in \autoref{fig:loss_train_val_baseline}. Training and Validation
+pixel accuracy and mean IOUs for baseline model is in \autoref{fig:pixel_accuracy_mean_iou_val_baseline}. Various IOUs
+for baseline model is in \autoref{fig:various_iou_val_baseline}.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Loss_train_baseline.png}
+    \caption{Training loss}
+    \label{fig:loss_train_baseline}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Loss_val_baseline.png}
+    \caption{Validation loss}
+    \label{fig:loss_val_baseline}
+  \end{subfigure}
+  \caption{Training and Validation loss for baseline model}
+  \label{fig:loss_train_val_baseline}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Pixel Accuracy_Val_baseline.png}
+    \caption{Pixel accuracy}
+    \label{fig:pixel_accuracy_val_baseline}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{IOU_Average_Val_baseline.png}
+    \caption{Mean IOUs}
+    \label{fig:mean_iou_val_baseline}
+  \end{subfigure}
+  \caption{Training and Validation pixel accuracy and mean IOUs for baseline model}
+  \label{fig:pixel_accuracy_mean_iou_val_baseline}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.19\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{IOU_Road_Val_baseline.png}
+    \caption{Road IOU}
+    \label{fig:road_iou_val_baseline}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.19\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{IOU_Sidewalk_Val_baseline.png}
+    \caption{Sidewalk IOU}
+    \label{fig:sidewalk_iou_val_baseline}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.19\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{IOU_Car_Val_baseline.png}
+    \caption{Car IOU}
+    \label{fig:car_iou_val_baseline}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.19\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{IOU_Billboard_Val_baseline.png}
+    \caption{Billboard IOU}
+    \label{fig:billboard_iou_val_baseline}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.19\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{IOU_Sky_Val_baseline.png}
+    \caption{Sky IOU}
+    \label{fig:sky_iou_val_baseline}
+  \end{subfigure}
+  \caption{Various IOUs for baseline model}
+  \label{fig:various_iou_val_baseline}
+\end{figure}
 
 \subsection{Improved baseline model}
 
 \subsection{Custom model}
-Inspired by this \href{https://arxiv.org/ftp/arxiv/papers/1802/1802.06955.pdf}{paper}, we replace the encoder part in FCN model with the RRCNN layer instead, the RRCNN represent better abstraction ability, thus we would expect better IoU and precision. However the RRCNN is really memory-intensive, we have to crop the image to only 256 *256 size and delete 3 layers from original model's encoding part, which severly influence the performance of our model. What's worse is the RRCNN encoding part contains maxpooling operation after each RRCNN block, which means the images size would shrinks even more, since we have already started from a relative small size, maxpool will almost ruin all the details in the feature map.
+
 \subsection{Transfer learning}
-In this part we employ the DEEPLABV3-RESNET101 model, which is a default pre-trained net work in PyTorch, from the \href{https://pytorch.org/hub/pytorch_vision_deeplabv3_resnet101/}{official document} we know that this model is constructed by a Deeplabv3 model with a ResNet-101 backbone. The pre-trained model has been trained on a subset of COCO train2017, on the 20 categories that are present in the Pascal VOC dataset. We modifier the classifier part so that it could match the number of our feature, and we freeze the parameters of the pretrained part to accelerate the whole procedure.
+
 \subsection{U-Net}
-Folowing the routine demostrated in the \href{https://arxiv.org/pdf/1505.04597.pdf}{U-net paper}, we build the U-net by our self. The obvious difference is the U-net convolution block contains 2 convolution of the same size, while the FCN model only contains 1 convolution operation. We notice that the U-net model is also memory intensive while the datahub only give us a GTX 1080 ti with  11GB memory, hence there's a trade-off of between batch size, image size and model's completeness. We decide to crop the image and shrink the batch size to run the whole model, though this might not be the best solution, but this could give us a flavor of how the complete network looks like.
 
 %--------------------------------------------
 
@@ -99,7 +241,6 @@ Folowing the routine demostrated in the \href{https://arxiv.org/pdf/1505.04597.p
 %--------------------------------------------
 
 \section{Individual contributions to the project}
-\label{Sec:ICP}
 
 \paragraph{Fangzhou Ai}
 Custom model, Transfer learning and U-Net model.
@@ -109,5 +250,8 @@ Custom model, Transfer learning and U-Net model.
 Evaluation metrics, Dataset loading and Baseline Model.
 
 \paragraph{Zunming Zhang}
+
+\bibliographystyle{plainnat}
+\bibliography{bibfile}
 
 \end{document}
