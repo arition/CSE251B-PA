@@ -21,6 +21,7 @@
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{amsfonts}       % blackboard math symbols
+\usepackage{amsmath}
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 \usepackage{listings}
@@ -61,9 +62,9 @@
 \maketitle
 
 \begin{abstract}
-  In this report, we explore the full convolutional network (fcn) and use full convolutional network to perform
-  semantic segmentation task on Indian driving dataset. Using our baseline dataset, we archive pixel accuracy of
-  $0.79$ and average IOU of $0.33$.
+  In this report, we explore the full convolutional network (fcn) and use full convolutional network to perform semantic
+  segmentation task on Indian driving dataset. Using our baseline dataset, we archive pixel accuracy of $0.79$ and
+  average IOU of $0.33$.
 \end{abstract}
 
 %--------------------------------------------
@@ -97,6 +98,43 @@ activation function. For the last layer, we use softmax to get the classify resu
 
 \subsection{Improved baseline}
 
+\subsubsection{Dataset Augmentation}
+
+From the baseline model, we tried to do some data augmentation on the training dataset to see whether the performance
+could be approved. Since training is quite time-consuming, in this report, we implemented and tested two different data
+augmentation algorithm and tried to compare the performance with each other.
+
+The data augmentation methods used are:
+\begin{itemize}
+  \item Mirror flip: for the training dataset, we mirror flipped the dataset and fed them into the model
+  \item Image Rotating: rotate the images slightly (for a certain degree), in this report, we tried to rotate the images
+        by 1 degree and then fed them into the model
+\end{itemize}
+
+\subsubsection{Imbalanced class problem}
+
+For the imbalanced class problem, what we usually do is to pressuring the network to categorize the infrequently seen
+class. We proposed to use the weighted loss method to accommodate this issue, which will weight infrequent classes more.
+
+For the weighted loss, the idea is to set the weight of the loss of each class inversely proportion to the frequency of
+each class in the training dataset. For the data pre-processing, we calculated the total pixel count of each class in
+all the training dataset and then use this information to help us set the weight of the loss.
+
+Suppose, the number of samples for each class is stored in nSamples, then we use $\text{normedWeights} = [1 - (x /
+  \sum\text{nSamples}) \text{ for } x \text{ in} \text{ nSamples}]$ as the normalized weight of the loss for each class.
+
+For this dataset, we calculated the number of samples for each class is:
+
+$ \text{nSamples} = [2198453584,519609102,28929892,126362539,58804972,59032134, $
+
+$ 94293190,2569952,101519794,163659019,105075839,47400301,30998126,133835645, $
+
+$ 135950687,41339482,15989829,104795610,8062798,450973,94820222,341805135, $
+
+$557016609,71159311,1465165566,1823922767,2775322]$
+
+Then we could be able to set the weight of the loss for each class according to nSamples.
+
 \subsection{Custom model}
 
 Inspired by this paper\cite{alom2018recurrent}, we replace the encoder part in FCN model with the RRCNN layer instead,
@@ -116,12 +154,12 @@ parameters of the pretrained part to accelerate the whole procedure.
 
 \subsection{U-Net}
 
-Folowing the routine demostrated in the U-net paper \cite{ronneberger2015unet}, we build the U-net by
-our self. The obvious difference is the U-net convolution block contains 2 convolution of the same size, while the FCN
-model only contains 1 convolution operation. We notice that the U-net model is also memory intensive while the datahub
-only give us a GTX 1080 ti with  11GB memory, hence there's a trade-off of between batch size, image size and model's
-completeness. We decide to crop the image and shrink the batch size to run the whole model, though this might not be the
-best solution, but this could give us a flavor of how the complete network looks like.
+Folowing the routine demostrated in the U-net paper \cite{ronneberger2015unet}, we build the U-net by our self. The
+obvious difference is the U-net convolution block contains 2 convolution of the same size, while the FCN model only
+contains 1 convolution operation. We notice that the U-net model is also memory intensive while the datahub only give us
+a GTX 1080 ti with  11GB memory, hence there's a trade-off of between batch size, image size and model's completeness.
+We decide to crop the image and shrink the batch size to run the whole model, though this might not be the best
+solution, but this could give us a flavor of how the complete network looks like.
 
 %--------------------------------------------
 
@@ -129,20 +167,22 @@ best solution, but this could give us a flavor of how the complete network looks
 
 \begin{table}[h]
   \caption{Pixel accuracy and IOUs for different models}
-  \label{table:regularization}
+  \label{table:results}
   \centering
   \hspace*{-1.2cm}\begin{tabular}{@{}llllllll@{}}
     \toprule
-    Model             & Pixel accuracy & Mean IOU & road IOU & sidewalk IOU & car IOU & billboard IOU & sky IOU \\ \midrule
-    Baseline          & 0.7944         & 0.3371   & 0.8632   & 0.2323       & 0.5084  & 0.2419        & 0.9403  \\
-    Improved baseline & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA     \\
+    Model             & Pixel accuracy & Mean IOU & road IOU & sidewalk IOU & car IOU & billboard IOU & sky IOU \\
+    \midrule Baseline & 0.7944         & 0.3371   & 0.8632   & 0.2323       & 0.5084  & 0.2419        & 0.9403
+    \\
+    Mirror flip       & 0.6953         & 0.2313   & 0.7477   & 0.0874       & 0.2262  & 0.2542        & 0.8105  \\
+    Rotation          & 0.7936         & 0.3393   & 0.8577   & 0.2483       & 0.4857  & 0.2755        & 0.9445  \\
+    weighted loss     & 0.6953         & 0.2313   & 0.7477   & 0.0874       & 0.2262  & 0.2542        & 0.8105  \\
     Custom            & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA     \\
-    Transfer Learning & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA     \\
-    U-Net             & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA     \\\bottomrule
+    Transfer learning & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA     \\
+    U-Net             & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA
+    \\\bottomrule
   \end{tabular}
 \end{table}
-
-\subsection{Baseline model}
 
 Training and Validation loss for baseline model is in \autoref{fig:loss_train_val_baseline}. Training and Validation
 pixel accuracy and mean IOUs for baseline model is in \autoref{fig:pixel_accuracy_mean_iou_val_baseline}. Various IOUs
@@ -228,6 +268,80 @@ for baseline model is in \autoref{fig:various_iou_val_baseline}.
 
 \subsection{Improved baseline model}
 
+\subsubsection{Dataset Augmentation}
+
+\autoref{table:results} shows the model performance of different augmentation method. From the table, we could see
+that the performance was improved by ~ 10\% simply by rotating the training dataset for a small angle.
+
+The train and validation loss for mirror flip and rotation methods could be seen in \autoref{fig:fliploss} and
+\autoref{fig:rotationloss}, respectively. The visualization of the segmented output for the first image in the test.csv
+overlaid on the image for mirror flip and rotation method could be seen in \autoref{fig:mirror_flip} and
+\autoref{fig:rotation}, respectively.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{flip_loss.png}
+    \caption{Training and validation loss for flip augmentation method}
+    \label{fig:fliploss}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{rotate_loss.png}
+    \caption{Training and validation loss for Rotation augmentation method}
+    \label{fig:rotationloss}
+  \end{subfigure}
+  \caption{Training and validation loss for different augmentation methods}
+  \label{fig:loss_train_val_augmentation}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{flip_method.png}
+    \caption{Visualization of segmented output for Mirror flip augmentation method}
+    \label{fig:mirror_flip}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{rotate_method.png}
+    \caption{Visualization of segmented output for Rotation augmentation method}
+    \label{fig:rotation}
+  \end{subfigure}
+  \caption{Visualization of segmented output for different augmentation methods}
+  \label{fig:visualization_augmentation}
+\end{figure}
+
+\subsubsection{Imbalanced class problem}
+
+The train and validation loss after introducing weighted loss method could be seen in \autoref{fig:weightedloss}. The
+performance of the model could be seen in \autoref{table:results} and the visualization of the segmented output for the
+first image in the testdataset overlaid on the image could be seen in \autoref{fig:visualization_weighted}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{flip_loss.png}
+    \caption{Training and validation loss for weighted loss}
+    \label{fig:weightedloss}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{rotate_loss.png}
+    \caption{Visualization of result by training with weighted loss}
+    \label{fig:visualization_weighted}
+  \end{subfigure}
+  \caption{Weighted loss}
+  \label{fig:loss_visualization_weighted}
+\end{figure}
+
+
 \subsection{Custom model}
 
 \subsection{Transfer learning}
@@ -250,6 +364,8 @@ Custom model, Transfer learning and U-Net model.
 Evaluation metrics, Dataset loading and Baseline Model.
 
 \paragraph{Zunming Zhang}
+
+Improved baseline model with mirror flip, rotate and weighted loss for imbalanced classes.
 
 \bibliographystyle{plainnat}
 \bibliography{bibfile}
