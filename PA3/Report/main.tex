@@ -184,9 +184,12 @@ solution, but this could give us a flavor of how the complete network looks like
   \end{tabular}
 \end{table}
 
+\subsection{Baseline model}
+
 Training and Validation loss for baseline model is in \autoref{fig:loss_train_val_baseline}. Training and Validation
 pixel accuracy and mean IOUs for baseline model is in \autoref{fig:pixel_accuracy_mean_iou_val_baseline}. Various IOUs
-for baseline model is in \autoref{fig:various_iou_val_baseline}.
+for baseline model is in \autoref{fig:various_iou_val_baseline}. The visualization of the output is in
+\autoref{fig:visualization_baseline}.
 
 \begin{figure}[h]
   \centering
@@ -264,6 +267,16 @@ for baseline model is in \autoref{fig:various_iou_val_baseline}.
   \end{subfigure}
   \caption{Various IOUs for baseline model}
   \label{fig:various_iou_val_baseline}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{vis_baseline.png}
+  \end{subfigure}
+  \caption{Visualization of segmented output for baseline model}
+  \label{fig:visualization_baseline}
 \end{figure}
 
 \subsection{Improved baseline model}
