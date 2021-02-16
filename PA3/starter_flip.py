@@ -88,7 +88,7 @@ def train():
             last_iter += 1
 
         print("Finish epoch {}, time elapsed {}".format(epoch, time.time() - ts))
-        torch.save(fcn_model, 'latest_model')
+        torch.save(fcn_model, 'flip_model')
         writer.add_scalar('Loss/train_epoch', epoch_loss / num_iter, epoch)
         val(epoch)
 
@@ -154,6 +154,34 @@ def test():
     iou = iouMetric.result()
     print("Test, pixel acc {}, avg iou {}, time elapsed {}".format(pixel_acc, np.mean(iou), time.time() - ts))
     print(f"ious result: {iou}")
+
+
+def test_visualization():
+    iouMetric = IOUMetric()
+    pixelAccMetric = PixelAccMetric()
+    fcn_model.eval()  # Don't forget to put in eval mode !
+    ts = time.time()
+    with torch.no_grad():
+        for X, Y in test_loader:
+            if use_gpu:
+                inputs = X.cuda()
+                Y = Y.cuda()
+            else:
+                inputs = X
+
+            outputs = F.log_softmax(fcn_model(inputs), dim=1)
+            _, pred = torch.max(outputs, dim=1)
+            break
+    imgs = []
+    for i in pred[0]:
+        for j in i:
+            imgs.append(labels[j][2])
+    imgs = np.asarray(imgs).reshape(pred.shape[1], pred.shape[2], 3)
+    outputimg = PIL.Image.fromarray(np.array(imgs, dtype=np.uint8))
+    plt.axis('off')
+    plt.imshow(outputimg)
+    plt.title('Output Image')
+    plt.show()
 
 
 def test_visualization():
