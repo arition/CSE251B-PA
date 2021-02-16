@@ -111,7 +111,24 @@ The data augmentation methods used are:
         IoU for sky(25)                             & 0.8105          & 0.9445   \\ \bottomrule
     \end{tabular}
 \end{table}
-The visualization of the segmented output for the first image in the test.csv overlaid on the image for mirror flip and rotation method could be seen in \autoref{fig:mirror_flip} and \autoref{fig:rotation}, respectively.
+The train and validation loss for mirror flip and rotation methods could be seen in \autoref{fig:fliploss} and \autoref{fig:rotationloss}, respectively. The visualization of the segmented output for the first image in the test.csv overlaid on the image for mirror flip and rotation method could be seen in \autoref{fig:mirror_flip} and \autoref{fig:rotation}, respectively.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.90\linewidth]{flip_loss.png}
+    \caption{Training and validation loss for flip augmentation method}
+    \label{fig:fliploss}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.90\linewidth]{rotate_loss.png}
+    \caption{Training and validation loss for Rotation augmentation method}
+    \label{fig:rotationloss}
+\end{figure}
+
+
 
 \begin{figure}
     \centering
@@ -126,6 +143,9 @@ The visualization of the segmented output for the first image in the test.csv ov
     \caption{Visualization of segmented output for Rotation augmentation method}
     \label{fig:rotation}
 \end{figure}
+
+
+
 
 \subsubsection{Imbalanced class problem}
 For the imbalanced class problem, what we usually do is to pressuring the network to categorize the infrequently seen class. We proposed to use the weighted loss method to accommodate this issue, which will weight infrequent classes more.
@@ -145,8 +165,9 @@ $ 104795610,8062798,450973,94820222,341805135,557016609,71159311,1465165566,1823
 
 Then we could be able to set the weight of the loss for each class according to nSamples.
 
-The performance of the model could be seen in \autoref{table:weighted} and the visualization of the segmented output for the first image in the testdataset overlaid on the image could be seen in \autoref{fig:weighted}   % need to be changed once finishing training
-\begin{table}[ht]   
+The train and validation loss after introducing weighted loss method could be seen in \autoref{fig:weightedloss}. The performance of the model could be seen in \autoref{table:weighted} and the visualization of the segmented output for the first image in the testdataset overlaid on the image could be seen in \autoref{fig:weighted}   
+
+\begin{table}[ht]     % need to be changed once finishing training
     \caption{Performance of model after introducing the weighted loss for the imbalanced dataset}
     \label{table:weighted}
     \centering
@@ -162,6 +183,13 @@ The performance of the model could be seen in \autoref{table:weighted} and the v
         IoU for sky(25)                             & 0.8105          \\ \bottomrule
     \end{tabular}
 \end{table}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.90\linewidth]{rotate_loss.png}   % need to be changed once finishing training
+    \caption{Training and validation loss after introducing weighted loss method}
+    \label{fig:weightedloss}
+\end{figure}
 
 \begin{figure}
     \centering
