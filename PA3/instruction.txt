@@ -1,0 +1,1 @@
+For each model, simply run the corresponding starter file would give the result.
