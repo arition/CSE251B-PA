@@ -58,6 +58,7 @@ class IddDataset(Dataset):
         # Add mirror flip transformations
         self.fliplr = np.fliplr
         self.flipud = np.flipud
+        self.rotate = transforms.RandomRotation((-5, 5), fill=26)
 
         # The following transformation normalizes each channel using the mean and std provided
         self.transforms = transforms.Compose([transforms.ToTensor(),
@@ -69,6 +70,7 @@ class IddDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
+
         img_name = self.data.iloc[idx, 0]
         img = Image.open(img_name).convert('RGB')
         label_name = self.data.iloc[idx, 1]
@@ -82,8 +84,9 @@ class IddDataset(Dataset):
             label = self.fliplr(label)
             label = self.flipud(label)
         elif self.transforms_ == 'rotate':
-            img = self.rotate(img, 1)
-            label = self.rotate(label, 1)
+            degrees = self.rotate.get_params((-5, 5))
+            img = transforms.functional.rotate(img, degrees, fill=0)
+            label = transforms.functional.rotate(label, degrees, fill=26)
 
         img = self.transforms(np.asarray(img).copy()).float()  # Normalization
         label = torch.from_numpy(np.asarray(label).copy()).long()  # convert to tensor
