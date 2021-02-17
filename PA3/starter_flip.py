@@ -19,11 +19,13 @@ import PIL
 
 writer = SummaryWriter()
 
-train_dataset = IddDataset(csv_file='train.csv', transforms_='flip')
+train_dataset = IddDataset(csv_file='train.csv')
+train_dataset_flip = IddDataset(csv_file='train.csv', transforms_='flip')
 val_dataset = IddDataset(csv_file='val.csv')
 test_dataset = IddDataset(csv_file='test.csv')
 
 train_loader = DataLoader(dataset=train_dataset, batch_size=4, num_workers=8, shuffle=True)
+train_loader_flip = DataLoader(dataset=train_dataset_flip, batch_size=4, num_workers=8, shuffle=True)
 val_loader = DataLoader(dataset=val_dataset, batch_size=4, num_workers=8, shuffle=True)
 test_loader = DataLoader(dataset=test_dataset, batch_size=4, num_workers=8, shuffle=False)
 
@@ -68,6 +70,25 @@ def train():
         epoch_loss = 0
         num_iter = 0
         for iter, (X, Y) in enumerate(train_loader):
+            optimizer.zero_grad()
+            if use_gpu:
+                inputs = X.cuda()
+                labels = Y.cuda()
+            else:
+                inputs, labels = X, Y
+
+            outputs = fcn_model(inputs)
+            loss = criterion(outputs, labels)
+            epoch_loss += loss.item()
+            num_iter += 1
+            loss.backward()
+            optimizer.step()
+
+            if iter % 10 == 0:
+                print("epoch{}, iter{}, loss: {}".format(epoch, iter, loss.item()))
+                writer.add_scalar('Loss/train_batch', loss.item(), last_iter)
+            last_iter += 1
+        for iter, (X, Y) in enumerate(train_loader_flip):
             optimizer.zero_grad()
             if use_gpu:
                 inputs = X.cuda()
@@ -178,38 +199,14 @@ def test_visualization():
             imgs.append(labels[j][2])
     imgs = np.asarray(imgs).reshape(pred.shape[1], pred.shape[2], 3)
     outputimg = PIL.Image.fromarray(np.array(imgs, dtype=np.uint8))
+    outputimg.save('flip.png')
     plt.axis('off')
     plt.imshow(outputimg)
+    plt.imshow(test_dataset[0][1], alpha=0.8)
     plt.title('Output Image')
     plt.show()
 
 
-def test_visualization():
-    iouMetric = IOUMetric()
-    pixelAccMetric = PixelAccMetric()
-    fcn_model.eval()  # Don't forget to put in eval mode !
-    ts = time.time()
-    with torch.no_grad():
-        for X, Y in test_loader:
-            if use_gpu:
-                inputs = X.cuda()
-                Y = Y.cuda()
-            else:
-                inputs = X
-
-            outputs = F.log_softmax(fcn_model(inputs), dim=1)
-            _, pred = torch.max(outputs, dim=1)
-            break
-    imgs = []
-    for i in pred[0]:
-        for j in i:
-            imgs.append(labels[j][2])
-    imgs = np.asarray(imgs).reshape(pred.shape[1], pred.shape[2], 3)
-    outputimg = PIL.Image.fromarray(np.array(imgs, dtype=np.uint8))
-    plt.axis('off')
-    plt.imshow(outputimg)
-    plt.title('Output Image')
-    plt.show()
 
 
 if __name__ == "__main__":
