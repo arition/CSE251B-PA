@@ -151,7 +151,28 @@ the RRCNN represent better abstraction ability, thus we would expect better IoU 
 really memory-intensive, we have to crop the image to only 256 *256 size and delete 3 layers from original model's
 encoding part, which severly influence the performance of our model. What's worse is the RRCNN encoding part contains
 maxpooling operation after each RRCNN block, which means the images size would shrinks even more, since we have already
-started from a relative small size, maxpool will almost ruin all the details in the feature map.
+started from a relative small size, maxpool will almost ruin all the details in the feature map. The structure of custom model is shown in
+\autoref{table:custom_model}. Each RRCNN is followed by a maxpool 2d which kernal size is 2 and stride is 2.
+
+\begin{table}[h]
+	\caption{Custom model}
+	\label{table:custom_model}
+	\centering
+	\hspace*{-1.2cm}\begin{tabular}{@{}llllllll@{}}
+		\toprule
+		Layer             & in\_Ch &out\_Ch     &kernal size    &stride    & padding  &dilation  &output padding        \\
+		\midrule	
+		RRCNN             & 3     & 32      &3   & 2   & 1   & 1    & 1 \\
+		RRCNN             & 32    & 64         &3   & 2   & 1   & 1    & 1   \\
+		RRCNN             & 64    & 128        &3   & 2   & 1   & 1    & 1   \\
+		RRCNN             & 128   & 256        &3   & 2   & 1   & 1    & 1   \\
+		RRCNN             & 256   & 512        &3   & 2   & 1   & 1    & 1   \\
+		RRCNN             & 512   & 1024       &3   & 2   & 1   & 1    & 1   \\
+		FCN               &1024   & n\_class \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
 
 \subsection{Transfer learning}
 
@@ -159,7 +180,27 @@ In this part we employ the DEEPLABV3-RESNET101 model, which is a default pre-tra
 website\cite{Deeplabv74:online} we know that this model is constructed by a Deeplabv3 model with a ResNet-101 backbone.
 The pre-trained model has been trained on a subset of COCO train2017, on the 20 categories that are present in the
 Pascal VOC dataset. We modifier the classifier part so that it could match the number of our feature, and we freeze the
-parameters of the pretrained part to accelerate the whole procedure.
+parameters of the pretrained part to accelerate the whole procedure.The structure of custom model is shown in
+\autoref{table:transfer_model}.
+
+
+\begin{table}[h]
+	\caption{Transfer learning model}
+	\label{table:transfer_model}
+	\centering
+	\hspace*{-1.2cm}\begin{tabular}{@{}llllllll@{}}
+		\toprule
+		Layer             & in\_Ch &out\_Ch  \\
+		\midrule	
+		DeepLabV3\_ResNet101   & 3     & 2048       \\
+		DeepLabHead            & 2048  & 1024       \\
+		FCN               &1024   & n\_class \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+
 
 \subsection{U-Net}
 
