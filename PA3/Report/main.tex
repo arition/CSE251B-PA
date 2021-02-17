@@ -178,7 +178,7 @@ solution, but this could give us a flavor of how the complete network looks like
     Rotation          & 0.8041         & 0.3533   & 0.8730   & 0.2455       & 0.5111  & 0.3078        & 0.9462  \\
     weighted loss     & 0.7991         & 0.3444   & 0.8648   & 0.2406       & 0.5104  & 0.2967        & 0.9472  \\
     Custom            & 0.3696         & 0.0976   & 0.6115   & 0.0002       & 0.2023  & 0.0220        & 0.6380  \\
-    Transfer learning & TBA            & TBA      & TBA      & TBA          & TBA     & TBA           & TBA     \\
+    Transfer learning & 0.8296         & 0.4370   & 0.8687   & 0.1485       & 0.7904  & 0.3900        & 0.9427  \\
     U-Net             & 0.7486         & 0.2577   & 0.8266   & 0.0038       & 0.4794  & 0.2225        & 0.9125
     \\\bottomrule
   \end{tabular}
@@ -392,9 +392,43 @@ The traning and validation loss are shown in  \autoref{fig:loss_train_val_custom
 
 
 \subsection{Transfer learning}
+With only 7 epochs, the transfer learning model got the best the result. "Standing on the shoulders of giants, discovering truth by building on previous discoveries". The result are shown in \autoref{fig:loss_train_val_Trans} and \autoref{fig:visualization_Trans}.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[b]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{Loss_train_Trans.png}
+		\caption{Training loss}
+		\label{fig:loss_train_Trans}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{Loss_val_Trans.png}
+		\caption{Validation loss}
+		\label{fig:loss_val_Trans}
+	\end{subfigure}
+	\caption{Training and Validation loss for Transfer learning model}
+	\label{fig:loss_train_val_Trans}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[b]{0.50\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{vis_Trans.png}
+	\end{subfigure}
+	\caption{Visualization of segmented output for Transfer learnin model}
+	\label{fig:visualization_Trans}
+\end{figure}
+
+
+
+
 
 \subsection{U-Net}
-The U net shows potential to beat the FCN model, however, the model is too large, we have to resize the model to 720 * 1280 and only use SGD (mini bathch size = 1) for training, and we only run 20 epochs, so the result is not that good, however we found that the precision is still increasing at the 20th epoch, so we believe that with more epochs the model would perform much better than current result. The loss is shown in \autoref{fig:loss_val_Unet} and final result is shown in \autoref{fig:visualization_Unet}.
+The U net shows potential to beat the FCN model, however, the model is too large, we have to resize the model to 720 * 1280 and only use SGD (mini batch size = 1) for training, and we only run 20 epochs, so the result is not that good, however we found that the precision is still increasing at the 20th epoch, so we believe that with more epochs the model would perform much better than current result. The loss is shown in \autoref{fig:loss_train_val_Unet} and final result is shown in \autoref{fig:visualization_Unet}.
 
 \begin{figure}[h]
 	\centering
@@ -412,7 +446,7 @@ The U net shows potential to beat the FCN model, however, the model is too large
 		\label{fig:loss_val_Unet}
 	\end{subfigure}
 	\caption{Training and Validation loss for Unet model}
-	\label{fig:loss_train_val_custom}
+	\label{fig:loss_train_val_Unet}
 \end{figure}
 
 \begin{figure}[h]
@@ -428,7 +462,7 @@ The U net shows potential to beat the FCN model, however, the model is too large
 %--------------------------------------------
 
 \section{Discussion}
-
+This homework gave us a flavor of how the real model works, instead of playing with simplified toy model, here we encountered the real challenging model and we made our own modifications, during this process we realize that GPU memory is really a key factor for machine learning speed-up. We came up with many ideas while due to the limit of the GPU memory, we have to made a choice between model complexity and batch size with images size. To test the full model we choose to sacrifice the latter two points, and it proved that some times make a trade off and find a balance point is more important, I would rather call it Zen of Machine learning.
 %--------------------------------------------
 
 \section{Individual contributions to the project}
