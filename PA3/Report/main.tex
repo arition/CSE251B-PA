@@ -64,7 +64,10 @@
 \begin{abstract}
   In this report, we explore the full convolutional network (fcn) and use full convolutional network to perform semantic
   segmentation task on Indian driving dataset. Using our baseline dataset, we archive pixel accuracy of $0.79$ and
-  average IOU of $0.33$.
+  average IOU of $0.33$. We also introduce different data pre-processing method such as flip and rotation to increase the performance.
+  For further investigation, we modified the baseline model and add our RRCNN part to replace the original encoding part, while it
+  didn't bring any substantial improvement. We also test U-net model and transfer learning based on DeepHeadv3\_Resnet101 which achieves
+  the best IoU above $0.43$ within only 7 epochs.
 \end{abstract}
 
 %--------------------------------------------
