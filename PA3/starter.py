@@ -19,7 +19,7 @@ import PIL
 
 writer = SummaryWriter()
 
-train_dataset = IddDataset(csv_file='train.csv', transforms_='flip')
+train_dataset = IddDataset(csv_file='train.csv')
 val_dataset = IddDataset(csv_file='val.csv')
 test_dataset = IddDataset(csv_file='test.csv')
 
@@ -178,8 +178,10 @@ def test_visualization():
             imgs.append(labels[j][2])
     imgs = np.asarray(imgs).reshape(pred.shape[1], pred.shape[2], 3)
     outputimg = PIL.Image.fromarray(np.array(imgs, dtype=np.uint8))
+    outputimg.save('baselineoutput.png')
     plt.axis('off')
     plt.imshow(outputimg)
+    plt.imshow(test_dataset[0][1], alpha=0.8)
     plt.title('Output Image')
     plt.show()
 

@@ -1,1 +1,14 @@
 For each model, simply run the corresponding starter file would give the result.
+
+For baseline model, run the 'starter.py'
+
+For improved baseline model
+    1) for the mirror flip method, run 'starter_flip.py'
+    2) for the rotate method, run 'starter_rotate.py'
+    3) for the weighted loss, run 'starter_rotate_weighted.py'
+    
+For the final part
+    1) for our own solution, run 'starter_MyModel.py'
+    2) for transfer learning, run 'starter_Transfer.py'
+    3) for Unet, run 'starter_Unet'
+    
