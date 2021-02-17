@@ -465,7 +465,17 @@ The U net shows potential to beat the FCN model, however, the model is too large
 %--------------------------------------------
 
 \section{Discussion}
-This homework gave us a flavor of how the real model works, instead of playing with simplified toy model, here we encountered the real challenging model and we made our own modifications, during this process we realize that GPU memory is really a key factor for machine learning speed-up. We came up with many ideas while due to the limit of the GPU memory, we have to made a choice between model complexity and batch size with images size. To test the full model we choose to sacrifice the latter two points, and it proved that some times make a trade off and find a balance point is more important, I would rather call it Zen of Machine learning.
+This homework gave us a flavor of how the real model works, instead of playing with simplified toy model, here we
+encountered the real challenging model and we made our own modifications. The first problem we met is that we
+accidentally crop too much data for our baseline augmentation models, and we also forgot to include unaugmented data
+during training. As a result, we got worse result than baseline. Luckily we figured out the problem and retrained the
+model.
+
+After we moved to custom model and U-Net, things became tougher. During this process we realize that GPU memory is
+really a key factor for machine learning speed-up. We came up with many ideas while due to the limit of the GPU memory,
+we have to made a choice between model complexity and batch size with images size. To test the full model we choose to
+sacrifice the latter two points, and it proved that some times make a trade off and find a balance point is more
+important, I would rather call it Zen of Machine learning.
 
 For the baseline model, we achieved a relateed high accuracy. But when we were trying to do some data augmentation, the model performance did not increase as what we expected. For the mirror flip method, the performance was even worse than the baseline model. For the rotation method, we were trying to randomly rotate the image by a small degrees (-5,5), the performance increase a little bit but somehow was only by 1-2 \%. For the imbalanced class, the typical way would be trying to introduce the weighted loss by accommodate the frequency of each class over all the training dataset. 
 %--------------------------------------------
