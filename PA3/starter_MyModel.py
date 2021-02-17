@@ -10,7 +10,7 @@ from torchvision import utils
 from collections import Counter
 
 from MyModel import *
-from dataloader import *
+from dataloader_part5 import *
 from utils import *
 
 import matplotlib.pyplot as plt
