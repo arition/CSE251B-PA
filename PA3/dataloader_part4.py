@@ -58,7 +58,7 @@ class IddDataset(Dataset):
         # Add mirror flip transformations
         self.fliplr = np.fliplr
         self.flipud = np.flipud
-        self.rotate = transforms.RandomRotation((-90, 90), fill=26)
+        self.rotate = transforms.RandomRotation((-5, 5), fill=26)
 
         # The following transformation normalizes each channel using the mean and std provided
         self.transforms = transforms.Compose([transforms.ToTensor(),
@@ -84,7 +84,7 @@ class IddDataset(Dataset):
             label = self.fliplr(label)
             label = self.flipud(label)
         elif self.transforms_ == 'rotate':
-            degrees = self.rotate.get_params((-90, 90))
+            degrees = self.rotate.get_params((-5, 5))
             img = transforms.functional.rotate(img, degrees, fill=0)
             label = transforms.functional.rotate(label, degrees, fill=26)
 

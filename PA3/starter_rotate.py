@@ -178,8 +178,10 @@ def test_visualization():
             imgs.append(labels[j][2])
     imgs = np.asarray(imgs).reshape(pred.shape[1], pred.shape[2], 3)
     outputimg = PIL.Image.fromarray(np.array(imgs, dtype=np.uint8))
+    outputimg.save('rotate_output.png')
     plt.axis('off')
     plt.imshow(outputimg)
+    plt.imshow(test_dataset[0][1], alpha=0.8)
     plt.title('Output Image')
     plt.show()
 
