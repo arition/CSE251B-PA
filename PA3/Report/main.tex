@@ -90,6 +90,59 @@ training speed and stability of the network, we introduce batch normalization la
 normalization layer solves that the distribution of each layer's inputs changes during training by normalizing layer
 inputs.
 
+\subsection{Weight Initialization}
+The aim of weight initialization is to prevent layer activation outputs from exploding or vanishing during the course of a forward pass through a deep neural network.
+ If either occurs, loss gradients will either be too large or too small to flow backwards beneficially, and the network will take longer to converge, if it is even able to do so at all.
+
+Glorot and Bengio proposed their own weight initialization strategy, which they referred to as “normalized initialization” in their paper, and which is now popularly termed “Xavier initialization.”
+
+Xavier initialization sets a layer’s weights to values chosen from a random uniform distribution that’s bounded between:
+\begin{equation}
+\pm \frac{\sqrt{6}}{\sqrt{n_{i}+n_{i+1}}}
+\end{equation}
+
+where $n_i$ is the number of incoming network connections, or “fan-in,” to the layer, and $n_{i+1}$ is the number of outgoing network connections from that layer, also known as the “fan-out.”
+
+\subsection{batch normalization}
+Batch normalization (also known as batch norm) is a method used to make artificial neural networks faster and more stable through normalization of the input layer by re-centering and re-scaling.
+
+In a neural network, batch normalization is achieved through a normalization step that fixes the means and variances of each layer's inputs. 
+Ideally, the normalization would be conducted over the entire training set, but to use this step jointly with stochastic optimization methods, it is impractical to use the global information. 
+Thus, normalization is restrained to each mini-batch in the training process.
+
+Use B to denote a mini-batch of size m of the entire training set. The empirical mean and variance of B could thus be denoted as:
+\begin{equation}
+\mu_{B}=\frac{1}{m} \sum_{i=1}^{m} x_{i}, \text { and } \sigma_{B}^{2}=\frac{1}{m} \sum_{i=1}^{m}\left(x_{i}-\mu_{B}\right)^{2}
+\end{equation}
+
+For a layer of the network with d-dimensional input, $ x=(x^{(1)},...,x^{(d)})$ $ x=(x^{(1)},...,x^{(d)})$, each dimension of its input is then normalized (i.e. re-centered and re-scaled) separately,
+
+\begin{equation}
+\hat{x}_{i}^{(k)}=\frac{x_{i}^{(k)}-\mu_{B}^{(k)}}{\sqrt{\sigma_{B}^{(k)^{2}}+\epsilon}}
+\end{equation}
+
+\begin{equation}
+\text { where } k \in[1, d] \text { and } i \in[1, m] ; \mu_{B}^{(k)} \text { and } \sigma_{B}^{(k)^{2}} \text { are the per-dimension mean and variance, respectively. }
+\end{equation}
+
+$\epsilon$ is added in the denominator for numerical stability and is an arbitrarily small constant. The resulting normalized activation $ {\hat {x}}^{(k)}$$ {\hat {x}}^{(k)}$have zero mean and unit variance, if $\epsilon$  is not taken into account. To restore the representation power of the network, a transformation step then follows as
+
+Formally, the operation that implements batch normalization is a transform 
+\begin{equation}
+B N_{\gamma^{(k)}, \beta^{(k)}}: x_{1 \ldots m}^{(k)} \rightarrow y_{1 \ldots m}^{(k)}
+\end{equation}
+called the Batch Normalizing transform. The output of the BN transform
+\begin{equation}
+y^{(k)}=B N_{\gamma^{(k)}, \beta^{(k)}}\left(x^{(k)}\right)
+\end{equation}
+is then passed to other network layers, while the normalized output $ {\hat {x}}_{i}^{(k)}$$ {\hat {x}}_{i}^{(k)}$ remains internal to the current layer.
+
+\begin{equation}
+\begin{aligned}
+&y_{i}^{(k)}=\gamma^{(k)} \hat{x}_{i}^{(k)}+\beta^{(k)}\\
+&\text { where the parameters } \gamma^{(k)} \text { and } \beta^{(k)} \text { are subsequently learned in the optimization process. }
+\end{aligned}
+\end{equation}
 %--------------------------------------------
 
 \section{Related Work}
