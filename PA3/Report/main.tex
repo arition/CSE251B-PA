@@ -359,113 +359,126 @@ first image in the testdataset overlaid on the image could be seen in \autoref{f
 
 
 \subsection{Custom model}
-The traning and validation loss are shown in  \autoref{fig:loss_train_val_custom}, we replace all the conv blocks with RRCNN blocks, and it shows strong ovberfitting signal at the first beginning, thus the result is very bad. Also, large model and limited memory force us to choose only batch size 1 and smaller picture size, which also brought significant negative effect to the rsult. The final segmentation picture is shown in \autoref{fig:visualization_custom}.
-
-
+The traning and validation loss are shown in  \autoref{fig:loss_train_val_custom}, we replace all the conv blocks with
+RRCNN blocks, and it shows strong ovberfitting signal at the first beginning, thus the result is very bad. Also, large
+model and limited memory force us to choose only batch size 1 and smaller picture size, which also brought significant
+negative effect to the rsult. The final segmentation picture is shown in \autoref{fig:visualization_custom}.
 
 \begin{figure}[h]
-	\centering
-	\begin{subfigure}[b]{0.49\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{Loss_train_custom.png}
-		\caption{Training loss}
-		\label{fig:loss_train_cust}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.49\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{Loss_val_custom.png}
-		\caption{Validation loss}
-		\label{fig:loss_val_cust}
-	\end{subfigure}
-	\caption{Training and Validation loss for custom model}
-	\label{fig:loss_train_val_custom}
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Loss_train_custom.png}
+    \caption{Training loss}
+    \label{fig:loss_train_cust}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Loss_val_custom.png}
+    \caption{Validation loss}
+    \label{fig:loss_val_cust}
+  \end{subfigure}
+  \caption{Training and Validation loss for custom model}
+  \label{fig:loss_train_val_custom}
 \end{figure}
 
 \begin{figure}[h]
-	\centering
-	\begin{subfigure}[b]{0.50\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{vis_custom.png}
-	\end{subfigure}
-	\caption{Visualization of segmented output for custom model}
-	\label{fig:visualization_custom}
+  \centering
+  \begin{subfigure}[b]{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{vis_custom.png}
+  \end{subfigure}
+  \caption{Visualization of segmented output for custom model}
+  \label{fig:visualization_custom}
 \end{figure}
 
 
 
 \subsection{Transfer learning}
-With only 7 epochs, the transfer learning model got the best the result. "Standing on the shoulders of giants, discovering truth by building on previous discoveries". The result are shown in \autoref{fig:loss_train_val_Trans} and \autoref{fig:visualization_Trans}.
+With only 7 epochs, the transfer learning model got the best the result. "Standing on the shoulders of giants,
+discovering truth by building on previous discoveries". The result are shown in \autoref{fig:loss_train_val_Trans} and
+\autoref{fig:visualization_Trans}.
 
 \begin{figure}[h]
-	\centering
-	\begin{subfigure}[b]{0.49\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{Loss_train_Trans.png}
-		\caption{Training loss}
-		\label{fig:loss_train_Trans}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.49\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{Loss_val_Trans.png}
-		\caption{Validation loss}
-		\label{fig:loss_val_Trans}
-	\end{subfigure}
-	\caption{Training and Validation loss for Transfer learning model}
-	\label{fig:loss_train_val_Trans}
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Loss_train_Trans.png}
+    \caption{Training loss}
+    \label{fig:loss_train_Trans}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Loss_val_Trans.png}
+    \caption{Validation loss}
+    \label{fig:loss_val_Trans}
+  \end{subfigure}
+  \caption{Training and Validation loss for Transfer learning model}
+  \label{fig:loss_train_val_Trans}
 \end{figure}
 
 \begin{figure}[h]
-	\centering
-	\begin{subfigure}[b]{0.50\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{vis_Trans.png}
-	\end{subfigure}
-	\caption{Visualization of segmented output for Transfer learnin model}
-	\label{fig:visualization_Trans}
+  \centering
+  \begin{subfigure}[b]{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{vis_Trans.png}
+  \end{subfigure}
+  \caption{Visualization of segmented output for Transfer learnin model}
+  \label{fig:visualization_Trans}
 \end{figure}
-
-
-
-
 
 \subsection{U-Net}
-The U net shows potential to beat the FCN model, however, the model is too large, we have to resize the model to 720 * 1280 and only use SGD (mini batch size = 1) for training, and we only run 20 epochs, so the result is not that good, however we found that the precision is still increasing at the 20th epoch, so we believe that with more epochs the model would perform much better than current result. The loss is shown in \autoref{fig:loss_train_val_Unet} and final result is shown in \autoref{fig:visualization_Unet}.
+The U net shows potential to beat the FCN model, however, the model is too large, we have to resize the model to 720 *
+1280 and only use SGD (mini batch size = 1) for training, and we only run 20 epochs, so the result is not that good,
+however we found that the precision is still increasing at the 20th epoch, so we believe that with more epochs the model
+would perform much better than current result. The loss is shown in \autoref{fig:loss_train_val_Unet} and final result
+is shown in \autoref{fig:visualization_Unet}.
 
 \begin{figure}[h]
-	\centering
-	\begin{subfigure}[b]{0.49\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{Loss_train_Unet.png}
-		\caption{Training loss}
-		\label{fig:loss_train_Unet}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.49\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{Loss_val_Unet.png}
-		\caption{Validation loss}
-		\label{fig:loss_val_Unet}
-	\end{subfigure}
-	\caption{Training and Validation loss for Unet model}
-	\label{fig:loss_train_val_Unet}
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Loss_train_Unet.png}
+    \caption{Training loss}
+    \label{fig:loss_train_Unet}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Loss_val_Unet.png}
+    \caption{Validation loss}
+    \label{fig:loss_val_Unet}
+  \end{subfigure}
+  \caption{Training and Validation loss for Unet model}
+  \label{fig:loss_train_val_Unet}
 \end{figure}
 
 \begin{figure}[h]
-	\centering
-	\begin{subfigure}[b]{0.50\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{vis_Unet.png}
-	\end{subfigure}
-	\caption{Visualization of segmented output for Unet model}
-	\label{fig:visualization_Unet}
+  \centering
+  \begin{subfigure}[b]{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{vis_Unet.png}
+  \end{subfigure}
+  \caption{Visualization of segmented output for Unet model}
+  \label{fig:visualization_Unet}
 \end{figure}
 
 %--------------------------------------------
 
 \section{Discussion}
-This homework gave us a flavor of how the real model works, instead of playing with simplified toy model, here we encountered the real challenging model and we made our own modifications, during this process we realize that GPU memory is really a key factor for machine learning speed-up. We came up with many ideas while due to the limit of the GPU memory, we have to made a choice between model complexity and batch size with images size. To test the full model we choose to sacrifice the latter two points, and it proved that some times make a trade off and find a balance point is more important, I would rather call it Zen of Machine learning.
+This homework gave us a flavor of how the real model works, instead of playing with simplified toy model, here we
+encountered the real challenging model and we made our own modifications. The first problem we met is that we
+accidentally crop too much data for our baseline augmentation models, and we also forgot to include unaugmented data
+during training. As a result, we got worse result than baseline. Luckily we figured out the problem and retrained the
+model.
+
+After we moved to custom model and U-Net, things became tougher. During this process we realize that GPU memory is
+really a key factor for machine learning speed-up. We came up with many ideas while due to the limit of the GPU memory,
+we have to made a choice between model complexity and batch size with images size. To test the full model we choose to
+sacrifice the latter two points, and it proved that some times make a trade off and find a balance point is more
+important, I would rather call it Zen of Machine learning.
 %--------------------------------------------
 
 \section{Individual contributions to the project}
