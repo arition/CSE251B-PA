@@ -262,7 +262,33 @@ obvious difference is the U-net convolution block contains 2 convolution of the 
 contains 1 convolution operation. We notice that the U-net model is also memory intensive while the datahub only give us
 a GTX 1080 ti with  11GB memory, hence there's a trade-off of between batch size, image size and model's completeness.
 We decide to crop the image and shrink the batch size to run the whole model, though this might not be the best
-solution, but this could give us a flavor of how the complete network looks like.
+solution, but this could give us a flavor of how the complete network looks like. The structure of custom model is shown in
+\autoref{table:unet_model}. We maintain exactly the same structure except the output channel is modified to our n\_class.
+
+\begin{table}[h]
+	\caption{Unet model}
+	\label{table:unet_model}
+	\centering
+	\hspace*{-1.2cm}\begin{tabular}{@{}llllllll@{}}
+		\toprule
+		Layer             & in\_Ch &out\_Ch     &kernal size    &stride    & padding          \\
+		\midrule	
+		Conv\_Block        & 3     & 32      &3   & 2   & 1    \\
+		Conv\_Block             & 32    & 64         &3   & 2   & 1     \\
+		Conv\_Block             & 64    & 128        &3   & 2   & 1     \\
+		Conv\_Block             & 128   & 256        &3   & 2   & 1     \\
+		Conv\_Block             & 256   & 512        &3   & 2   & 1     \\
+		Conv\_Block             & 512   & 1024       &3   & 2   & 1     \\
+		deConv\_Block             & 1024   & 512       &3   & 2   & 1     \\
+		deConv\_Block             & 512   & 256       &3   & 2   & 1     \\
+		deConv\_Block             & 256   & 128       &3   & 2   & 1     \\
+		deConv\_Block             & 128   & 64       &3   & 2   & 1     \\
+		deConv\_Block             & 64   & 32       &3   & 2   & 1     \\
+		deConv\_Block             & 32   & n\_class       &3   & 2   & 1     \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
 
 %--------------------------------------------
 
