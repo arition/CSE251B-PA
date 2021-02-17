@@ -11,7 +11,7 @@ import torch.nn as nn
 from torchvision.models.segmentation.deeplabv3 import DeepLabHead
 from torchvision import models
 
-from dataloader import *
+from dataloader_part5 import *
 from utils import *
 import matplotlib.pyplot as plt
 from torchvision import transforms
