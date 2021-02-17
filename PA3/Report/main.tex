@@ -92,6 +92,7 @@ inputs.
 %--------------------------------------------
 
 \section{Methods}
+For the baseline and improved baseline model, we used a constant learning rate of 0.0001 and used the adam as the optimizer method. For the loss function, we used cross entropy loss.
 
 \subsection{Baseline}
 
@@ -477,7 +478,8 @@ we have to made a choice between model complexity and batch size with images siz
 sacrifice the latter two points, and it proved that some times make a trade off and find a balance point is more
 important, I would rather call it Zen of Machine learning.
 
-For the baseline model, we achieved a relateed high accuracy. But when we were trying to do some data augmentation, the model performance did not increase as what we expected. For the mirror flip method, the performance was even worse than the baseline model. For the rotation method, we were trying to randomly rotate the image by a small degrees (-5,5), the performance increase a little bit but somehow was only by 1-2 \%. For the imbalanced class, the typical way would be trying to introduce the weighted loss by accommodate the frequency of each class over all the training dataset. 
+For this PA, we haven't got any chance to dive deep into the parameter tuning. We use a constant learning over the whole training procedure. In the real case, we would like to introduce the learning rate decreasing method to help us get a better training result. For the optimizer, we sticked with the adam method and didn't explore other methods. We all agreed that if we have more resources and time, we could achieved a better result than the current naive tuning model.
+
 %--------------------------------------------
 
 \section{Individual contributions to the project}
