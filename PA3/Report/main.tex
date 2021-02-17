@@ -88,7 +88,7 @@ inputs.
 %--------------------------------------------
 
 \section{Related Work}
-
+In part 5, we use the idea from work\cite{alom2018recurrent} to create our RRCNN block to replace the FCN encoding part, also for transfer learning, we use the DEEPLABV3-ResNet101\cite{Deeplabv74:online} as the encoding part, by freezing the pre-trained part, we only need to train the decoding layer. The U-net structure comes from the paper\cite{ronneberger2015unet}, we simply re-construct their network and apply it to IDD data set directly.
 %--------------------------------------------
 
 \section{Methods}
