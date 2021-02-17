@@ -273,18 +273,18 @@ solution, but this could give us a flavor of how the complete network looks like
 		\toprule
 		Layer             & in\_Ch &out\_Ch     &kernal size    &stride    & padding          \\
 		\midrule	
-		Conv\_Block        & 3     & 32      &3   & 2   & 1    \\
-		Conv\_Block             & 32    & 64         &3   & 2   & 1     \\
-		Conv\_Block             & 64    & 128        &3   & 2   & 1     \\
-		Conv\_Block             & 128   & 256        &3   & 2   & 1     \\
-		Conv\_Block             & 256   & 512        &3   & 2   & 1     \\
-		Conv\_Block             & 512   & 1024       &3   & 2   & 1     \\
-		deConv\_Block             & 1024   & 512       &3   & 2   & 1     \\
-		deConv\_Block             & 512   & 256       &3   & 2   & 1     \\
-		deConv\_Block             & 256   & 128       &3   & 2   & 1     \\
-		deConv\_Block             & 128   & 64       &3   & 2   & 1     \\
-		deConv\_Block             & 64   & 32       &3   & 2   & 1     \\
-		deConv\_Block             & 32   & n\_class       &3   & 2   & 1     \\
+		Conv\_Block        & 3     & 32      &3   & 1   & 1    \\
+		Conv\_Block             & 32    & 64         &3   &1   & 1     \\
+		Conv\_Block             & 64    & 128        &3   &1   & 1     \\
+		Conv\_Block             & 128   & 256        &3   &1   & 1     \\
+		Conv\_Block             & 256   & 512        &3   &1   & 1     \\
+		Conv\_Block             & 512   & 1024       &3   & 1   & 1     \\
+		deConv\_Block             & 1024   & 512       &3   & 1   & 1     \\
+		deConv\_Block             & 512   & 256       &3   & 1   & 1     \\
+		deConv\_Block             & 256   & 128       &3   & 1   & 1     \\
+		deConv\_Block             & 128   & 64       &3   &1  & 1     \\
+		deConv\_Block             & 64   & 32       &3   &1  & 1     \\
+		deConv\_Block             & 32   & n\_class       &3   &1   & 1     \\
 		\bottomrule
 	\end{tabular}
 \end{table}
