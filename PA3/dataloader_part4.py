@@ -85,7 +85,7 @@ class IddDataset(Dataset):
             label = self.flipud(label)
         elif self.transforms_ == 'rotate':
             degrees = self.rotate.get_params((-90, 90))
-            img = transforms.functional.rotate(img, degrees, fill=26)
+            img = transforms.functional.rotate(img, degrees, fill=0)
             label = transforms.functional.rotate(label, degrees, fill=26)
 
         img = self.transforms(np.asarray(img).copy()).float()  # Normalization
