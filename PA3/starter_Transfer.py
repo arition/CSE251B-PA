@@ -62,9 +62,9 @@ train_dataset = IddDataset(csv_file='train.csv', transforms_='flip')
 val_dataset = IddDataset(csv_file='val.csv')
 test_dataset = IddDataset(csv_file='test.csv')
 
-train_loader = DataLoader(dataset=train_dataset, batch_size=2, num_workers=1, shuffle=True)
-val_loader = DataLoader(dataset=val_dataset, batch_size=2, num_workers=1, shuffle=True)
-test_loader = DataLoader(dataset=test_dataset, batch_size=2, num_workers=1, shuffle=False)
+train_loader = DataLoader(dataset=train_dataset, batch_size=2, num_workers=8, shuffle=True)
+val_loader = DataLoader(dataset=val_dataset, batch_size=2, num_workers=8, shuffle=True)
+test_loader = DataLoader(dataset=test_dataset, batch_size=2, num_workers=8, shuffle=False)
 
 weighted = 'True'
 
