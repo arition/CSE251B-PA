@@ -7,8 +7,6 @@ class VanillaRNN(nn.Module):
     def __init__(self, embedding_size, hidden_size, output_size):
         super(VanillaRNN, self).__init__()
         
-        self.hidden_size = hidden_size
-        
         self.pre_trained_encoder = models.resnet50(pretrained=True)
         
         num_ftrs = self.pre_trained_encoder.fc.in_features
@@ -29,21 +27,23 @@ class VanillaRNN(nn.Module):
         
         self.H_to_O = nn.Linear(hidden_size, output_size)
         
+        # Init hidden state
+        self.hidden = torch.zeros(1, self.hidden_size)
         
         
-    def forward(self, x, hidden = torch.zeros(1, self.hidden_size)):
+    def forward(self, x):
         x = self.pre_trained_encoder(x)
         
-        x = torch.cat((x, hidden), 1)
+        x = torch.cat((x, self.hidden), 1)
         
         # Input+Hidden to Hidden
         x = self.I_to_H(x)
         
         # Activation
-        hidden = nn.Tanh(x)
+        self.hidden = nn.Tanh(x)
         
         # Hidden to Output
-        x = self.H_to_O(hidden)
+        x = self.H_to_O(self.hidden)
         
-        return x, hidden
+        return x
 
