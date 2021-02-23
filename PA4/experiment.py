@@ -106,19 +106,20 @@ class Experiment(object):
         start_iter = len(self.__train_loader) * self.__current_epoch
         iter_loss = 0
 
-        for i, (images, captions, _) in enumerate(self.__train_loader):
+        for i, (images, captions, truths, _) in enumerate(self.__train_loader):
             images = images.to(device)
             captions = captions.to(device)
+            truths = truths.to(device)
             self.__optimizer.zero_grad()
             out = self.__model(images, captions)
-            loss = self.__criterion(out, captions)
+            loss = self.__criterion(out, truths)
             loss.backward()
             self.__optimizer.step()
             iter_loss += loss.item()
             training_loss += loss.item()
 
             if i % 10 == 9:
-                summary_str = "Epoch: {}, train, Iter: {}, Iter Loss: {}\n"
+                summary_str = "Epoch: {}, train, Iter: {}, Iter Loss: {}"
                 summary_str = summary_str.format(self.__current_epoch + 1, start_iter + i, iter_loss / 10)
                 self.__log(summary_str)
                 self.writer.add_scalar('train/iter_loss', iter_loss / 10, start_iter + i)
@@ -137,16 +138,17 @@ class Experiment(object):
         iter_loss = 0
 
         with torch.no_grad():
-            for i, (images, captions, img_ids) in enumerate(self.__val_loader):
+            for i, (images, captions, truths, img_ids) in enumerate(self.__val_loader):
                 images = images.to(device)
                 captions = captions.to(device)
+                truths = truths.to(device)
                 out = self.__model(images, captions)
-                loss = self.__criterion(out, captions)
+                loss = self.__criterion(out, truths)
                 iter_loss += loss.item()
                 val_loss += loss.item()
 
                 if i % 10 == 9:
-                    summary_str = "Epoch: {}, val, Iter: {}, Iter Loss: {}\n"
+                    summary_str = "Epoch: {}, val, Iter: {}, Iter Loss: {}"
                     summary_str = summary_str.format(self.__current_epoch + 1, start_iter + i, iter_loss / 10)
                     self.__log(summary_str)
                     self.writer.add_scalar('val/iter_loss', iter_loss / 10, start_iter + i)
@@ -155,7 +157,7 @@ class Experiment(object):
                 # only test one mini batch
                 if i == 0:
                     val_loss_no_teacher, bleu1, bleu4, text_predicts = self.__test_bleu(
-                        images, captions, img_ids, self.__coco)
+                        images, captions, truths, img_ids, self.__coco)
                     self.writer.add_scalar('val/loss_no_teacher', val_loss_no_teacher /
                                            self.__val_loader.batch_size, self.__current_epoch)
                     self.writer.add_scalar('val/bleu1', bleu1 / self.__val_loader.batch_size, self.__current_epoch)
@@ -172,13 +174,13 @@ class Experiment(object):
         self.__lr_scheduler.step(val_loss)
         return val_loss
 
-    def __test_bleu(self, images, captions, img_ids, coco):
+    def __test_bleu(self, images, captions, truths, img_ids, coco):
         self.__model.eval()
         bleu1 = 0
         bleu4 = 0
         with torch.no_grad():
             out = self.__model(images, captions)
-            loss = self.__criterion(out, captions)
+            loss = self.__criterion(out, truths)
             test_loss = loss
 
             text_predicts = self.__model.forward_eval(
@@ -207,11 +209,12 @@ class Experiment(object):
         text_predicts = []
 
         with torch.no_grad():
-            for iter, (images, captions, img_ids) in enumerate(self.__test_loader):
+            for iter, (images, captions, truths, img_ids) in enumerate(self.__test_loader):
                 images = images.to(device)
                 captions = captions.to(device)
+                truths = truths.to(device)
                 test_loss_, bleu1_, bleu4_, text_predicts_ = self.__test_bleu(
-                    images, captions, img_ids, self.__coco_test)
+                    images, captions, truths, img_ids, self.__coco_test)
                 test_loss += test_loss_
                 bleu1_ += bleu1_
                 bleu4_ += bleu4_

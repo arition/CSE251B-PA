@@ -9,12 +9,12 @@
     "images_root_dir": "./data/images/",
     "vocabulary_threshold": 2,
     "img_size": 256,
-    "batch_size": 64,
+    "batch_size": 128,
     "num_workers": 8
   },
   "experiment": {
-    "num_epochs": 100,
-    "learning_rate": 5e-4
+    "num_epochs": 500,
+    "learning_rate": 1e-3
   },
   "model": {
     "hidden_size": 512,
@@ -24,6 +24,6 @@
   "generation": {
     "max_length": 20,
     "deterministic": false,
-    "temperature": 0.1
+    "temperature": 1.1
   }
 }

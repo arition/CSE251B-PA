@@ -79,6 +79,7 @@ def collate_fn(data):
     Returns:
         images: torch tensor of shape (batch_size, 3, 256, 256).
         targets: torch tensor of shape (batch_size, padded_length).
+        truth: torch tensor of shape (batch_size, padded_length).
         lengths: list; valid length for each padded caption.
     """
     # Sort a data list by caption length (descending order).
@@ -90,8 +91,10 @@ def collate_fn(data):
     # Merge captions (from tuple of 1D tensor to 2D tensor).
     lengths = [len(cap) for cap in captions]
     targets = torch.zeros(len(captions), max(lengths)).long()
+    truths = torch.zeros(len(captions), max(lengths)).long()
 
     for i, cap in enumerate(captions):
         end = lengths[i]
         targets[i, :end] = cap[:end]
-    return images, targets, img_ids
+        truths[i, :end-1] = cap[1:end]
+    return images, targets, truths, img_ids
