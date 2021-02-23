@@ -21,4 +21,4 @@ def bleu1(reference_captions, predicted_caption):
 
 def bleu4(reference_captions, predicted_caption):
     return 100 * sentence_bleu(reference_captions, predicted_caption,
-                               weights=(0, 0, 0, 1), smoothing_function=SmoothingFunction().method1)
+                               weights=(0.25, 0.25, 0.25, 0.25), smoothing_function=SmoothingFunction().method1)

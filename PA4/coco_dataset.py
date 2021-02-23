@@ -45,10 +45,10 @@ class CocoDataset(data.Dataset):
         ann_id = self.ids[index]
         caption = coco.anns[ann_id]['caption']
         img_id = coco.anns[ann_id]['image_id']
-        path = coco.loadImgs(img_id)[0]['file_name'];
+        path = coco.loadImgs(img_id)[0]['file_name']
         image = Image.open(os.path.join(self.root, path)).convert('RGB')
         image = self.resize(image)
-        image = self.normalize(np.asarray(image))
+        image = self.normalize(image)
 
         # Convert caption (string) to word ids.
         tokens = nltk.tokenize.word_tokenize(str(caption).lower())

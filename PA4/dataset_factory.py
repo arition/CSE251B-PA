@@ -4,12 +4,14 @@
 # Fall 2020
 ################################################################################
 
-import csv, os
-from torch.utils.data import DataLoader
-from pycocotools.coco import COCO
+import csv
+import os
 
-from vocab import load_vocab
+from pycocotools.coco import COCO
+from torch.utils.data import DataLoader
+
 from coco_dataset import CocoDataset, collate_fn
+from vocab import load_vocab
 
 
 # Builds your datasets here based on the configuration.
@@ -39,7 +41,7 @@ def get_datasets(config_data):
     test_data_loader = get_coco_dataloader(test_ids_file_path, root_test, test_annotation_file, coco_test, vocabulary,
                                            config_data)
 
-    return coco_test, vocabulary, train_data_loader, val_data_loader, test_data_loader
+    return coco, coco_test, vocabulary, train_data_loader, val_data_loader, test_data_loader
 
 
 def get_coco_dataloader(img_ids_file_path, imgs_root_dir, annotation_file_path, coco_obj, vocabulary, config_data):
