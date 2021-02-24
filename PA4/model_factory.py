@@ -6,6 +6,8 @@
 
 # Build and return the model here based on the configuration.
 from ImageCaptionLSTM import ImageCaptionLSTM
+from ImageCaptionLSTM import ImageCaptionVanilla
+from ImageCaptionLSTM import ImageCaptionGRU
 from vocab import Vocabulary
 
 
@@ -17,5 +19,11 @@ def get_model(config_data, vocab: Vocabulary):
     model = None
     if model_type == 'LSTM':
         model = ImageCaptionLSTM(hidden_size, embedding_size, vocab)
-
+    elif model_type == 'Vanilla':
+        model = ImageCaptionVanilla(hidden_size, embedding_size, vocab)
+    elif model_type == 'GRU':
+        model = ImageCaptionGRU(hidden_size, embedding_size, vocab)
+    else:
+        raise Exception('Only support LSTM, Vanilla and GRU, got {}'.format(model_type))
+        
     return model
