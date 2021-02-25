@@ -77,6 +77,7 @@ class Experiment(object):
             state_dict = torch.load(os.path.join(self.__experiment_dir, 'latest_model.pt'))
             self.__model.load_state_dict(state_dict['model'])
             self.__optimizer.load_state_dict(state_dict['optimizer'])
+            self.__best_model = torch.load(os.path.join(self.__experiment_dir, 'best_model.pt'))['model']
 
         else:
             os.makedirs(self.__experiment_dir)
@@ -216,13 +217,14 @@ class Experiment(object):
                 test_loss_, bleu1_, bleu4_, text_predicts_ = self.__test_bleu(
                     images, captions, truths, img_ids, self.__coco_test)
                 test_loss += test_loss_
-                bleu1_ += bleu1_
-                bleu4_ += bleu4_
+                bleu1 += bleu1_
+                bleu4 += bleu4_
                 text_predicts += text_predicts_
 
-        test_loss = test_loss / len(self.__test_loader)
-        bleu1 = bleu1 / len(self.__test_loader)
-        bleu4 = bleu4 / len(self.__test_loader)
+        test_loss = test_loss / len(self.__test_loader) / self.__test_loader.batch_size
+        bleu1 = bleu1 / len(self.__test_loader) / self.__test_loader.batch_size
+        bleu4 = bleu4 / len(self.__test_loader) / self.__test_loader.batch_size
+        print(self.__test_loader.batch_size)
 
         self.writer.add_scalar('test/loss', test_loss, self.__current_epoch)
         self.writer.add_scalar('test/bleu1', bleu1, self.__current_epoch)
