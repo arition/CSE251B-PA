@@ -107,26 +107,67 @@ For the model comparison, we also tried Vanilla RNN and GRU. For these two model
 % TODO: Include the best hyperparameters of the fine tuning model
 \subsection{Learning Curve}
 
-
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{VanillaRNN_Loss.png}
-  \caption{Training and validation loss for Vanilla model}
-  \label{fig:loss_Vanilla}
-\end{figure}
+The learning curve for the Vanilla RNN and GRU could be found in \autoref{fig:loss_train_val_model}.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{GRU_Loss.png}
-  \caption{Training and validation loss for GRU model}
-  \label{fig:loss_GRU}
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{VanillaRNN_Loss.png}
+    \caption{Vanilla RNN Loss}
+    \label{fig:loss_train_baseline}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{GRU_Loss.png}
+    \caption{GRU Loss}
+    \label{fig:loss_val_baseline}
+  \end{subfigure}
+  \caption{Training and Validation loss for Vanilla RNN and GRU}
+  \label{fig:loss_train_val_model}
 \end{figure}
+
+
 
 \subsection{Cross Entropy Loss}
+The test set Cross Entropy Loss of different could be found in \autoref{table:CrossEntropyLoss}
+
+\begin{table}[h]
+  \caption{Pixel accuracy and IOUs for different models}
+  \label{table:CrossEntropyLoss}
+  \centering
+  \hspace*{-1.2cm}\begin{tabular}{@{}ll@{}}
+    \toprule
+    Model             & Testset Cross Entropy Loss \\
+    \midrule Baseline & TBD         \\
+    Vanilla RNN       & 1.819           \\
+    GRU          &1.586         \\
+    Finee tuning model     & TBD
+    \\\bottomrule
+  \end{tabular}
+\end{table}
 
 
 \subsection{BLEU Score}
+For this report, we set the weight for BLEU1 to be [1, 0, 0, 0] and BLEU4 to be [0.25, 0.25, 0.25, 0.25]. 
+The BLEU scores for different models could be found in \autoref{table:BLEUScores}
+
+\begin{table}[h]
+  \caption{Pixel accuracy and IOUs for different models}
+  \label{table:BLEUScores}
+  \centering
+  \hspace*{-1.2cm}\begin{tabular}{@{}lll@{}}
+    \toprule
+    Model             & BLEU1   &BLEU4 \\
+    \midrule Baseline & TBD   & TBD      \\
+    Vanilla RNN       & 54.59   &  8.93      \\
+    GRU          &65.16   & 17.17     \\
+    Finee tuning model     & TBD &TBD
+    \\\bottomrule
+  \end{tabular}
+\end{table}
+
 
 \subsection{Images Visualization of the Best Performance Model}
 % TODO: Report Requirement 10
