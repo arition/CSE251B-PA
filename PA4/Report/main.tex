@@ -1,0 +1,171 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.: \PassOptionsToPackage{numbers, compress}{natbib} before loading
+%     neurips_2020
+
+% ready for submission \usepackage{neurips_2020}
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the [preprint] option:
+% \usepackage[preprint]{neurips_2020}
+
+% to compile a camera-ready version, add the [final] option, e.g.: \usepackage[final]{neurips_2020}
+
+\PassOptionsToPackage{numbers, compress}{natbib}
+
+% to avoid loading the natbib package, add option nonatbib:
+     \usepackage[preprint]{neurips_2020}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{amsmath}
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\title{Image Captioning using an LSTM network}
+
+% The \author macro works with any number of authors. There are two commands used to separate the names and addresses of
+% multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the lines. Using \AND forces a line break at
+% that point. So, if LaTeX puts 3 of 4 authors names on the first line, and the last on the second line, try using \AND
+% instead of \And before the third author name.
+
+\author{%
+  Fangzhou Ai\\
+  Department of Electrical and Computer Engineering\\
+  University of California, San Diego\\
+  La Jolla, CA 92093 \\
+  \texttt{faai@eng.ucsd.edu} \\
+  % examples of more authors
+   \And Yue Qiao \\
+   Department of Electrical and Computer Engineering \\
+   University of California, San Diego\\
+   La Jolla, CA 92093 \\
+   \texttt{yuq021@eng.ucsd.edu}\\
+   \And Zunming Zhang \\
+   Department of Electrical and Computer Engineering \\
+   University of California, San Diego\\
+   La Jolla, CA 92093 \\
+   \texttt{zuz008@eng.ucsd.edu}\\
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  In this report, we ...
+\end{abstract}
+
+%--------------------------------------------
+
+\section{Introduction}
+
+In this report, we ...
+%--------------------------------------------
+
+\section{Related Work}
+
+
+%--------------------------------------------
+
+\section{Methods}
+
+
+\subsection{Dataset}
+For this image captioning task, we used the dataset from the well-known Common OBjects in Context (COCO) repssitory. 
+COCO is a large-scale object detection, segmentation, and captioning dataset. In this report, we used a subset (around 1/5) of the COCO 2015 Image Captioning Task. 
+The training set contains around 82k images with roughly 410k captions while the test set has around 3k images with almost 15k captions. 
+The original images in the dataset are of different sizes and aspect ratios, which we are resizing to 256x256 before the training.
+
+
+\subsection{Model}
+\subsubsection{Baseline Model}
+Our captioning system us implemented based on a Long Short-Time Memory (LSTM) network (baseline model). 
+For the encoder part, we use a forzen pretrained convolutional network, namly ResNet50, as the encoder. 
+We removed the last layer of pre-trained abd added a trainable linear layer with outputs a feaure vector of a fixed suze for each image. This seted the initial state of the LSTM network based on the image.
+For baseline model, we resized the image to 256x256 and hidden size of 512.
+% TODO: Add more detaild on decoder part
+
+\subsubsection{Vanilla RNN, LSTM and GRU}
+For the model comparison, we also tried Vanilla RNN and GRU. For these two models, we simply replaced the LSTM module in the encoder with either a Vanilla or a GRU, while the others remained to be same. Then, trained and compared the performance of these three different models.
+
+
+
+%--------------------------------------------
+
+\section{Results}
+
+% TODO: Include the best hyperparameters of the fine tuning model
+\subsection{Learning Curve}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{GRU_Loss.png}
+  \caption{Training and validation loss for GRU model}
+  \label{fig:loss_GRU}
+\end{figure}
+
+\subsection{Cross Entropy Loss}
+
+
+\subsection{BLEU Score}
+
+\subsection{Images Visualization of the Best Performance Model}
+% TODO: Report Requirement 10
+
+%--------------------------------------------
+
+\section{Discussion}
+\subsection{Baseline with different Temperatures}
+% TODO: Report Requirement 8
+
+\subsection{Baseline LSTM vs Vanilla RNN vs GRU}
+\subsubsection{Learning Curve}
+% TODO: Number of epochs needed for different model
+
+\subsubsection{Cross Entropy Loss}
+% TODO: performances differenced for different models
+
+\subsubsection{BLEU Score}
+% TODO: 
+
+\subsection{Baseline model vs fine tuning model}
+
+
+\subsubsection{Learning Curve}
+% TODO: learning curve difference for fine tuning model
+
+\subsubsection{Cross Entropy Loss}
+%TODO:  performances differenced for baseline and fine tuning model
+
+\subsubsection{BLEU Score}
+% TODO:
+
+
+%--------------------------------------------
+
+\section{Individual contributions to the project}
+
+\paragraph{Fangzhou Ai}
+
+
+\paragraph{Yue Qiao}
+
+
+\paragraph{Zunming Zhang}
+
+
+% \bibliographystyle{plainnat}
+% \bibliography{bibfile}
+
+\end{document}
