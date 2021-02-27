@@ -223,13 +223,13 @@ class Experiment(object):
         test_loss = test_loss / len(self.__test_loader) / self.__test_loader.batch_size
         bleu1 = bleu1 / len(self.__test_loader) / self.__test_loader.batch_size
         bleu4 = bleu4 / len(self.__test_loader) / self.__test_loader.batch_size
-        print(self.__test_loader.batch_size)
 
         self.writer.add_scalar('test/loss', test_loss, self.__current_epoch)
         self.writer.add_scalar('test/bleu1', bleu1, self.__current_epoch)
         self.writer.add_scalar('test/bleu4', bleu4, self.__current_epoch)
         self.writer.add_text('test/caption', '\n\n'.join([' '.join(text_predict)
                                                           for text_predict in text_predicts]), self.__current_epoch)
+        self.writer.flush()
 
         result_str = "Test Performance: Loss: {}, Bleu1: {}, Bleu4: {}".format(test_loss, bleu1, bleu4)
         self.__log(result_str)
