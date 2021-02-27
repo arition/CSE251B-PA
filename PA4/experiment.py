@@ -184,8 +184,7 @@ class Experiment(object):
             loss = self.__criterion(out, truths)
             test_loss = loss
 
-            text_predicts = self.__model.forward_eval(
-                images, self.__generation_config['temperature'], self.__generation_config['max_length'])
+            text_predicts = self.__model.forward_eval(images, self.__generation_config)
 
             for text_predict, img_id in zip(text_predicts, img_ids):
                 text_true = []

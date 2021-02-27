@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models
+from torch.distributions.categorical import Categorical
 
 from vocab import Vocabulary
 
@@ -33,7 +34,11 @@ class ImageCaptionLSTM(nn.Module):
         out = self.output(decode).permute(0, 2, 1)  # batch_size, vocab_size, seq_len
         return out
 
-    def forward_eval(self, img, temperature, max_length):
+    def forward_eval(self, img, generation_config):
+        temperature = generation_config['temperature']
+        max_length = generation_config['max_length']
+        deterministic = generation_config['deterministic']
+
         batch_size = img.shape[0]
 
         hidden = self.encoder(img).unsqueeze(0)
@@ -50,7 +55,10 @@ class ImageCaptionLSTM(nn.Module):
             decode = decode.permute(1, 0, 2)  # batch_size, seq_len, hidden_size
             out = self.output(decode).permute(0, 2, 1)  # batch_size, vocab_size, seq_len
 
-            _, text_ids = F.log_softmax(out.squeeze_() / temperature, dim=1).max(dim=1)
+            if deterministic:
+                _, text_ids = F.log_softmax(out.squeeze_(), dim=1).max(dim=1)
+            else:
+                text_ids = Categorical(F.log_softmax(out.squeeze_() / temperature, dim=1)).sample()
             for text_list, text_id in zip(text_lists, text_ids):
                 if text_list[-1] != '<end>':
                     text_list.append(self.vocab.idx2word[int(text_id.item())])
@@ -60,7 +68,7 @@ class ImageCaptionLSTM(nn.Module):
 
         return text_lists
 
-    
+
 class ImageCaptionVanilla(nn.Module):
     def __init__(self, hidden_size, embedding_size, vocab: Vocabulary):
         super().__init__()
@@ -87,7 +95,11 @@ class ImageCaptionVanilla(nn.Module):
         out = self.output(decode).permute(0, 2, 1)  # batch_size, vocab_size, seq_len
         return out
 
-    def forward_eval(self, img, temperature, max_length):
+    def forward_eval(self, img, generation_config):
+        temperature = generation_config['temperature']
+        max_length = generation_config['max_length']
+        deterministic = generation_config['deterministic']
+
         batch_size = img.shape[0]
 
         hidden = self.encoder(img).unsqueeze(0)
@@ -103,7 +115,10 @@ class ImageCaptionVanilla(nn.Module):
             decode = decode.permute(1, 0, 2)  # batch_size, seq_len, hidden_size
             out = self.output(decode).permute(0, 2, 1)  # batch_size, vocab_size, seq_len
 
-            _, text_ids = F.log_softmax(out.squeeze_() / temperature, dim=1).max(dim=1)
+            if deterministic:
+                _, text_ids = F.log_softmax(out.squeeze_(), dim=1).max(dim=1)
+            else:
+                text_ids = Categorical(F.log_softmax(out.squeeze_() / temperature, dim=1)).sample()
             for text_list, text_id in zip(text_lists, text_ids):
                 if text_list[-1] != '<end>':
                     text_list.append(self.vocab.idx2word[int(text_id.item())])
@@ -112,6 +127,7 @@ class ImageCaptionVanilla(nn.Module):
                        '<start>' and text != '<end>' and text != '<unk>'] for text_list in text_lists]
 
         return text_lists
+
 
 class ImageCaptionGRU(nn.Module):
     def __init__(self, hidden_size, embedding_size, vocab: Vocabulary):
@@ -139,7 +155,11 @@ class ImageCaptionGRU(nn.Module):
         out = self.output(decode).permute(0, 2, 1)  # batch_size, vocab_size, seq_len
         return out
 
-    def forward_eval(self, img, temperature, max_length):
+    def forward_eval(self, img, generation_config):
+        temperature = generation_config['temperature']
+        max_length = generation_config['max_length']
+        deterministic = generation_config['deterministic']
+
         batch_size = img.shape[0]
 
         hidden = self.encoder(img).unsqueeze(0)
@@ -156,7 +176,10 @@ class ImageCaptionGRU(nn.Module):
             decode = decode.permute(1, 0, 2)  # batch_size, seq_len, hidden_size
             out = self.output(decode).permute(0, 2, 1)  # batch_size, vocab_size, seq_len
 
-            _, text_ids = F.log_softmax(out.squeeze_() / temperature, dim=1).max(dim=1)
+            if deterministic:
+                _, text_ids = F.log_softmax(out.squeeze_(), dim=1).max(dim=1)
+            else:
+                text_ids = Categorical(F.log_softmax(out.squeeze_() / temperature, dim=1)).sample()
             for text_list, text_id in zip(text_lists, text_ids):
                 if text_list[-1] != '<end>':
                     text_list.append(self.vocab.idx2word[int(text_id.item())])
@@ -164,4 +187,4 @@ class ImageCaptionGRU(nn.Module):
         text_lists = [[text for text in text_list if text != '<pad>' and text !=
                        '<start>' and text != '<end>' and text != '<unk>'] for text_list in text_lists]
 
-        return text_lists    
+        return text_lists
