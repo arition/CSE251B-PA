@@ -62,7 +62,14 @@
 \maketitle
 
 \begin{abstract}
-  In this report, we ...
+  Image captioning is an important problem in artificial intelligence, related to both computer vision and natural language processing. 
+This work explores the power of Recurrent Neural Networks to deal with image captioning problem. 
+We used a pre-trained convolutional network, ResNet50, as the encoder and an LSTM model as the decoder. 
+We also tried to replaced the LSTM with Vinalla RNN and GRU and compared the performances of different models.
+For evaluation, we tried to compare the test set Cross Entropy Loss and BLEU scores for different models.
+For baseline model, we achieved a test loss of 1.966, BLEU1 socre of 56.48 and BLEU4 score of 7.75. 
+We got a better result for GRU method and the comparison could be found in \autoref{table:CrossEntropyLoss} and \autoref{table:BLEUScores}. 
+We also tried to fine tuned the baseline model and the model performance % TODO: Add fine tuning model performance
 \end{abstract}
 
 %--------------------------------------------
@@ -78,8 +85,8 @@ problem is also interesting in that it connects Computer Vision with Natural Lan
 fields in Artificial Intelligence.
 
 In this assignment, we will explore the power of Recurrent Neural Networks to deal with data that has temporal
-structure. Specifically, we will generate captions for images. In order to achieve this, we will need an encoderdecoder
-architecture for this assignment. Simply put, the encoder will take the image as input and encode it into a vector of
+structure. Specifically, we will generate captions for images. In order to achieve this, we will need an encoder-decoder
+architecture for this assignment. Simply, the encoder will take the image as input and encode it into a vector of
 feature values. This will then be passed through a linear layer for providing the input to LSTM. It will be trained
 to predict the next word at each step. we used a pre-trained convolutional network as the encoder and an LSTM model as
 the decoder and tried to fine tune the encoder and train the decoder by backpropagating error into it. The error will
@@ -135,7 +142,7 @@ of different sizes and aspect ratios, which we are resizing to 256x256 before th
 \subsection{Model}
 
 \subsubsection{Baseline Model}
-Our captioning system us implemented based on a Long Short-Time Memory (LSTM) network (baseline model). For the encoder
+Our captioning system is implemented based on a Long Short-Time Memory (LSTM) network (baseline model). For the encoder
 part, we use a forzen pretrained convolutional network, namely ResNet50, as the encoder. We removed the last layer of
 the network and added a trainable linear layer that outputs a feaure vector with a fixed size for each image. This
 feature becomes the initial hidden state and the cell state of LSTM network. For baseline model, we resized the
@@ -196,7 +203,7 @@ The learning curve for LSTM, Vanilla RNN and GRU could be found in \autoref{fig:
 
 
 \subsection{Cross Entropy Loss}
-The test set Cross Entropy Loss of different could be found in \autoref{table:CrossEntropyLoss}
+The test set Cross Entropy Loss of different models could be found in \autoref{table:CrossEntropyLoss}
 
 \begin{table}[h]
   \caption{Cross Entropy Loss for different models}
