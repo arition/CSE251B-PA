@@ -69,7 +69,8 @@ We also tried to replaced the LSTM with Vinalla RNN and GRU and compared the per
 For evaluation, we tried to compare the test set Cross Entropy Loss and BLEU scores for different models.
 For baseline model, we achieved a test loss of 1.966, BLEU1 socre of 56.48 and BLEU4 score of 7.75. 
 We got a better result for GRU method and the comparison could be found in \autoref{table:CrossEntropyLoss} and \autoref{table:BLEUScores}. 
-We also tried to fine tuned the baseline model and the model performance % TODO: Add fine tuning model performance
+We also tried to fine tuned the baseline model and we successfully increased the BLEU1 to 65.02, BLEU4 to 16.83 and
+decreased the loss to 1.517.
 \end{abstract}
 
 %--------------------------------------------
@@ -169,7 +170,7 @@ these three different models.
 
 \section{Results}
 
-% TODO: Include the best hyperparameters of the fine tuning model
+For best fine-tuning parameter, we use hidden size as 1200 and embedding size as 2000.
 \subsection{Learning Curve}
 
 The learning curve for LSTM, Vanilla RNN and GRU could be found in \autoref{fig:loss_train_val_model}.
@@ -216,7 +217,7 @@ The test set Cross Entropy Loss of different models could be found in \autoref{t
     Baseline          & 1.966                      \\
     Vanilla RNN       & 1.819                      \\
     GRU               & 1.586                      \\
-    Fine tuning model & TBD                        \\
+    Fine tuning model & 1.517                      \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -250,31 +251,31 @@ The good predictions are shwon in \autoref{fig:good_pred} and bad predictions ar
 \begin{subfigure}[b]{0.32\textwidth}
 	\centering
 	\includegraphics[width=\textwidth]{g1.jpg}
-	\caption{a bathroom with a toilet, sink and shower.}
+	\caption{Predicted:a bathroom with a toilet, sink and shower. True:A bathroom that has a tub, a toilet, a sink, and a mirror.}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.32\textwidth}
 	\centering
 	\includegraphics[width=\textwidth]{g2.jpg}
-	\caption{a woman sitting under an umbrella .}
+	\caption{Predicted:a woman sitting under an umbrella. True:A girl sits in a chair on a porch in summer.}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.32\textwidth}
 	\centering
 	\includegraphics[width=\textwidth]{g3.jpg}
-	\caption{a herd of sheep walking down a dirt road .}
+	\caption{Preditced:a herd of sheep walking down a dirt road. True:A large herd of sheep crossing the road in front of a van.}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.32\textwidth}
 	\centering
 	\includegraphics[width=\textwidth]{g4.jpg}
-	\caption{a living room filled with furniture and a flat screen tv .}
+	\caption{Predicted:a living room filled with furniture and a flat screen tv. True:A living area with a group of sofas, coffee table and television.}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.32\textwidth}
 	\centering
 	\includegraphics[width=\textwidth]{g5.jpg}
-	\caption{a little girl sitting at a table with a plate of food .}
+	\caption{Predicted:a little girl sitting at a table with a plate of food. True:That piece of cake will soon be eaten by the little girl.}
 	\label{fig:loss_GRU}
 \end{subfigure}
 	\caption{Good predictions.}
@@ -286,31 +287,31 @@ The good predictions are shwon in \autoref{fig:good_pred} and bad predictions ar
 	\begin{subfigure}[b]{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{b1.jpg}
-		\caption{a train on a train track near a building}
+		\caption{Predicted:a train on a train track near a building. True: A commuter train pulling out of a suburban station.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{b2.jpg}
-		\caption{A man standing in front of a refrigerator.}
+		\caption{Preditced:A man standing in front of a refrigerator. True:a half bathroom door showing the bottom half of someones legs}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{b3.jpg}
-		\caption{a person riding a horse on a beach}
+		\caption{Predicted: person riding a horse on a beach. True:a man with a hat and a back pack riding on a horse.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{b4.jpg}
-		\caption{a parking meter on the side of the road .}
+		\caption{Predicted:a parking meter on the side of the road. True:Two parking meters are on top of a pole.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{b5.jpg}
-		\caption{a man is holding a cell phone in his hand .}
+		\caption{Predicted:a man is holding a cell phone in his hand. True:a young man in a grey shirt is going to cut his hair.}
 		\label{fig:loss_GRU}
 	\end{subfigure}
 	\caption{Bad predictions.}
@@ -463,7 +464,7 @@ Fine tuning.
 Baseline LSTM Model.
 
 \paragraph{Zunming Zhang}
-
+Vanilla and GRU model.
 
 \bibliographystyle{plainnat}
 \bibliography{bibfile}
