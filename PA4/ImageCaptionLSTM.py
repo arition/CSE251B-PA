@@ -58,7 +58,7 @@ class ImageCaptionLSTM(nn.Module):
             if deterministic:
                 _, text_ids = F.log_softmax(out.squeeze_(), dim=1).max(dim=1)
             else:
-                text_ids = Categorical(F.log_softmax(out.squeeze_() / temperature, dim=1)).sample()
+                text_ids = Categorical(F.softmax(out.squeeze_() / temperature, dim=1)).sample()
             for text_list, text_id in zip(text_lists, text_ids):
                 if text_list[-1] != '<end>':
                     text_list.append(self.vocab.idx2word[int(text_id.item())])
@@ -118,7 +118,7 @@ class ImageCaptionVanilla(nn.Module):
             if deterministic:
                 _, text_ids = F.log_softmax(out.squeeze_(), dim=1).max(dim=1)
             else:
-                text_ids = Categorical(F.log_softmax(out.squeeze_() / temperature, dim=1)).sample()
+                text_ids = Categorical(F.softmax(out.squeeze_() / temperature, dim=1)).sample()
             for text_list, text_id in zip(text_lists, text_ids):
                 if text_list[-1] != '<end>':
                     text_list.append(self.vocab.idx2word[int(text_id.item())])
@@ -179,7 +179,7 @@ class ImageCaptionGRU(nn.Module):
             if deterministic:
                 _, text_ids = F.log_softmax(out.squeeze_(), dim=1).max(dim=1)
             else:
-                text_ids = Categorical(F.log_softmax(out.squeeze_() / temperature, dim=1)).sample()
+                text_ids = Categorical(F.softmax(out.squeeze_() / temperature, dim=1)).sample()
             for text_list, text_id in zip(text_lists, text_ids):
                 if text_list[-1] != '<end>':
                     text_list.append(self.vocab.idx2word[int(text_id.item())])
