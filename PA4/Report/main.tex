@@ -62,15 +62,15 @@
 \maketitle
 
 \begin{abstract}
-  Image captioning is an important problem in artificial intelligence, related to both computer vision and natural language processing. 
-This work explores the power of Recurrent Neural Networks to deal with image captioning problem. 
-We used a pre-trained convolutional network, ResNet50, as the encoder and an LSTM model as the decoder. 
-We also tried to replaced the LSTM with Vinalla RNN and GRU and compared the performances of different models.
-For evaluation, we tried to compare the test set Cross Entropy Loss and BLEU scores for different models.
-For baseline model, we achieved a test loss of 1.966, BLEU1 socre of 56.48 and BLEU4 score of 7.75. 
-We got a better result for GRU method and the comparison could be found in \autoref{table:CrossEntropyLoss} and \autoref{table:BLEUScores}. 
-We also tried to fine tuned the baseline model and we successfully increased the BLEU1 to 65.02, BLEU4 to 16.83 and
-decreased the loss to 1.517.
+  Image captioning is an important problem in artificial intelligence, related to both computer vision and natural
+  language processing. This work explores the power of Recurrent Neural Networks to deal with image captioning problem.
+  We used a pre-trained convolutional network, ResNet50, as the encoder and an LSTM model as the decoder. We also tried
+  to replaced the LSTM with Vinalla RNN and GRU and compared the performances of different models. For evaluation, we
+  tried to compare the test set Cross Entropy Loss and BLEU scores for different models. For baseline model, we achieved
+  a test loss of 1.966, BLEU1 socre of 56.48 and BLEU4 score of 7.75. We got a better result for GRU method and the
+  comparison could be found in \autoref{table:CrossEntropyLoss} and \autoref{table:BLEUScores}. We also tried to fine
+  tuned the baseline model and we successfully increased the BLEU1 to 65.02, BLEU4 to 16.83 and decreased the loss to
+  1.517.
 \end{abstract}
 
 %--------------------------------------------
@@ -134,7 +134,7 @@ with the Vanilla RNN and GRU to compared the model performances.
 
 \subsection{Dataset}
 For this image captioning task, we used the dataset from the well-known Common Objects in Context\cite{lin2015microsoft}
-(COCO) repssitory. COCO is a large-scale object detection, segmentation, and captioning dataset. In this report, we used
+(COCO) repository. COCO is a large-scale object detection, segmentation, and captioning dataset. In this report, we used
 a subset (around 1/5) of the COCO 2015 Image Captioning Task. The training set contains around 82k images with roughly
 410k captions while the test set has around 3k images with almost 15k captions. The original images in the dataset are
 of different sizes and aspect ratios, which we are resizing to 256x256 before the training.
@@ -173,31 +173,39 @@ these three different models.
 For best fine-tuning parameter, we use hidden size as 1200 and embedding size as 2000.
 \subsection{Learning Curve}
 
-The learning curve for LSTM, Vanilla RNN and GRU could be found in \autoref{fig:loss_train_val_model}.
+The learning curve for baseline LSTM, Vanilla RNN, GRU and the best fine tuning model could be found in
+\autoref{fig:loss_train_val_model}.
 
 \begin{figure}[h]
   \centering
-  \begin{subfigure}[b]{0.32\textwidth}
+  \begin{subfigure}[b]{0.245\textwidth}
     \centering
     \includegraphics[width=\textwidth]{LSTM_Loss.png}
     \caption{LSTM Loss}
     \label{fig:loss_LSTM}
   \end{subfigure}
   \hfill
-  \begin{subfigure}[b]{0.32\textwidth}
+  \begin{subfigure}[b]{0.245\textwidth}
     \centering
     \includegraphics[width=\textwidth]{VanillaRNN_Loss.png}
     \caption{Vanilla RNN Loss}
     \label{fig:loss_RNN}
   \end{subfigure}
   \hfill
-  \begin{subfigure}[b]{0.32\textwidth}
+  \begin{subfigure}[b]{0.245\textwidth}
     \centering
     \includegraphics[width=\textwidth]{GRU_Loss.png}
     \caption{GRU Loss}
     \label{fig:loss_GRU}
   \end{subfigure}
-  \caption{Training and Validation loss for LSTM, Vanilla RNN and GRU}
+  \hfill
+  \begin{subfigure}[b]{0.245\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Fine_tuning_loss.png}
+    \caption{GRU Loss}
+    \label{fig:loss_fine_tuning}
+  \end{subfigure}
+  \caption{Training and Validation loss for LSTM, Vanilla RNN, GRU and the best fine tuning model}
   \label{fig:loss_train_val_model}
 \end{figure}
 
@@ -247,75 +255,74 @@ The BLEU scores for different models could be found in \autoref{table:BLEUScores
 \subsection{Images Visualization of the Best Performance Model}
 The good predictions are shwon in \autoref{fig:good_pred} and bad predictions are shown in \autoref{fig:bad_pred}.
 \begin{figure}[h]
-\centering
-\begin{subfigure}[b]{0.32\textwidth}
-	\centering
-	\includegraphics[width=\textwidth]{g1.jpg}
-	\caption{Predicted:a bathroom with a toilet, sink and shower. True:A bathroom that has a tub, a toilet, a sink, and a mirror.}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{0.32\textwidth}
-	\centering
-	\includegraphics[width=\textwidth]{g2.jpg}
-	\caption{Predicted:a woman sitting under an umbrella. True:A girl sits in a chair on a porch in summer.}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{0.32\textwidth}
-	\centering
-	\includegraphics[width=\textwidth]{g3.jpg}
-	\caption{Preditced:a herd of sheep walking down a dirt road. True:A large herd of sheep crossing the road in front of a van.}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{0.32\textwidth}
-	\centering
-	\includegraphics[width=\textwidth]{g4.jpg}
-	\caption{Predicted:a living room filled with furniture and a flat screen tv. True:A living area with a group of sofas, coffee table and television.}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{0.32\textwidth}
-	\centering
-	\includegraphics[width=\textwidth]{g5.jpg}
-	\caption{Predicted:a little girl sitting at a table with a plate of food. True:That piece of cake will soon be eaten by the little girl.}
-	\label{fig:loss_GRU}
-\end{subfigure}
-	\caption{Good predictions.}
-	\label{fig:good_pred}
+  \centering
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{g1.jpg}
+    \caption{Predicted: A bathroom with a toilet, sink and shower. True: A bathroom that has a tub, a toilet, a sink, and a mirror.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{g2.jpg}
+    \caption{Predicted: A woman sitting under an umbrella. True: A girl sits in a chair on a porch in summer.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{g5.jpg}
+    \caption{Predicted: A little girl sitting at a table with a plate of food. True: That piece of cake will soon be eaten by the little girl.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{g3.jpg}
+    \caption{Preditced: A herd of sheep walking down a dirt road. True: A large herd of sheep crossing the road in front of a van.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{g4.jpg}
+    \caption{Predicted: A living room filled with furniture and a flat screen tv. True: A living area with a group of sofas, coffee table and television.}
+  \end{subfigure}
+  \caption{Good predictions.}
+  \label{fig:good_pred}
 \end{figure}
 
 \begin{figure}[h]
-	\centering
-	\begin{subfigure}[b]{0.32\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{b1.jpg}
-		\caption{Predicted:a train on a train track near a building. True: A commuter train pulling out of a suburban station.}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.32\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{b2.jpg}
-		\caption{Preditced:A man standing in front of a refrigerator. True:a half bathroom door showing the bottom half of someones legs}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.32\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{b3.jpg}
-		\caption{Predicted: person riding a horse on a beach. True:a man with a hat and a back pack riding on a horse.}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.32\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{b4.jpg}
-		\caption{Predicted:a parking meter on the side of the road. True:Two parking meters are on top of a pole.}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.32\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{b5.jpg}
-		\caption{Predicted:a man is holding a cell phone in his hand. True:a young man in a grey shirt is going to cut his hair.}
-		\label{fig:loss_GRU}
-	\end{subfigure}
-	\caption{Bad predictions.}
-	\label{fig:bad_pred}
+  \centering
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{b1.jpg}
+    \caption{Predicted: A train on a train track near a building. True: A commuter train pulling out of a suburban station.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{b2.jpg}
+    \caption{Preditced: A man standing in front of a refrigerator. True: A half bathroom door showing the bottom half of someones legs.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{b3.jpg}
+    \caption{Predicted: Person riding a horse on a beach. True: A man with a hat and a back pack riding on a horse.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{b4.jpg}
+    \caption{Predicted: A parking meter on the side of the road. True: Two parking meters are on top of a pole.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{b5.jpg}
+    \caption{Predicted: A man is holding a cell phone in his hand. True: A young man in a grey shirt is going to cut his hair.}
+    \label{fig:loss_GRU}
+  \end{subfigure}
+  \caption{Bad predictions.}
+  \label{fig:bad_pred}
 \end{figure}
 %--------------------------------------------
 
@@ -337,19 +344,18 @@ listed in \autoref{table:StochasticBLEUScores}.
     \toprule
     Temperature & BLEU1 & BLEU4 \\
     \midrule
-    0.01        & 0.117 & 0.022 \\
-    0.1         & 0.107 & 0.020 \\
-    0.2         & 0.099 & 0.018 \\
-    0.7         & 0.106 & 0.020 \\
-    1           & 0.118 & 0.022 \\
-    1.5         & 0.142 & 0.026 \\
-    2           & 0.152 & 0.028 \\
-    5           & 0.169 & 0.032 \\
+    Baseline    & 56.48 & 7.75  \\
+    0.1         & 55.78 & 7.791 \\
+    0.2         & 54.45 & 7.591 \\
+    0.7         & 47.21 & 5.717 \\
+    1           & 35.56 & 3.775 \\
+    1.5         & 12.12 & 1.509 \\
+    2           & 4.044 & 0.616 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-From the table we can see that a higher temperature produces higher BLEU score. All of the score is lower than the
+From the table we can see that a lower temperature produces higher BLEU score. All of the BLEU-1 score is lower than the
 determinstic approach. We suppose that the baseline model is too small to support the stochastic approach to produce
 good sentences.
 
@@ -370,86 +376,86 @@ GRU on BLEU-1 score. GRU has the highest score on both BLEU-1 and BLEU-4. It aga
 networks with small feature sizes.
 
 \subsection{Baseline model vs fine tuning model}
-For fine tuning part, we use grid search method to find the best model, all tasks are submitted to GPU cluster as batch jobs. The result shows that increasing the embedding size is mode effective than increasing the hidden size, which is reasonable since the length of the vector for each word is 60,000 in this dataset, the original 300 embedding size is apparently too small to fit large vocabulary. In our experiment we found that when hidden size is 1200 and embedding size is 2000, we achieve the best BLEU score.
+
+For fine tuning part, we use grid search method to find the best model, all tasks are submitted to GPU cluster as batch
+jobs. The result shows that increasing the embedding size is mode effective than increasing the hidden size, which is
+reasonable since the length of the vector for each word is 60,000 in this dataset, the original 300 embedding size is
+apparently too small to fit large vocabulary. In our experiment we found that when hidden size is 1200 and embedding
+size is 2000, we achieve the best BLEU score.
+
 \subsubsection{Learning Curve}
-The learning curve is shown in \autoref{fig:loss_FT}.
-\begin{figure}
-	\centering
-	\includegraphics[width=8cm]{Fine_tuning_loss.png}
-	\caption{Fine tuning model loss.}
-	\label{fig:loss_FT}
-\end{figure}
+From \autoref{fig:loss_train_val_model}, we can see that the fine tuning model also takes about 90 epochs to converge.
 
 \subsubsection{Cross Entropy Loss}
-The loss for each model with different parameters are shown in \autoref{table:FT_val_loss}. All the results are collected after 100 epochs training. The validation loss shows that larger embedding size is better than larger hidden size.
+The loss for each model with different parameters are shown in \autoref{table:FT_val_loss}. All the results are
+collected after 100 epochs training. The validation loss shows that larger embedding size is better than larger hidden
+size.
 \begin{table}[h]
-	\caption{Validation loss of different models.}
-	\label{table:FT_val_loss}
-	\centering
-	\begin{tabular}{@{}lllllll@{}}
-		\toprule
-		Hidden/embedding size & 1000 & 1200 & 1400 & 1600 & 1800 & 2000 \\
-		\midrule
-		1000       & 1.681337369	& 1.691209305 &	1.580959492 & 1.551394041 & 1.583891191 & 1.560777765\\
-		1200        &1.816109741 & 1.618265422	&1.57035513	&1.536661038	&1.524779346	&1.522998657 \\
-		1400       &1.662981744	&1.641106087	&1.616746906	&1.559747254	&1.637271137	&1.543163765 \\
-		1600         &1.75068753&	1.587794039&	1.563622826&	1.529088398& 1.550765577&	1.519091342\\
-		1800           &1.646753683	&1.591480875&	1.586649266&	1.591782318&	1.537952337&	1.521097336\\
-		2000         &1.639377112	&1.586326071	&1.671221515&	1.595450379	&1.560300544	&1.517007219\\
-		\bottomrule
-	\end{tabular}
+  \caption{Validation loss of different models.}
+  \label{table:FT_val_loss}
+  \centering
+  \begin{tabular}{@{}lllllll@{}}
+    \toprule
+    Hidden/embedding size & 1000  & 1200  & 1400  & 1600  & 1800  & 2000  \\
+    \midrule
+    1000                  & 1.68  & 1.691 & 1.580 & 1.551 & 1.583 & 1.560 \\
+    1200                  & 1.81  & 1.618 & 1.570 & 1.536 & 1.524 & 1.522 \\
+    1400                  & 1.66  & 1.641 & 1.616 & 1.559 & 1.637 & 1.543 \\
+    1600                  & 1.750 & 1.587 & 1.563 & 1.529 & 1.550 & 1.519 \\
+    1800                  & 1.646 & 1.591 & 1.586 & 1.591 & 1.537 & 1.521 \\
+    2000                  & 1.639 & 1.586 & 1.671 & 1.595 & 1.560 & 1.517 \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
 \subsubsection{BLEU Score}
-The BLEU1 scores are shown in \autoref{table:BLEU1_FT} and BLEU4 scores are shown in \autoref{table:BLEU4_FT}. We can also see that larger embedding size is better than larger hidden size.
+The BLEU1 scores are shown in \autoref{table:BLEU1_FT} and BLEU4 scores are shown in \autoref{table:BLEU4_FT}. We can
+also see that larger embedding size is better than larger hidden size.
 \begin{table}[h]
 
-	\caption{BLEU1 score of different models.}
-	\label{table:BLEU1_FT}
-	\centering
-	\begin{tabular}{@{}lllllll@{}}
-		\toprule
-		Hidden/embedding size & 1000 & 1200 & 1400 & 1600 & 1800 & 2000 \\
-		\midrule
-		1000       & 59.41769621&	59.62020083&	63.35089825&	63.32872151&	63.73170132&	64.43839568\\
-		1200        &56.05131035	&62.30367823&	62.35710535&	63.26050116&	64.60560355&	65.01930785 \\
-		1400       &60.39761923	&60.39945857&	60.63426329&	62.73186609&	61.13974605&	64.93391073\\
-		1600         &57.34373218	&61.60656617&	62.77856346&	62.47185297&	64.2897595&	63.74235525\\
-		1800           &58.97915755	&61.51667164	&62.34537701	&60.52766041	&63.5199832&	63.17110813\\
-		2000         &59.78645267&	60.58827569&	58.05156176&	61.15798722	&62.67753716&	63.65793274\\
-		\bottomrule
-	\end{tabular}
+  \caption{BLEU1 score of different models.}
+  \label{table:BLEU1_FT}
+  \centering
+  \begin{tabular}{@{}lllllll@{}}
+    \toprule
+    Hidden/embedding size & 1000   & 1200   & 1400   & 1600   & 1800   & 2000   \\
+    \midrule
+    1000                  & 59.417 & 59.620 & 63.350 & 63.328 & 63.731 & 64.438 \\
+    1200                  & 56.051 & 62.303 & 62.357 & 63.260 & 64.605 & 65.019 \\
+    1400                  & 60.397 & 60.399 & 60.634 & 62.731 & 61.139 & 64.933 \\
+    1600                  & 57.343 & 61.606 & 62.778 & 62.471 & 64.289 & 63.742 \\
+    1800                  & 58.979 & 61.516 & 62.345 & 60.527 & 63.519 & 63.171 \\
+    2000                  & 59.786 & 60.588 & 58.051 & 61.157 & 62.677 & 63.657 \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
 \begin{table}[h]
-	
-	\caption{BLEU4 score of different models.}
-	\label{table:BLEU4_FT}
-	\centering
-	\begin{tabular}{@{}lllllll@{}}
-		\toprule
-		Hidden/embedding size & 1000 & 1200 & 1400 & 1600 & 1800 & 2000 \\
-		\midrule
-		1000       & 11.84089542	&12.40819432	&15.3686782	&15.82054416&	15.70298138&	16.54373736\\
-		1200        &8.772820601	&14.55022853	&15.01156252	&15.60198284	&16.4523467	&16.83235187\\
-		1400       &12.8796874	&12.91051223	&13.49639036	&15.16698644	&13.21635365	&16.18174622\\
-		1600         &10.58407818&	14.31981595&	14.94549483&	15.37257563&	16.52898121&	15.7704121\\
-		1800         &12.36232193	&14.22257743&	14.84009182&	13.30323795&	15.66635975&	15.41644636\\
-		2000         &12.19404039&	13.25380803&	11.32768971&	13.89880156&	15.30576858&	15.89286523\\
-		\bottomrule
-	\end{tabular}
+
+  \caption{BLEU4 score of different models.}
+  \label{table:BLEU4_FT}
+  \centering
+  \begin{tabular}{@{}lllllll@{}}
+    \toprule
+    Hidden/embedding size & 1000   & 1200   & 1400   & 1600   & 1800   & 2000   \\
+    \midrule
+    1000                  & 11.840 & 12.408 & 15.368 & 15.820 & 15.702 & 16.543 \\
+    1200                  & 8.772  & 14.550 & 15.011 & 15.601 & 16.452 & 16.832 \\
+    1400                  & 12.879 & 12.910 & 13.496 & 15.166 & 13.216 & 16.181 \\
+    1600                  & 10.584 & 14.319 & 14.945 & 15.372 & 16.528 & 15.770 \\
+    1800                  & 12.362 & 14.222 & 14.840 & 13.303 & 15.666 & 15.416 \\
+    2000                  & 12.194 & 13.253 & 11.327 & 13.898 & 15.305 & 15.892 \\
+    \bottomrule
+  \end{tabular}
 \end{table}
-
-
-
 
 
 \subsubsection{Fine tuning for Vanilla RNN and GRU}
-Though this is not required, we still tuned the vanilla RNN and GRU model to check the differences between these tow models and LSTM. During these extra fine tuning process, we also observed that the embedding size has a more important effect on validation loss and BLEU score than hidden size, the difference is RNN and GRU model seems to be saturated when embedding size is around 1200 ~ 1400, namely after that increasing embedding size cannot bring us more improvement, while for LSTM, the saturation threshold is approaching 2000. 
-
-
-
-
+Though this is not required, we still tuned the vanilla RNN and GRU model to check the differences between these tow
+models and LSTM. During these extra fine tuning process, we also observed that the embedding size has a more important
+effect on validation loss and BLEU score than hidden size, the difference is RNN and GRU model seems to be saturated
+when embedding size is around 1200 ~ 1400, namely after that increasing embedding size cannot bring us more improvement,
+while for LSTM, the saturation threshold is approaching 2000.
 
 
 %--------------------------------------------
