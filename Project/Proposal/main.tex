@@ -1,0 +1,122 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.: \PassOptionsToPackage{numbers, compress}{natbib} before loading
+%     neurips_2020
+
+% ready for submission \usepackage{neurips_2020}
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the [preprint] option:
+% \usepackage[preprint]{neurips_2020}
+
+% to compile a camera-ready version, add the [final] option, e.g.: \usepackage[final]{neurips_2020}
+
+\PassOptionsToPackage{numbers, compress}{natbib}
+
+% to avoid loading the natbib package, add option nonatbib:
+     \usepackage[preprint]{neurips_2020}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{amsmath}
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\title{Catheter and Line Position Challenge}
+
+% The \author macro works with any number of authors. There are two commands used to separate the names and addresses of
+% multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the lines. Using \AND forces a line break at
+% that point. So, if LaTeX puts 3 of 4 authors names on the first line, and the last on the second line, try using \AND
+% instead of \And before the third author name.
+
+\author{%
+  Fangzhou Ai\\
+  Department of Electrical and Computer Engineering\\
+  University of California, San Diego\\
+  La Jolla, CA 92093 \\
+  \texttt{faai@eng.ucsd.edu} \\
+  % examples of more authors
+   \And Yue Qiao \\
+   Department of Electrical and Computer Engineering \\
+   University of California, San Diego\\
+   La Jolla, CA 92093 \\
+   \texttt{yuq021@eng.ucsd.edu}\\
+   \And Zunming Zhang \\
+   Department of Electrical and Computer Engineering \\
+   University of California, San Diego\\
+   La Jolla, CA 92093 \\
+   \texttt{zuz008@eng.ucsd.edu}\\
+}
+
+\begin{document}
+
+\maketitle
+
+
+%--------------------------------------------
+
+\section{Project Description}
+Our project will be based on the Code Competition from Kaggle (find more \href{https://www.kaggle.com/c/ranzcr-clip-catheter-line-classification/overview}{here}). 
+Here is the detailed description of the challenge on Kaggle:
+
+Serious complications can occur as a result of malpositioned lines and tubes in patients. 
+Doctors and nurses frequently use checklists for placement of lifesaving equipment to ensure they follow protocol in managing patients. 
+Yet, these steps can be time consuming and are still prone to human error, especially in stressful situations when hospitals are at capacity.
+
+Hospital patients can have catheters and lines inserted during the course of their admission and serious complications can arise if they are positioned incorrectly. 
+Nasogastric tube malpositioning into the airways has been reported in up to 3\% of cases, with up to 40\% of these cases demonstrating complications. 
+Airway tube malposition in adult patients intubated outside the operating room is seen in up to 25\% of cases . 
+The likelihood of complication is directly related to both the experience level and specialty of the proceduralist. 
+Early recognition of malpositioned tubes is the key to preventing risky complications (even death), even more so now that millions of COVID-19 patients are in need of these tubes and lines.
+
+The gold standard for the confirmation of line and tube positions are chest radiographs. 
+However, a physician or radiologist must manually check these chest x-rays to verify that the lines and tubes are in the optimal position. 
+Not only does this leave room for human error, but delays are also common as radiologists can be busy reporting other scans. 
+Deep learning algorithms may be able to automatically detect malpositioned catheters and lines. 
+Once alerted, clinicians can reposition or remove them to avoid life-threatening complications.
+
+The Royal Australian and New Zealand College of Radiologists (RANZCR) is a not-for-profit professional organisation for clinical radiologists and radiation oncologists in Australia, New Zealand, and Singapore. The group is one of many medical organisations around the world (including the NHS) that recognizes malpositioned tubes and lines as preventable. RANZCR is helping design safety systems where such errors will be caught.
+
+
+%--------------------------------------------
+
+\section{Dataset}
+In this competition, we will detect the presence and position of catheters and lines on chest x-rays. 
+Use machine learning to train and test our model on 40,000 images to categorize a tube that is poorly placed.
+
+The dataset has been labelled with a set of definitions to ensure consistency with labelling. 
+The normal category includes lines that were appropriately positioned and did not require repositioning. 
+The borderline category includes lines that would ideally require some repositioning but would in most cases still function adequately in their current position. 
+The abnormal category included lines that required immediate repositioning.
+
+%--------------------------------------------
+
+\section{Proposed Architecture}
+% TODO: Add some proposed architecture
+
+
+%--------------------------------------------
+
+\section{Recent Work} 
+Paras Lakhani \cite{lakhani2017deep} evaluated the efficacy of deep convolutional neural networks (DCNNs) in differentiating subtle, intermediate, and more obvious image differences in radiography.
+In the paper, three different datasets were created, which included presence/absence of the endotracheal (ET) tube (n = 300), low/normal position of the ET tube (n = 300), and chest/abdominal radiographs (n = 120). 
+The datasets were split into training, validation, and test. 
+Both untrained and pre-trained deep neural networks were employed, including AlexNet and GoogLeNet classifiers, using the Caffe framework. 
+Data augmentation was performed for the presence/absence and low/normal ET tube datasets.
+
+
+%--------------------------------------------
+
+\bibliographystyle{plainnat}
+\bibliography{bibfile}
+
+\end{document}
