@@ -113,6 +113,9 @@ The datasets were split into training, validation, and test.
 Both untrained and pre-trained deep neural networks were employed, including AlexNet and GoogLeNet classifiers, using the Caffe framework. 
 Data augmentation was performed for the presence/absence and low/normal ET tube datasets.
 
+In\cite{wang2018chestnet}, Hongyu Wang and Yong Xia proposed a model called ChestNet, which consists of two branches: a classification branch serves as a uniform feature extraction-classification network to free users from troublesome handcrafted feature extraction, and an attention branch exploits the correlation between class labels and the locations of patholog-ical abnormalities and allows the model to concentrate adaptively on the patholog-ically abnormal regions.With this model they achieved SOTA on the Chest X-ray 14 dataset.
+
+In \cite{fridadar2019endotracheal}, Maayan and etc. suggest a method for training the network, first with synthetic data and then with real X-ray images in a fine-tuning phase, which allows the network to train on thousands of cases without annotating any data. The proposed method was tested on 477 real chest radiography from a public data set and reached AUC of 0.99 in classifying the presence vs. absence of the ET tube, along with outputting high quality ET tube segmentation maps, which could give us more hints on how the training should go on.
 
 %--------------------------------------------
 
