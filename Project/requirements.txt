@@ -1,0 +1,5 @@
+pandas
+torchvision
+torch
+pytorch_ignite
+Pillow
