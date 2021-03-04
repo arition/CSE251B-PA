@@ -6,9 +6,9 @@ from torch.utils.data.dataset import Dataset
 
 
 class XRayDataset(Dataset):
-    def __init__(self) -> None:
+    def __init__(self, csv_path, augmentation=False) -> None:
         super().__init__()
-        csv = pandas.read_csv('data/train.csv')
+        csv = pandas.read_csv(csv_path)
         self.images = list(csv['StudyInstanceUID'])
 
         self.ett = torch.zeros(len(self.images), dtype=torch.long)
@@ -30,12 +30,14 @@ class XRayDataset(Dataset):
 
         self.sgc[csv['Swan Ganz Catheter Present'] == 1] = 1
 
+        self.augmentation = augmentation
+
     def __len__(self):
         return len(self.images)
 
     def __getitem__(self, index):
         image = Image.open(f'data/train/{self.images[index]}.jpg').convert('RGB')
-        transform = transforms.Compose([
+        augmentation_transform = transforms.Compose([
             transforms.RandomResizedCrop((256, 256)),
             transforms.RandomHorizontalFlip(),
             transforms.RandomVerticalFlip(),
@@ -44,4 +46,15 @@ class XRayDataset(Dataset):
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
 
-        return transform(image), self.ett[index], self.ngt[index], self.cvc[index], self.sgc[index]
+        transform = transforms.Compose([
+            transforms.Resize((256, 256)),
+            transforms.ToTensor(),
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+        ])
+
+        if self.augmentation:
+            image = augmentation_transform(image)
+        else:
+            image = transform(image)
+
+        return image, self.ett[index], self.ngt[index], self.cvc[index], self.sgc[index]

@@ -10,7 +10,6 @@ from ignite.handlers import (Checkpoint, DiskSaver, EarlyStopping,
                              global_step_from_engine)
 from ignite.metrics import Accuracy, Loss
 from torch.utils.data.dataloader import DataLoader
-from torch.utils.data.dataset import random_split
 from torch.utils.tensorboard import SummaryWriter
 
 from dataset import XRayDataset
@@ -19,9 +18,8 @@ from models import *
 
 def train():
     device = torch.device('cuda')
-    dataset = XRayDataset()
-    (train_dataset, val_dataset) = random_split(dataset, [len(dataset) - len(dataset) // 9, len(dataset) // 9],
-                                                generator=torch.Generator().manual_seed(42))
+    train_dataset = XRayDataset('data/train_split.csv', augmentation=True)
+    val_dataset = XRayDataset('data/val_split.csv', augmentation=False)
     train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=12, timeout=60)
     val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=4, timeout=60)
 
