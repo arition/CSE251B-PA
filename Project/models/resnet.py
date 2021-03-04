@@ -1,5 +1,4 @@
 import torch
-from torch.autograd import backward
 import torch.nn as nn
 from torchvision.models.resnet import Bottleneck, ResNet
 
