@@ -16,16 +16,20 @@ from dataset import XRayDataset
 from models import *
 
 
-def train():
+def train(name):
     device = torch.device('cuda')
     train_dataset = XRayDataset('data/train_split.csv', augmentation=True)
     val_dataset = XRayDataset('data/val_split.csv', augmentation=False)
     train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=12, timeout=60)
     val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=4, timeout=60)
 
-    model = ClsHead(ResNet50()).to(device, non_blocking=True)
+    if name == 'resnet50':
+        backbone = ResNet50()
+    elif name == 'efficientnet-b5':
+        backbone = EfficientNetB5()
+
+    model = ClsHead(backbone).to(device, non_blocking=True)
     model.backbone.load_pretrain()
-    name = 'resnet50'
 
     optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.5, patience=5)
@@ -137,4 +141,4 @@ def train():
 
 
 if __name__ == "__main__":
-    train()
+    train('efficientnet-b5')
