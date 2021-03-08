@@ -93,28 +93,9 @@ clinical radiologists and radiation oncologists in Australia, New Zealand, and S
 medical organisations around the world (including the NHS) that recognizes malpositioned tubes and lines as preventable.
 RANZCR is helping design safety systems where such errors will be caught.
 
-
 %--------------------------------------------
 
-\section{Dataset}
-In this competition, we will detect the presence and position of catheters and lines on chest x-rays. Use machine
-learning to train and test our model on 40,000 images to categorize a tube that is poorly placed.
-
-The dataset has been labelled with a set of definitions to ensure consistency with labelling. The normal category
-includes lines that were appropriately positioned and did not require repositioning. The borderline category includes
-lines that would ideally require some repositioning but would in most cases still function adequately in their current
-position. The abnormal category included lines that required immediate repositioning.
-
-%--------------------------------------------
-
-\section{Proposed Architecture}
-% TODO: Add some proposed architecture
-We propose to use the pre-trained imageNet as our baseline model and fine tune the parameters.
-
-
-%--------------------------------------------
-
-\section{Recent Work} 
+\section{Recent Work}
 Paras Lakhani \cite{lakhani2017deep} evaluated the efficacy of deep convolutional neural networks (DCNNs) in
 differentiating subtle, intermediate, and more obvious image differences in radiography. In the paper, three different
 datasets were created, which included presence/absence of the endotracheal (ET) tube (n = 300), low/normal position of
@@ -133,6 +114,108 @@ and then with real X-ray images in a fine-tuning phase, which allows the network
 annotating any data. The proposed method was tested on 477 real chest radiography from a public data set and reached AUC
 of 0.99 in classifying the presence vs. absence of the ET tube, along with outputting high quality ET tube segmentation
 maps, which could give us more hints on how the training should go on.
+
+%--------------------------------------------
+
+\section{Dataset}
+In this competition, we detect the presence and position of catheters and lines on chest x-rays. Use machine learning to
+train and test our model on 40,000 images to categorize a poorly placed tube.
+
+The dataset has been labeled with a set of definitions to ensure consistency with labeling. The normal category includes
+lines that were appropriately positioned and did not require repositioning; The borderline category includes lines that
+would ideally require some repositioning but would in most cases still function adequately in their current position;
+The abnormal category included lines that required immediate repositioning. Since there can be multiple tubes in an
+X-Ray image and different tubes have different usages, the dataset labels are further separated into different tube
+categories. There are four categories for tubes in the dataset: PAC stands for Pulmonary artery catheter; ETT stands for
+endotracheal tube; NGT stands for Nasogastric tube; CVC stands for central venous catheter.
+
+%--------------------------------------------
+
+\section{Methods}
+
+\subsection{Background}
+Convolutional neural network (CNN) is one of the most popular architectures to solve the image classification problem.
+ResNet\cite{he2015deep} is one of the most widely used CNN architectures. ResNet features residual learning blocks that
+help fight against vanishing gradients problem by introducing skip connections. EfficientNet\cite{tan2020efficientnet}
+is a recently introduced convolutional neural network. The authors of EfficientNet first design a new baseline network
+using neural architecture search and later scales it up using a new scaling method that uniformly scales the properties
+of CNNs using a highly effective compound coefficient. The EfficientNet series archives state-of-the-art accuracy in the
+ImageNet dataset as of 2020.
+
+\subsection{architecture}
+In our experiments, we choose ResNet and EfficientNet as the backbone CNN for our classification model. Since there are
+multiple tubes, we proposed a multi-head image classification network for poorly placed tube detection. In our model, we
+have four different heads. Each of them receives the same flattened CNN features as input and uses a single linear layer
+for classification output. We use different loss functions for different heads. For ETT and SGC heads, we applied a
+standard Softmax layer and cross-entropy loss on them. For NGT and CVC heads, we applied a Sigmoid layer and Binary
+cross-entropy loss on them. We use Binary cross entropy loss on NGT and CVC heads because there could be more than one
+NGT or CVC tubes in one X-Ray image. Therefore, the result can be both in the Normal category and Abnormal Category. The
+traditional Softmax layer does not fit this situation, so we use a sigmoid layer and Binary cross-entropy loss.
+
+\subsection{Image augmentation}
+We applied random scale, flip and crop to the image during pre-processing. More details…
+
+\subsection{Learning rate scheduling}
+To archive best accuracy, we dynamically reduce the learning rate during training. We use a method called reduce on
+plateau. More details…
+
+\subsection{Mixed precision training}
+As recent CNN models become deeper and deeper, GPU memory requirement increases, and the training speed decreases. We
+use a new training method called mixed-precision training to accelerate the training speed and reduce GPU memory usage.
+During training, all convolution and matrix multiplication will be performed under float 16 precision, significantly
+reducing GPU memory usage by half and increasing training speed. When calculating loss, the precision is scaled back to
+float 32 to prevent underflow or overflow for loss calculation.
+
+\section{Experiments}
+We split the official dataset into the training set and validation set, and use a fixed random seed to ensure the result
+is reproducible. $90\%$ percent of data becomes training set, and $10\%$ of data becomes validation set. During the
+training, we use SGD as the optimizer, set the initial learning rate to $0.001$ and momentum to $0.9$. We use PyTorch as
+our training framework and use Tensorboard to monitor and record our training results.
+
+\subsection{Results}
+The validation accuracy for different categories is shown in \autoref{fig:val_accuracy}.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.49\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{val_ett_accuracy.png}
+          \caption{ETT Accuracy}
+          \label{fig:val_ett_accuracy}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.49\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{val_ngt_accuracy.png}
+          \caption{NGT Accuracy}
+          \label{fig:val_ngt_accuracy}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.49\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{val_cvc_accuracy.png}
+          \caption{CVC Accuracy}
+          \label{fig:val_cvc_accuracy}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.49\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{val_sgc_accuracy.png}
+          \caption{SGC Accuracy}
+          \label{fig:val_sgc_accuracy}
+     \end{subfigure}
+     \caption{Validation accuracy for different tube categories. Orange line: Model with ResNet50 backbone. \
+          Blue line: Model with EfficientNet-b5 backbone.}
+     \label{fig:val_accuracy}
+\end{figure}
+
+More experiments in progress...
+
+\section{Discussion}
+
+We can see that for ETT, NGT and SGC, EfficientNet outperforms ResNet a lot from the \autoref{fig:val_accuracy}. That’s expected since
+EfficientNet also outperforms ResNet in ImageNet classification. However, for CVC, EfficientNet has a sharp drop in
+accuracy during training. We need to do more investigation to find out what happened.
 
 %--------------------------------------------
 
