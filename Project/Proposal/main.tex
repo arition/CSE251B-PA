@@ -65,38 +65,45 @@
 %--------------------------------------------
 
 \section{Project Description}
-Our project will be based on the Code Competition from Kaggle (find more \href{https://www.kaggle.com/c/ranzcr-clip-catheter-line-classification/overview}{here}). 
-Here is the detailed description of the challenge on Kaggle:
+Our project will be based on the Code Competition from Kaggle (find more
+\href{https://www.kaggle.com/c/ranzcr-clip-catheter-line-classification/overview}{here}). Here is the detailed
+description of the challenge on Kaggle:
 
-Serious complications can occur as a result of malpositioned lines and tubes in patients. 
-Doctors and nurses frequently use checklists for placement of lifesaving equipment to ensure they follow protocol in managing patients. 
-Yet, these steps can be time consuming and are still prone to human error, especially in stressful situations when hospitals are at capacity.
+Serious complications can occur as a result of malpositioned lines and tubes in patients. Doctors and nurses frequently
+use checklists for placement of lifesaving equipment to ensure they follow protocol in managing patients. Yet, these
+steps can be time consuming and are still prone to human error, especially in stressful situations when hospitals are at
+capacity.
 
-Hospital patients can have catheters and lines inserted during the course of their admission and serious complications can arise if they are positioned incorrectly. 
-Nasogastric tube malpositioning into the airways has been reported in up to 3\% of cases, with up to 40\% of these cases demonstrating complications. 
-Airway tube malposition in adult patients intubated outside the operating room is seen in up to 25\% of cases . 
-The likelihood of complication is directly related to both the experience level and specialty of the proceduralist. 
-Early recognition of malpositioned tubes is the key to preventing risky complications (even death), even more so now that millions of COVID-19 patients are in need of these tubes and lines.
+Hospital patients can have catheters and lines inserted during the course of their admission and serious complications
+can arise if they are positioned incorrectly. Nasogastric tube malpositioning into the airways has been reported in up
+to 3\% of cases, with up to 40\% of these cases demonstrating complications. Airway tube malposition in adult patients
+intubated outside the operating room is seen in up to 25\% of cases . The likelihood of complication is directly related
+to both the experience level and specialty of the proceduralist. Early recognition of malpositioned tubes is the key to
+preventing risky complications (even death), even more so now that millions of COVID-19 patients are in need of these
+tubes and lines.
 
-The gold standard for the confirmation of line and tube positions are chest radiographs. 
-However, a physician or radiologist must manually check these chest x-rays to verify that the lines and tubes are in the optimal position. 
-Not only does this leave room for human error, but delays are also common as radiologists can be busy reporting other scans. 
-Deep learning algorithms may be able to automatically detect malpositioned catheters and lines. 
-Once alerted, clinicians can reposition or remove them to avoid life-threatening complications.
+The gold standard for the confirmation of line and tube positions are chest radiographs. However, a physician or
+radiologist must manually check these chest x-rays to verify that the lines and tubes are in the optimal position. Not
+only does this leave room for human error, but delays are also common as radiologists can be busy reporting other scans.
+Deep learning algorithms may be able to automatically detect malpositioned catheters and lines. Once alerted, clinicians
+can reposition or remove them to avoid life-threatening complications.
 
-The Royal Australian and New Zealand College of Radiologists (RANZCR) is a not-for-profit professional organisation for clinical radiologists and radiation oncologists in Australia, New Zealand, and Singapore. The group is one of many medical organisations around the world (including the NHS) that recognizes malpositioned tubes and lines as preventable. RANZCR is helping design safety systems where such errors will be caught.
+The Royal Australian and New Zealand College of Radiologists (RANZCR) is a not-for-profit professional organisation for
+clinical radiologists and radiation oncologists in Australia, New Zealand, and Singapore. The group is one of many
+medical organisations around the world (including the NHS) that recognizes malpositioned tubes and lines as preventable.
+RANZCR is helping design safety systems where such errors will be caught.
 
 
 %--------------------------------------------
 
 \section{Dataset}
-In this competition, we will detect the presence and position of catheters and lines on chest x-rays. 
-Use machine learning to train and test our model on 40,000 images to categorize a tube that is poorly placed.
+In this competition, we will detect the presence and position of catheters and lines on chest x-rays. Use machine
+learning to train and test our model on 40,000 images to categorize a tube that is poorly placed.
 
-The dataset has been labelled with a set of definitions to ensure consistency with labelling. 
-The normal category includes lines that were appropriately positioned and did not require repositioning. 
-The borderline category includes lines that would ideally require some repositioning but would in most cases still function adequately in their current position. 
-The abnormal category included lines that required immediate repositioning.
+The dataset has been labelled with a set of definitions to ensure consistency with labelling. The normal category
+includes lines that were appropriately positioned and did not require repositioning. The borderline category includes
+lines that would ideally require some repositioning but would in most cases still function adequately in their current
+position. The abnormal category included lines that required immediate repositioning.
 
 %--------------------------------------------
 
@@ -108,15 +115,24 @@ We propose to use the pre-trained imageNet as our baseline model and fine tune t
 %--------------------------------------------
 
 \section{Recent Work} 
-Paras Lakhani \cite{lakhani2017deep} evaluated the efficacy of deep convolutional neural networks (DCNNs) in differentiating subtle, intermediate, and more obvious image differences in radiography.
-In the paper, three different datasets were created, which included presence/absence of the endotracheal (ET) tube (n = 300), low/normal position of the ET tube (n = 300), and chest/abdominal radiographs (n = 120). 
-The datasets were split into training, validation, and test. 
-Both untrained and pre-trained deep neural networks were employed, including AlexNet and GoogLeNet classifiers, using the Caffe framework. 
-Data augmentation was performed for the presence/absence and low/normal ET tube datasets.
+Paras Lakhani \cite{lakhani2017deep} evaluated the efficacy of deep convolutional neural networks (DCNNs) in
+differentiating subtle, intermediate, and more obvious image differences in radiography. In the paper, three different
+datasets were created, which included presence/absence of the endotracheal (ET) tube (n = 300), low/normal position of
+the ET tube (n = 300), and chest/abdominal radiographs (n = 120). The datasets were split into training, validation, and
+test. Both untrained and pre-trained deep neural networks were employed, including AlexNet and GoogLeNet classifiers,
+using the Caffe framework. Data augmentation was performed for the presence/absence and low/normal ET tube datasets.
 
-In\cite{wang2018chestnet}, Hongyu Wang and Yong Xia proposed a model called ChestNet, which consists of two branches: a classification branch serves as a uniform feature extraction-classification network to free users from troublesome handcrafted feature extraction, and an attention branch exploits the correlation between class labels and the locations of patholog-ical abnormalities and allows the model to concentrate adaptively on the patholog-ically abnormal regions.With this model they achieved SOTA on the Chest X-ray 14 dataset.
+In\cite{wang2018chestnet}, Hongyu Wang and Yong Xia proposed a model called ChestNet, which consists of two branches: a
+classification branch serves as a uniform feature extraction-classification network to free users from troublesome
+handcrafted feature extraction, and an attention branch exploits the correlation between class labels and the locations
+of patholog-ical abnormalities and allows the model to concentrate adaptively on the patholog-ically abnormal
+regions.With this model they achieved SOTA on the Chest X-ray 14 dataset.
 
-In \cite{fridadar2019endotracheal}, Maayan and etc. suggest a method for training the network, first with synthetic data and then with real X-ray images in a fine-tuning phase, which allows the network to train on thousands of cases without annotating any data. The proposed method was tested on 477 real chest radiography from a public data set and reached AUC of 0.99 in classifying the presence vs. absence of the ET tube, along with outputting high quality ET tube segmentation maps, which could give us more hints on how the training should go on.
+In \cite{fridadar2019endotracheal}, Maayan and etc. suggest a method for training the network, first with synthetic data
+and then with real X-ray images in a fine-tuning phase, which allows the network to train on thousands of cases without
+annotating any data. The proposed method was tested on 477 real chest radiography from a public data set and reached AUC
+of 0.99 in classifying the presence vs. absence of the ET tube, along with outputting high quality ET tube segmentation
+maps, which could give us more hints on how the training should go on.
 
 %--------------------------------------------
 
