@@ -64,7 +64,7 @@
 
 %--------------------------------------------
 
-\section{Project Description}
+\section{Introduction}
 Our project will be based on the Code Competition from Kaggle (find more
 \href{https://www.kaggle.com/c/ranzcr-clip-catheter-line-classification/overview}{here}). Here is the detailed
 description of the challenge on Kaggle:
@@ -93,28 +93,17 @@ clinical radiologists and radiation oncologists in Australia, New Zealand, and S
 medical organisations around the world (including the NHS) that recognizes malpositioned tubes and lines as preventable.
 RANZCR is helping design safety systems where such errors will be caught.
 
+%--------------------------------------------
+\section{Motivation}
+If successful, your efforts may help clinicians save lives. 
+Earlier detection of malpositioned catheters and lines is even more important as COVID-19 cases continue to surge. 
+Many hospitals are at capacity and more patients are in need of these tubes and lines. 
+Quick feedback on catheter and line placement could help clinicians better treat these patients. 
+Beyond COVID-19, detection of line and tube position will ALWAYS be a requirement in many ill hospital patients.
 
 %--------------------------------------------
 
-\section{Dataset}
-In this competition, we will detect the presence and position of catheters and lines on chest x-rays. Use machine
-learning to train and test our model on 40,000 images to categorize a tube that is poorly placed.
-
-The dataset has been labelled with a set of definitions to ensure consistency with labelling. The normal category
-includes lines that were appropriately positioned and did not require repositioning. The borderline category includes
-lines that would ideally require some repositioning but would in most cases still function adequately in their current
-position. The abnormal category included lines that required immediate repositioning.
-
-%--------------------------------------------
-
-\section{Proposed Architecture}
-% TODO: Add some proposed architecture
-We propose to use the pre-trained imageNet as our baseline model and fine tune the parameters.
-
-
-%--------------------------------------------
-
-\section{Recent Work} 
+\section{Related Work} 
 Paras Lakhani \cite{lakhani2017deep} evaluated the efficacy of deep convolutional neural networks (DCNNs) in
 differentiating subtle, intermediate, and more obvious image differences in radiography. In the paper, three different
 datasets were created, which included presence/absence of the endotracheal (ET) tube (n = 300), low/normal position of
@@ -133,6 +122,30 @@ and then with real X-ray images in a fine-tuning phase, which allows the network
 annotating any data. The proposed method was tested on 477 real chest radiography from a public data set and reached AUC
 of 0.99 in classifying the presence vs. absence of the ET tube, along with outputting high quality ET tube segmentation
 maps, which could give us more hints on how the training should go on.
+
+%--------------------------------------------
+\section{Method}
+\subsection{Dataset}
+In this competition, we will detect the presence and position of catheters and lines on chest x-rays. Use machine
+learning to train and test our model on 40,000 images to categorize a tube that is poorly placed.
+
+The dataset has been labelled with a set of definitions to ensure consistency with labelling. The normal category
+includes lines that were appropriately positioned and did not require repositioning. The borderline category includes
+lines that would ideally require some repositioning but would in most cases still function adequately in their current
+position. The abnormal category included lines that required immediate repositioning.
+
+%--------------------------------------------
+
+\subsection{Network Architecture}
+
+
+%--------------------------------------------
+\section{Results}
+
+
+%--------------------------------------------
+\section{Discussion}
+
 
 %--------------------------------------------
 
