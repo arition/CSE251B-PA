@@ -64,7 +64,7 @@
 
 %--------------------------------------------
 
-\section{Project Description}
+\section{Introduction}
 Our project will be based on the Code Competition from Kaggle (find more
 \href{https://www.kaggle.com/c/ranzcr-clip-catheter-line-classification/overview}{here}). Here is the detailed
 description of the challenge on Kaggle:
@@ -94,8 +94,16 @@ medical organisations around the world (including the NHS) that recognizes malpo
 RANZCR is helping design safety systems where such errors will be caught.
 
 %--------------------------------------------
+\section{Motivation}
+???????????? If successful, your efforts may help clinicians save lives. Earlier detection of malpositioned catheters
+and lines is even more important as COVID-19 cases continue to surge. Many hospitals are at capacity and more patients
+are in need of these tubes and lines. Quick feedback on catheter and line placement could help clinicians better treat
+these patients. Beyond COVID-19, detection of line and tube position will ALWAYS be a requirement in many ill hospital
+patients.
 
-\section{Recent Work}
+%--------------------------------------------
+
+\section{Related Work} 
 Paras Lakhani \cite{lakhani2017deep} evaluated the efficacy of deep convolutional neural networks (DCNNs) in
 differentiating subtle, intermediate, and more obvious image differences in radiography. In the paper, three different
 datasets were created, which included presence/absence of the endotracheal (ET) tube (n = 300), low/normal position of
@@ -116,8 +124,8 @@ of 0.99 in classifying the presence vs. absence of the ET tube, along with outpu
 maps, which could give us more hints on how the training should go on.
 
 %--------------------------------------------
-
-\section{Dataset}
+\section{Method}
+\subsection{Dataset}
 In this competition, we detect the presence and position of catheters and lines on chest x-rays. Use machine learning to
 train and test our model on 40,000 images to categorize a poorly placed tube.
 
@@ -129,11 +137,7 @@ X-Ray image and different tubes have different usages, the dataset labels are fu
 categories. There are four categories for tubes in the dataset: PAC stands for Pulmonary artery catheter; ETT stands for
 endotracheal tube; NGT stands for Nasogastric tube; CVC stands for central venous catheter.
 
-%--------------------------------------------
-
-\section{Methods}
-
-\subsection{Background}
+\subsection{Architecture}
 Convolutional neural network (CNN) is one of the most popular architectures to solve the image classification problem.
 ResNet\cite{he2015deep} is one of the most widely used CNN architectures. ResNet features residual learning blocks that
 help fight against vanishing gradients problem by introducing skip connections. EfficientNet\cite{tan2020efficientnet}
@@ -142,7 +146,6 @@ using neural architecture search and later scales it up using a new scaling meth
 of CNNs using a highly effective compound coefficient. The EfficientNet series archives state-of-the-art accuracy in the
 ImageNet dataset as of 2020.
 
-\subsection{architecture}
 In our experiments, we choose ResNet and EfficientNet as the backbone CNN for our classification model. Since there are
 multiple tubes, we proposed a multi-head image classification network for poorly placed tube detection. In our model, we
 have four different heads. Each of them receives the same flattened CNN features as input and uses a single linear layer
