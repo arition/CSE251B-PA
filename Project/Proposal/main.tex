@@ -61,6 +61,15 @@
 
 \maketitle
 
+\begin{abstract}
+     In this paper, we propose a method that can label mispositioned catheters and lines on X-Ray images by using deep
+     learning and image classification methods. We used different architectures like Resnet, EfficientNet, and DenseNet
+     as the backbone of our solution to classify the line and tube from x-ray photos. We also applied different image
+     augmentation methods to enhance our results. We introduced the learning rate scheduling method for fast convergence
+     during the training, and we also employed mixed-precision training to accelerate the whole procedure while saving
+     the GPU memory. The experiment result shows that the EfficientNet backbone significantly improves the
+     classification accuracy compared to ResNet and DenseNet backbone.
+\end{abstract}
 
 %--------------------------------------------
 
@@ -91,9 +100,8 @@ will always be required by many ill hospital patients.
 The Royal Australian and New Zealand College of Radiologists (RANZCR) is a not-for-profit professional organization for
 clinical radiologists and radiation oncologists in Australia, New Zealand, and Singapore. The group is one of many
 medical organizations worldwide (including the NHS) that recognizes mispositioned tubes and lines as preventable. To
-label mispositioned tubes by deep learning methods, We use the dataset with X-Ray images and handcrafted labels
+label mispositioned tubes by deep learning methods, we use the dataset with X-Ray images and handcrafted labels
 published by RANZCR on Kaggle\cite{RANZCRCL93:online}.
-
 
 %--------------------------------------------
 
