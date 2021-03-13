@@ -139,9 +139,12 @@ help fight against vanishing gradients problem by introducing skip connections. 
 is a recently introduced convolutional neural network. The authors of EfficientNet first design a new baseline network
 using neural architecture search and later scales it up using a new scaling method that uniformly scales the properties
 of CNNs using a highly effective compound coefficient. The EfficientNet series archives state-of-the-art accuracy in the
-ImageNet dataset as of 2020.
+ImageNet dataset as of 2020. DenseNet\cite{huang2017densely} connects each layer to every other layer in a feed-forward fashion. 
+Whereas traditional convolutional networks with L layers have L connections — one between each layer and its subsequent layer — DenseNet network has L(L+1)/ 2 direct connections. 
+For each layer, the feature-maps of all preceding layers are used as inputs, and its own feature-maps are used as inputs into all subsequent layers. 
+DenseNets have several compelling advantages: they alleviate the vanishing-gradient problem, strengthen feature propagation, encourage feature reuse, and substantially reduce the number of parameters.
 
-In our experiments, we choose ResNet and EfficientNet as the backbone CNN for our classification model. Since there are
+In our experiments, we choose ResNet, Densenet and EfficientNet as the backbone CNN for our classification model. Since there are
 multiple tubes, we proposed a multi-head image classification network for poorly placed tube detection. In our model, we
 have four different heads. Each of them receives the same flattened CNN features as input and uses a single linear layer
 for classification output. We use different loss functions for different heads. For ETT and SGC heads, we applied a
