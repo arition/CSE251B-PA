@@ -11,13 +11,14 @@ class XRayDataset(Dataset):
         csv = pandas.read_csv(csv_path)
         self.images = list(csv['StudyInstanceUID'])
 
-        self.ett = torch.zeros(len(self.images), dtype=torch.long)
+        self.ett = torch.zeros((len(self.images), 3), dtype=torch.float)
         self.ngt = torch.zeros((len(self.images), 4), dtype=torch.float)
         self.cvc = torch.zeros((len(self.images), 3), dtype=torch.float)
-        self.sgc = torch.zeros(len(self.images), dtype=torch.long)
+        self.sgc = torch.zeros((len(self.images), 1), dtype=torch.float)
 
-        self.ett[csv['ETT - Borderline'] == 1] = 1
-        self.ett[csv['ETT - Normal'] == 1] = 2
+        self.ett[csv['ETT - Abnormal'] == 1, 0] = 1
+        self.ett[csv['ETT - Borderline'] == 1, 1] = 1
+        self.ett[csv['ETT - Normal'] == 1, 2] = 1
 
         self.ngt[csv['NGT - Abnormal'] == 1, 0] = 1
         self.ngt[csv['NGT - Borderline'] == 1, 1] = 1
@@ -28,7 +29,7 @@ class XRayDataset(Dataset):
         self.cvc[csv['CVC - Borderline'] == 1, 1] = 1
         self.cvc[csv['CVC - Normal'] == 1, 2] = 1
 
-        self.sgc[csv['Swan Ganz Catheter Present'] == 1] = 1
+        self.sgc[csv['Swan Ganz Catheter Present'] == 1, 0] = 1
 
         self.augmentation = augmentation
 

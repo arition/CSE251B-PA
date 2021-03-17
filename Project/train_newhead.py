@@ -14,7 +14,7 @@ from torch.utils.data.dataloader import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
 from dataset import XRayDataset
-from models import *
+from models_newhead import *
 
 
 def train(name):
@@ -36,7 +36,7 @@ def train(name):
     lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.5, patience=5)
     scaler = torch.cuda.amp.GradScaler()
     criterion_bce = nn.BCEWithLogitsLoss().to(device, non_blocking=True)
-    writer = SummaryWriter(f'experiments/{name}/tensorboard')
+    writer = SummaryWriter(f'experiments/{name}_newhead/tensorboard')
 
     writer.add_graph(model, torch.rand((1, 3, 256, 256), device=device))
 
@@ -100,14 +100,14 @@ def train(name):
     ROC_AUC(output_transform=lambda y_tuple: (torch.sigmoid(torch.cat(y_tuple[0], dim=1)), torch.cat(y_tuple[1], dim=1))).attach(evaluator, 'auc')
 
     to_save = {'model': model, 'optimizer': optimizer, 'lr_scheduler': lr_scheduler, 'trainer': trainer, 'scaler': scaler}
-    handler = Checkpoint(to_save, DiskSaver(f'experiments/{name}/checkpoint', create_dir=True), n_saved=2)
+    handler = Checkpoint(to_save, DiskSaver(f'experiments/{name}_newhead/checkpoint', create_dir=True), n_saved=2)
     trainer.add_event_handler(Events.EPOCH_COMPLETED, handler)
 
     def score_function(engine: Engine):
         return engine.state.metrics['auc']
         return (engine.state.metrics['ett_accuracy'] + engine.state.metrics['ngt_accuracy'] + engine.state.metrics['cvc_accuracy'] + engine.state.metrics['sgc_accuracy'])
     handler = Checkpoint(
-        {'model': model}, DiskSaver(f'experiments/{name}/checkpoint', create_dir=True),
+        {'model': model}, DiskSaver(f'experiments/{name}_newhead/checkpoint', create_dir=True),
         n_saved=2, filename_prefix='best', score_function=score_function, score_name="val_acc",
         global_step_transform=global_step_from_engine(trainer)
     )
