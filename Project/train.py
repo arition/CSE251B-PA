@@ -9,25 +9,39 @@ from ignite.engine import Engine, Events
 from ignite.handlers import (Checkpoint, DiskSaver, EarlyStopping,
                              global_step_from_engine)
 from ignite.metrics import Accuracy, Loss
-from ignite.contrib.metrics import ROC_AUC
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
-from dataset import XRayDataset
+from dataset import XRayDataset, XRayDataset_vgg
 from models import *
+
+from torchvision import transforms
 
 
 def train(name):
     device = torch.device('cuda')
-    train_dataset = XRayDataset('data/train_split.csv', augmentation=True)
-    val_dataset = XRayDataset('data/val_split.csv', augmentation=False)
-    train_dataloader = DataLoader(train_dataset, batch_size=24, shuffle=True, num_workers=12, timeout=60)
-    val_dataloader = DataLoader(val_dataset, batch_size=24, shuffle=True, num_workers=4, timeout=60)
-
+    
     if name == 'resnet50':
         backbone = ResNet50()
     elif name == 'efficientnet-b4':
         backbone = EfficientNetB4()
+    elif name == 'densenet121':
+        backbone = DenseNet121()
+    elif name == 'vgg11_bn':
+        backbone = vgg11_bn()
+    elif name == 'vgg19':
+        backbone = vgg19()
+        
+        
+    if name == 'vgg11_bn' or name == 'vgg19':
+        train_dataset = XRayDataset_vgg('data/train_split.csv', augmentation=True)
+        val_dataset = XRayDataset_vgg('data/val_split.csv', augmentation=False)
+    else:
+        train_dataset = XRayDataset('data/train_split.csv', augmentation=True)
+        val_dataset = XRayDataset('data/val_split.csv', augmentation=False)
+    train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=12, timeout=60)
+    val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=4, timeout=60)
+
 
     model = ClsHead(backbone).to(device, non_blocking=True)
     model.backbone.load_pretrain()
@@ -35,10 +49,9 @@ def train(name):
     optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.5, patience=5)
     scaler = torch.cuda.amp.GradScaler()
+    criterion_ce = nn.CrossEntropyLoss().to(device, non_blocking=True)
     criterion_bce = nn.BCEWithLogitsLoss().to(device, non_blocking=True)
     writer = SummaryWriter(f'experiments/{name}/tensorboard')
-
-    writer.add_graph(model, torch.rand((1, 3, 256, 256), device=device))
 
     def train_process(engine: Engine, batch: Sequence[torch.Tensor]):
         model.train()
@@ -53,10 +66,10 @@ def train(name):
 
         with torch.cuda.amp.autocast():
             ett_pred, ngt_pred, cvc_pred, sgc_pred = model(x)
-            ett_loss = criterion_bce(ett_pred, ett)
+            ett_loss = criterion_ce(ett_pred, ett)
             ngt_loss = criterion_bce(ngt_pred, ngt)
             cvc_loss = criterion_bce(cvc_pred, cvc)
-            sgc_loss = criterion_bce(sgc_pred, sgc)
+            sgc_loss = criterion_ce(sgc_pred, sgc)
             loss = ett_loss + ngt_loss + cvc_loss + sgc_loss
 
         scaler.scale(loss).backward()
@@ -83,29 +96,23 @@ def train(name):
     trainer = Engine(train_process)
     evaluator = Engine(val_process)
 
-    Loss(criterion_bce, output_transform=lambda y_tuple: (y_tuple[0][0], y_tuple[1][0]), device=device).attach(evaluator, 'ett_loss')
+    Loss(criterion_ce, output_transform=lambda y_tuple: (y_tuple[0][0], y_tuple[1][0]), device=device).attach(evaluator, 'ett_loss')
     Loss(criterion_bce, output_transform=lambda y_tuple: (y_tuple[0][1], y_tuple[1][1]), device=device).attach(evaluator, 'ngt_loss')
     Loss(criterion_bce, output_transform=lambda y_tuple: (y_tuple[0][2], y_tuple[1][2]), device=device).attach(evaluator, 'cvc_loss')
-    Loss(criterion_bce, output_transform=lambda y_tuple: (y_tuple[0][3], y_tuple[1][3]), device=device).attach(evaluator, 'sgc_loss')
+    Loss(criterion_ce, output_transform=lambda y_tuple: (y_tuple[0][3], y_tuple[1][3]), device=device).attach(evaluator, 'sgc_loss')
 
-    Accuracy(output_transform=lambda y_tuple: (torch.round(torch.sigmoid(y_tuple[0][0])), y_tuple[1][0]), is_multilabel=True, device=device).attach(evaluator, 'ett_accuracy')
-    Accuracy(output_transform=lambda y_tuple: (torch.round(torch.sigmoid(y_tuple[0][1])), y_tuple[1][1]), is_multilabel=True, device=device).attach(evaluator, 'ngt_accuracy')
-    Accuracy(output_transform=lambda y_tuple: (torch.round(torch.sigmoid(y_tuple[0][2])), y_tuple[1][2]), is_multilabel=True, device=device).attach(evaluator, 'cvc_accuracy')
-    Accuracy(output_transform=lambda y_tuple: (torch.round(torch.sigmoid(y_tuple[0][3])), y_tuple[1][3]), device=device).attach(evaluator, 'sgc_accuracy')
-
-    ROC_AUC(output_transform=lambda y_tuple: (torch.sigmoid(y_tuple[0][0]), y_tuple[1][0])).attach(evaluator, 'ett_auc')
-    ROC_AUC(output_transform=lambda y_tuple: (torch.sigmoid(y_tuple[0][1]), y_tuple[1][1])).attach(evaluator, 'ngt_auc')
-    ROC_AUC(output_transform=lambda y_tuple: (torch.sigmoid(y_tuple[0][2]), y_tuple[1][2])).attach(evaluator, 'cvc_auc')
-    ROC_AUC(output_transform=lambda y_tuple: (torch.sigmoid(y_tuple[0][3]), y_tuple[1][3])).attach(evaluator, 'sgc_auc')
-    ROC_AUC(output_transform=lambda y_tuple: (torch.sigmoid(torch.cat(y_tuple[0], dim=1)), torch.cat(y_tuple[1], dim=1))).attach(evaluator, 'auc')
+    Accuracy(output_transform=lambda y_tuple: (y_tuple[0][0], y_tuple[1][0]), device=device).attach(evaluator, 'ett_accuracy')
+    Accuracy(output_transform=lambda y_tuple: (torch.round(torch.sigmoid(y_tuple[0][1])), torch.round(y_tuple[1][1])), is_multilabel=True, device=device).attach(evaluator, 'ngt_accuracy')
+    Accuracy(output_transform=lambda y_tuple: (torch.round(torch.sigmoid(y_tuple[0][2])), torch.round(y_tuple[1][2])), is_multilabel=True, device=device).attach(evaluator, 'cvc_accuracy')
+    Accuracy(output_transform=lambda y_tuple: (y_tuple[0][3], y_tuple[1][3]), device=device).attach(evaluator, 'sgc_accuracy')
 
     to_save = {'model': model, 'optimizer': optimizer, 'lr_scheduler': lr_scheduler, 'trainer': trainer, 'scaler': scaler}
     handler = Checkpoint(to_save, DiskSaver(f'experiments/{name}/checkpoint', create_dir=True), n_saved=2)
     trainer.add_event_handler(Events.EPOCH_COMPLETED, handler)
 
     def score_function(engine: Engine):
-        return engine.state.metrics['auc']
-        return (engine.state.metrics['ett_accuracy'] + engine.state.metrics['ngt_accuracy'] + engine.state.metrics['cvc_accuracy'] + engine.state.metrics['sgc_accuracy'])
+        return (engine.state.metrics['ett_accuracy'] + engine.state.metrics['ngt_accuracy'] +
+                engine.state.metrics['cvc_accuracy'] + engine.state.metrics['sgc_accuracy'])
     handler = Checkpoint(
         {'model': model}, DiskSaver(f'experiments/{name}/checkpoint', create_dir=True),
         n_saved=2, filename_prefix='best', score_function=score_function, score_name="val_acc",
@@ -132,22 +139,16 @@ def train(name):
         metrics = evaluator.state.metrics
         loss = metrics['ett_loss'] + metrics['ngt_loss'] + metrics['cvc_loss'] + metrics['sgc_loss']
 
-        writer.add_scalar('val/loss/ett', metrics['ett_loss'], trainer.state.epoch)
-        writer.add_scalar('val/loss/ngt', metrics['ngt_loss'], trainer.state.epoch)
-        writer.add_scalar('val/loss/cvc', metrics['cvc_loss'], trainer.state.epoch)
-        writer.add_scalar('val/loss/sgc', metrics['sgc_loss'], trainer.state.epoch)
         writer.add_scalar('val/loss', loss, trainer.state.epoch)
+        writer.add_scalar('val/ett_loss', metrics['ett_loss'], trainer.state.epoch)
+        writer.add_scalar('val/ngt_loss', metrics['ngt_loss'], trainer.state.epoch)
+        writer.add_scalar('val/cvc_loss', metrics['cvc_loss'], trainer.state.epoch)
+        writer.add_scalar('val/sgc_loss', metrics['sgc_loss'], trainer.state.epoch)
 
-        writer.add_scalar('val/accuracy/ett', metrics['ett_accuracy'], trainer.state.epoch)
-        writer.add_scalar('val/accuracy/ngt', metrics['ngt_accuracy'], trainer.state.epoch)
-        writer.add_scalar('val/accuracy/cvc', metrics['cvc_accuracy'], trainer.state.epoch)
-        writer.add_scalar('val/accuracy/sgc', metrics['sgc_accuracy'], trainer.state.epoch)
-
-        writer.add_scalar('val/auc/ett', metrics['ett_auc'], trainer.state.epoch)
-        writer.add_scalar('val/auc/ngt', metrics['ngt_auc'], trainer.state.epoch)
-        writer.add_scalar('val/auc/cvc', metrics['cvc_auc'], trainer.state.epoch)
-        writer.add_scalar('val/auc/sgc', metrics['sgc_auc'], trainer.state.epoch)
-        writer.add_scalar('val/auc', metrics['auc'], trainer.state.epoch)
+        writer.add_scalar('val/ett_accuracy', metrics['ett_accuracy'], trainer.state.epoch)
+        writer.add_scalar('val/ngt_accuracy', metrics['ngt_accuracy'], trainer.state.epoch)
+        writer.add_scalar('val/cvc_accuracy', metrics['cvc_accuracy'], trainer.state.epoch)
+        writer.add_scalar('val/sgc_accuracy', metrics['sgc_accuracy'], trainer.state.epoch)
 
         lr_scheduler.step(loss)
 

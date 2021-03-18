@@ -9,7 +9,6 @@ class ClsHead(nn.Module):
         self.ngtHead = nn.Linear(self.backbone.out_features, 4)
         self.cvcHead = nn.Linear(self.backbone.out_features, 3)
         self.sgcHead = nn.Linear(self.backbone.out_features, 2)
-
     def forward(self, x):
         x = self.backbone(x)
         ett = self.ettHead(x)
