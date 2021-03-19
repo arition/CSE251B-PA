@@ -28,6 +28,8 @@ def train(name):
         backbone = ResNet50()
     elif name == 'efficientnet-b4':
         backbone = EfficientNetB4()
+    elif name == 'densenet121':
+        backbone = DenseNet121()
 
     model = ClsHead(backbone).to(device, non_blocking=True)
     model.backbone.load_pretrain()
