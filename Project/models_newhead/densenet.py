@@ -5,39 +5,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 from collections import OrderedDict
 
-# you need to download the models to ~/.torch/models
 # model_urls = {
 #     'densenet121': 'https://download.pytorch.org/models/densenet121-a639ec97.pth',
 #     'densenet169': 'https://download.pytorch.org/models/densenet169-b2777c0a.pth',
 #     'densenet201': 'https://download.pytorch.org/models/densenet201-c1103571.pth',
 #     'densenet161': 'https://download.pytorch.org/models/densenet161-8d451a50.pth',
 # }
-
-# densenet121_model_name = 'densenet121-a639ec97.pth'
-# densenet169_model_name = 'densenet169-b2777c0a.pth'
-# densenet201_model_name = 'densenet201-c1103571.pth'
-# densenet161_model_name = 'densenet161-8d451a50.pth'
-# models_dir = os.path.expanduser('~/.torch/models')
-
-
-# def densenet121(pretrained=False, **kwargs):
-#     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 24, 16), **kwargs)
-#     return model
-
-
-# def densenet169(pretrained=False, **kwargs):
-#     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 32, 32), **kwargs)
-#     return model
-
-
-# def densenet201(pretrained=False, **kwargs):
-#     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 48, 32), **kwargs)
-#     return model
-
-
-# def densenet161(pretrained=False, **kwargs):
-#     model = DenseNet(num_init_features=96, growth_rate=48, block_config=(6, 12, 36, 24), **kwargs)
-#     return model
 
 
 class _DenseLayer(nn.Sequential):
@@ -138,9 +111,6 @@ class DenseNet121(nn.Module):
             self.features.add_module('transition%d' % (i + 1), trans)
             num_features = num_features // 2
 
-#         # Final batch norm
-#         self.features.add_module('norm5', nn.BatchNorm2d(num_features))
-
         #
         self.out_features = num_features + block_config[-1] * growth_rate
 
@@ -165,7 +135,6 @@ class DenseNet121(nn.Module):
 
     def forward(self, x):
         features = self.features(x)
-
         return features
 
     def load_pretrain(self):
