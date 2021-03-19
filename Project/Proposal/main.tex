@@ -294,7 +294,7 @@ The test AUC for different CNN models is shown in \autoref{table:cnn_auc}.
 \end{table}
 
 \paragraph{Compare between different heads}
-The overall AUC for differrnt heads shown in \autoref{fig:cnn_val_overall}.
+The overall AUC for differrnt heads shown in \autoref{fig:head_val_overall}.
 
 \begin{figure}[h]
      \centering
@@ -334,8 +334,8 @@ The test AUC for different CNN models is shown in \autoref{table:head_auc}.
 \end{table}
 
 \section{Discussion}
-
-From \autoref{fig:cnn_val_overall}, we can see that EfficientNet-b5 has the highest AUC. It is expected since it is the
+\subsection{Different backbones}
+In this report, we tried four different backbones: ResNet50, DenseNet201, EfficientNet-b4 and EfficientNet-b5. From \autoref{fig:cnn_val_overall}, we can see that EfficientNet-b5 has the highest AUC. It is expected since it is the
 largest model among all of the four models. The ResNet-50 performs better than we expected. It has almost the same
 performance as EfficientNet-b5 on ETT, and outperforms EfficientNet-b4 on all categories. Recent work has shown that
 convolutional networks can be more accurate and efficient to train if there are more short connections in and between
@@ -343,10 +343,26 @@ layers. DenseNets take this into consideration and develop the architecture. But
 the AUC for DenseNet is the lowest. One possible reason is that these skip connecctions in DenseNet destory the layer
 structure and the individual CNN layers in the heads are actually affecting each other.
 
-Comparing AUC for different heads using data in \autoref{fig:head_val_overall}, we can see that CNN + Linear layer head
+\subsection{Different headers}
+We tried two different headers: one with Linear layer and the other with CNN + Linear layer. Comparing AUC for different heads using data in \autoref{fig:head_val_overall}, we can see that CNN + Linear layer head
 works better for both models. The result is consistent with what we expected before: shallow CNN layers learn general
 features; deep CNN layers learn specific features. With one layer more flexibility of learning, the whole model will
 work better.
+
+\subsection{Different types of tubes}
+From \autoref{fig:cnn_categories_val_auc}, we could see that, we achieved a relatively high accuracy on ETT, NGT and SGC (above 90\% accuracy, some of them even above 95\% accuracy). 
+But for the CVC, the highest accuracy we could achieve is around 79\%. 
+From \autoref{fig:visual_tubes}, we could see that CVC is the most complicated situation. We could have the tubes positioned on the left side, right side or even both sides of the body.
+And we could also have multiple tubes in one patient. It would be very hard for the network to correctly detect all different CVC cases. 
+For the other types of tubes, they are relatively straightforward, which match with our network performances.
+
+\begin{figure}[h]
+
+    \centering
+    \includegraphics[width=0.98\textwidth]{Visualization.png}
+     \caption{Visualization of different types of tubes.}
+     \label{fig:visual_tubes}
+\end{figure}
 
 
 \section{Individual contributions to the project}
