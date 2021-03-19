@@ -169,6 +169,12 @@ be more than one NGT or CVC tubes in one X-Ray image. Therefore, the result can 
 Abnormal Category. The traditional Softmax layer does not fit this situation, so we use a sigmoid layer and Binary
 cross-entropy loss.
 
+One of the critical properties of CNN is that the shallow layers in CNN learn general features. In contrast, the deep
+layers in CNN learn specific features. Using this property, we also propose a new kind of header with an extra CNN layer
+and a linear layer.  The CNN layer is the same as the last layer of the CNN backbone. In training, the heads receive
+features from the second to last layer of the CNN backbone and extract features using the last CNN layer with its own
+weights. We believe this kind of head can perform better because it can only learn the specific feature it wants.
+
 \subsection{Image augmentation}
 Image augmentation is a common technique used in image classification tasks. To archive higher accuracy, deep learning
 methods require many samples. However, the samples available for training are usually limited. We can use image
@@ -199,47 +205,161 @@ data becomes test set. During the training, we use SGD as the optimizer, set the
 learning rate to $0.001$ and momentum to $0.9$. We use PyTorch as our training framework and use Tensorboard to monitor
 and record our training results.
 
+\subsection{Metrics}
+
+Instead of looking at the results' accuracy, we use area under ROC curve (AUC) as our metrics. A ROC curve (receiver
+operating characteristic curve) shows the true positive rate and false positive rate of a binary classification model at
+all classification thresholds. AUC is the area under the ROC curve, which is classification threshold invariant. Since
+people can set a threshold based on their needs (more false positive or false negative), the AUC metric can better
+reflect a binary classification model's overall performance.
+
 \subsection{Results}
-The validation accuracy for different categories is shown in \autoref{fig:val_accuracy}.
+
+\paragraph{Compare between different CNN models}
+The overall Loss and AUC is shown in \autoref{fig:cnn_val_overall}. All of the models use CNN + Linear head.
 
 \begin{figure}[h]
      \centering
      \begin{subfigure}[b]{0.49\textwidth}
           \centering
-          \includegraphics[width=\textwidth]{val_ett_accuracy.png}
-          \caption{ETT Accuracy}
-          \label{fig:val_ett_accuracy}
+          \includegraphics[width=\textwidth]{cnn_val_auc.png}
+          \caption{Overall AUC}
+          \label{fig:cnn_val_auc}
      \end{subfigure}
      \hfill
      \begin{subfigure}[b]{0.49\textwidth}
           \centering
-          \includegraphics[width=\textwidth]{val_ngt_accuracy.png}
-          \caption{NGT Accuracy}
-          \label{fig:val_ngt_accuracy}
+          \includegraphics[width=\textwidth]{cnn_val_loss.png}
+          \caption{Overall loss}
+          \label{fig:cnn_val_loss}
      \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.49\textwidth}
-          \centering
-          \includegraphics[width=\textwidth]{val_sgc_accuracy.png}
-          \caption{SGC Accuracy}
-          \label{fig:val_sgc_accuracy}
-     \end{subfigure}
-     \caption{Validation accuracy for different tube categories. Orange line: Model with ResNet50 backbone. \ Blue line:
-          Model with EfficientNet-b5 backbone. Aqua line: Model with DenseNet101 backbone.}
-     \label{fig:val_accuracy}
+     \caption{Overall Loss and AUC for different CNN backbone. Pink line: Model with ResNet50 backbone. \
+          Red line: Model with EfficientNet-b5 backbone.Blue line: Model with EfficientNet-b4 backbone. \
+          Aqua line: Model with DenseNet201 backbone.}
+     \label{fig:cnn_val_overall}
 \end{figure}
 
-More experiments in progress...
+The validation AUC for different categories is shown in \autoref{fig:cnn_categories_val_auc}.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.49\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{cnn_val_auc_ett.png}
+          \caption{ETT AUC}
+          \label{fig:cnn_val_auc_ett}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.49\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{cnn_val_auc_ngt.png}
+          \caption{NGT AUC}
+          \label{fig:cnn_val_auc_ngt}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.49\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{cnn_val_auc_cvc.png}
+          \caption{CVC AUC}
+          \label{fig:cnn_val_auc_cvc}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.49\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{cnn_val_auc_sgc.png}
+          \caption{SGC AUC}
+          \label{fig:cnn_val_auc_sgc}
+     \end{subfigure}
+     \caption{Validation AUC for different tube categories. Pink line: Model with ResNet50 backbone. \
+          Red line: Model with EfficientNet-b5 backbone.Blue line: Model with EfficientNet-b4 backbone. \
+          Aqua line: Model with DenseNet201 backbone.}
+     \label{fig:cnn_categories_val_auc}
+\end{figure}
+
+The test AUC for different CNN models is shown in \autoref{table:cnn_auc}.
+
+\begin{table}[h]
+     \caption{AUC on test set for different CNN models}
+     \label{table:cnn_auc}
+     \centering
+     \begin{tabular}{@{}ll@{}}
+          \toprule
+          Model           & Testset AUC \\
+          \midrule
+          Resnet-50       & 0.8835      \\
+          EfficientNet-b4 & 0.8389      \\
+          EfficientNet-b5 & 0.8973      \\
+          DenseNet201     & 0.7622      \\
+          \bottomrule
+     \end{tabular}
+\end{table}
+
+\paragraph{Compare between different heads}
+The overall AUC for differrnt heads shown in \autoref{fig:cnn_val_overall}.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.49\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{head_efficientnet_val_auc.png}
+          \caption{EfficientNet-b4 AUC. Blue line: CNN + Linear layer. Green line: Linear layer.}
+          \label{fig:head_efficientnet_val_auc}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.49\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{head_resnet_val_auc.png}
+          \caption{ResNet-50 AUC. Pink line: CNN + Linear layer. Orange line: Linear layer.}
+          \label{fig:head_resnet_val_auc}
+     \end{subfigure}
+     \caption{Overall AUC for different heads.}
+     \label{fig:head_val_overall}
+\end{figure}
+
+The test AUC for different CNN models is shown in \autoref{table:head_auc}.
+
+\begin{table}[h]
+     \caption{AUC on test set for different head}
+     \label{table:head_auc}
+     \centering
+     \begin{tabular}{@{}ll@{}}
+          \toprule
+          Head-Model                & Testset AUC \\
+          \midrule
+          Linear-Resnet-50          & 0.8698      \\
+          CNNLinear-Resnet-50       & 0.8835      \\
+          Linear-EfficientNet-b4    & 0.8389      \\
+          CNNLinear-EfficientNet-b4 & 0.8377      \\
+          \bottomrule
+     \end{tabular}
+\end{table}
 
 \section{Discussion}
 
-We can see that for ETT, NGT and SGC, EfficientNet outperforms ResNet a lot from the \autoref{fig:val_accuracy}. That’s
-expected since EfficientNet also outperforms ResNet in ImageNet classification.
+From \autoref{fig:cnn_val_overall}, we can see that EfficientNet-b5 has the highest AUC. It is expected since it is the
+largest model among all of the four models. The ResNet-50 performs better than we expected. It has almost the same
+performance as EfficientNet-b5 on ETT, and outperforms EfficientNet-b4 on all categories. Recent work has shown that
+convolutional networks can be more accurate and efficient to train if there are more short connections in and between
+layers. DenseNets take this into consideration and develop the architecture. But from this experiment, we could see that
+the AUC for DenseNet is the lowest. One possible reason is that these skip connecctions in DenseNet destory the layer
+structure and the individual CNN layers in the heads are actually affecting each other.
 
-Recent work has shown that convolutional networks can be substantially deeper, more acurate, and efficient to train if
-they contain shorter connections between layers close to the input and those close to the output. DenseNets take this
-into consideration and develop the architecture. But from this experiment, we could see that the accuracy is lower than
-EfficientNet.
+Comparing AUC for different heads using data in \autoref{fig:head_val_overall}, we can see that CNN + Linear layer head
+works better for both models. The result is consistent with what we expected before: shallow CNN layers learn general
+features; deep CNN layers learn specific features. With one layer more flexibility of learning, the whole model will
+work better.
+
+
+\section{Individual contributions to the project}
+
+\paragraph{Fangzhou Ai}
+Fine tuning.
+
+\paragraph{Yue Qiao}
+ResNet and EfficientNet model. Multi-Head design.
+
+\paragraph{Zunming Zhang}
+DenseNet model.
 
 %--------------------------------------------
 
