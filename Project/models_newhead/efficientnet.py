@@ -1,15 +1,16 @@
 import torch
 import torch.nn as nn
 from efficientnet_pytorch import EfficientNet, get_model_params
+from efficientnet_pytorch.utils import round_filters, round_repeats
 
 
-class EfficientNetB4Head(EfficientNet):
-    def __init__(self, image_size=(256, 256)):
-        blocks_args, global_params = get_model_params('efficientnet-b4', None)
+class EfficientNetSeriesHead(EfficientNet):
+    def __init__(self, variant, start_layer, image_size=(256, 256)):
+        blocks_args, global_params = get_model_params(variant, None)
         global_params = global_params._replace(image_size=image_size)
         super().__init__(blocks_args, global_params)
 
-        self.start_layer = sum([block_args.num_repeat for block_args in self._blocks_args[:-1]])
+        self.start_layer = start_layer
 
     def forward(self, x):
         # Blocks
@@ -26,19 +27,28 @@ class EfficientNetB4Head(EfficientNet):
         return x
 
 
-class EfficientNetB4(EfficientNet):
-    def __init__(self, image_size=(256, 256)):
-        blocks_args, global_params = get_model_params('efficientnet-b4', None)
+class EfficientNetSeries(EfficientNet):
+    def __init__(self, variant, image_size=(256, 256)):
+        blocks_args, global_params = get_model_params(variant, None)
         global_params = global_params._replace(image_size=image_size)
         super().__init__(blocks_args, global_params)
 
         self.out_features = self._fc.in_features
+        self.variant = variant
         self.image_size = image_size
-        self.stop_layer = sum([block_args.num_repeat for block_args in self._blocks_args[:-1]])
+
+        def replace_args(block_args):
+            # Update block input and output filters based on depth multiplier.
+            return block_args._replace(
+                input_filters=round_filters(block_args.input_filters, self._global_params),
+                output_filters=round_filters(block_args.output_filters, self._global_params),
+                num_repeat=round_repeats(block_args.num_repeat, self._global_params)
+            )
+        self.stop_layer = sum([replace_args(block_args).num_repeat for block_args in self._blocks_args[:-1]])
 
     def make_head(self):
         head = nn.Sequential(
-            EfficientNetB4Head(self.image_size),
+            EfficientNetSeriesHead(self.variant, self.stop_layer, self.image_size),
             nn.AdaptiveAvgPool2d(1),
             nn.Dropout(self._global_params.dropout_rate),
             nn.Flatten()
@@ -71,8 +81,26 @@ class EfficientNetB4(EfficientNet):
         x = self.extract_features(x)
         return x
 
+
+class EfficientNetB4(EfficientNetSeries):
+    def __init__(self, image_size=(256, 256)):
+        super().__init__('efficientnet-b4', image_size=image_size)
+
     def load_pretrain(self):
         url = 'https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/adv-efficientnet-b4-44fb3a87.pth'
+        pretrained_dict = torch.hub.load_state_dict_from_url(url, progress=False)
+        model_dict = self.state_dict()
+        pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
+        model_dict.update(pretrained_dict)
+        self.load_state_dict(model_dict)
+
+
+class EfficientNetB5(EfficientNetSeries):
+    def __init__(self, image_size=(256, 256)):
+        super().__init__('efficientnet-b5', image_size=image_size)
+
+    def load_pretrain(self):
+        url = 'https://github.com/lukemelas/EfficientNet-PyTorch/releases/download/1.0/adv-efficientnet-b5-86493f6b.pth'
         pretrained_dict = torch.hub.load_state_dict_from_url(url, progress=False)
         model_dict = self.state_dict()
         pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
