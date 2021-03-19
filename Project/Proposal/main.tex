@@ -84,18 +84,17 @@ up to 25\% of cases. The likelihood of complication is directly related to both 
 the proceduralist. Early recognition of malpositioned tubes is the key to preventing dangerous complications (even
 death), even more so now that millions of COVID-19 patients need these tubes and lines.
 
-The gold standard for the confirmation of line and tube positions is chest radiographs in the real world. Once getting
+The gold standard for the confirmation of line and tube positions is chest radiographs. Once getting
 the chest radiographs (X-Ray images), a physician or radiologist must manually check these chest x-rays to verify the
 lines and tubes are correctly positioned.  Not only does this leave room for human error, but delays are also common as
-radiologists can be busy reporting other scans. Leveraging deep learning, we believe that we could develop algorithms
-that may be able to detect mispositioned catheters and lines automatically.  Once alerted, clinicians can reposition or
-remove them to avoid life-threatening complications, which will dramatically reduce the human resources involved.
+radiologists can be busy reporting other scans. The delays would cause severe complications in most of the cases.
+Leveraging deep learning, we believe that we could develop algorithms that may be able to detect mispositioned catheters and lines automatically and in  a much sooner fashion.  
+Once alerted from the model, clinicians can reposition or remove them immediatedly to avoid life-threatening complications, which will dramatically reduce the human resources involved.
 
 Under the COVID-19 pandemic, almost all the hospitals are at capacity, and more patients require correctly positioned
-catheter lines and tubes. If successful, our efforts may help clinicians save lives. Earlier detection of mispositioned
-catheters and lines is even more critical as COVID-19 cases continue to surge. Quick feedback on catheter and line
-placement could help clinicians better treat these patients. Even beyond COVID-19, detection of line and tube position
-will always be required by many ill hospital patients.
+catheter lines and tubes. If successful, our efforts may help clinicians save lives and release a lot of human resources on other emergency. 
+Quick feedback on catheter and line placement could help clinicians better treat these patients. 
+Even beyond COVID-19, detection of line and tube position will always be required by many ill hospital patients.
 
 The Royal Australian and New Zealand College of Radiologists (RANZCR) is a not-for-profit professional organization for
 clinical radiologists and radiation oncologists in Australia, New Zealand, and Singapore. The group is one of many
@@ -113,11 +112,12 @@ the ET tube (n = 300), and chest/abdominal radiographs (n = 120). The datasets w
 test. Both untrained and pre-trained deep neural networks were employed, including AlexNet and GoogLeNet classifiers,
 using the Caffe framework. Data augmentation was performed for the presence/absence and low/normal ET tube datasets.
 
-In\cite{wang2018chestnet}, Hongyu Wang and Yong Xia proposed a model called ChestNet, which consists of two branches: a
-classification branch serves as a uniform feature extraction-classification network to free users from troublesome
-handcrafted feature extraction, and an attention branch exploits the correlation between class labels and the locations
-of patholog-ical abnormalities and allows the model to concentrate adaptively on the patholog-ically abnormal
-regions.With this model they achieved SOTA on the Chest X-ray 14 dataset.
+In\cite{wang2018chestnet}, Hongyu Wang and Yong Xia proposed a model called ChestNet. It consists of two branches.
+The first classification branch is a uniform feature extraction-classification network, 
+which would, to some extent, free users from troublesome handcrafted feature extraction.
+The second branch is an attention branch to exploit the correlation between class labels and the locations of patholog-ical abnormalities.
+By introducing the attention branch, the patholog-ically abnormal regions could be adaptively concentrated by the model
+With this model they achieved SOTA on the Chest X-ray 14 dataset.
 
 In \cite{fridadar2019endotracheal}, Maayan and etc. suggest a method for training the network, first with synthetic data
 and then with real X-ray images in a fine-tuning phase, which allows the network to train on thousands of cases without
@@ -144,11 +144,10 @@ kind of tubes are mispositioned.
 Convolutional neural network (CNN) is one of the most popular architectures to solve the image classification problem.
 ResNet\cite{he2015deep} is one of the most widely used CNN architectures. ResNet features residual learning blocks that
 help fight against vanishing gradients problem by introducing skip connections. DenseNet\cite{huang2017densely} connects
-each layer to every other layer in a feed-forward fashion. Whereas traditional convolutional networks with L layers have
-L connections (one between each layer and its subsequent layer), DenseNet network has L(L+1)/ 2 direct connections. For
-each layer, the feature-maps of all preceding layers are used as inputs, and its own feature-maps are used as inputs
-into all subsequent layers. DenseNets have several compelling advantages: they alleviate the vanishing-gradient problem,
-strengthen feature propagation, encourage feature reuse, and substantially reduce the number of parameters.
+each layer to every other layer in a feed-forward fashion. For the traditional convolotional networks, usually it would have L layers with L connections. 
+But for the DenseNet, it has L(L+1)/2 direct connections. 
+Each layer in the DenseNet takes the feature-maps of all proceding layers as the inputs and all its own feature-maps would be used as the inputs into all subsequent layers.
+Not only does the DenseNets alleviate the vanishing-gradient problem, but also strengthen feature propagation, encourage feature reuse, and substantially reduce the number of parameters.
 EfficientNet\cite{tan2020efficientnet} is a recently introduced convolutional neural network. The authors of
 EfficientNet first design a new baseline network using neural architecture search and later scales it up using a new
 scaling method that uniformly scales the properties of CNNs using a highly effective compound coefficient. The
