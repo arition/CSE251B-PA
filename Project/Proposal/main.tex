@@ -84,17 +84,18 @@ up to 25\% of cases. The likelihood of complication is directly related to both 
 the proceduralist. Early recognition of malpositioned tubes is the key to preventing dangerous complications (even
 death), even more so now that millions of COVID-19 patients need these tubes and lines.
 
-The gold standard for the confirmation of line and tube positions is chest radiographs. Once getting
-the chest radiographs (X-Ray images), a physician or radiologist must manually check these chest x-rays to verify the
-lines and tubes are correctly positioned.  Not only does this leave room for human error, but delays are also common as
-radiologists can be busy reporting other scans. The delays would cause severe complications in most of the cases.
-Leveraging deep learning, we believe that we could develop algorithms that may be able to detect mispositioned catheters and lines automatically and in  a much sooner fashion.  
-Once alerted from the model, clinicians can reposition or remove them immediatedly to avoid life-threatening complications, which will dramatically reduce the human resources involved.
+The gold standard for the confirmation of line and tube positions is chest radiographs. Once getting the chest
+radiographs (X-Ray images), a physician or radiologist must manually check these chest x-rays to verify the lines and
+tubes are correctly positioned. Not only does this leave room for human error, but delays are also common as
+radiologists can be busy reporting other scans. The delays would cause severe complications in most cases. Leveraging
+deep learning, we believe that we could develop algorithms that may detect mispositioned catheters and lines
+automatically and in a much sooner fashion. Once alerted from the model, clinicians can reposition or remove them
+immediately to avoid life-threatening complications, dramatically reducing the human resources involved.
 
 Under the COVID-19 pandemic, almost all the hospitals are at capacity, and more patients require correctly positioned
-catheter lines and tubes. If successful, our efforts may help clinicians save lives and release a lot of human resources on other emergency. 
-Quick feedback on catheter and line placement could help clinicians better treat these patients. 
-Even beyond COVID-19, detection of line and tube position will always be required by many ill hospital patients.
+catheter lines and tubes. If successful, our efforts may help clinicians save lives and release many human resources on
+other emergencies. Quick feedback on catheter and line placement could help clinicians better treat these patients. Even
+beyond COVID-19, detection of line and tube position will always be required by many ill hospital patients.
 
 The Royal Australian and New Zealand College of Radiologists (RANZCR) is a not-for-profit professional organization for
 clinical radiologists and radiation oncologists in Australia, New Zealand, and Singapore. The group is one of many
@@ -112,12 +113,12 @@ the ET tube (n = 300), and chest/abdominal radiographs (n = 120). The datasets w
 test. Both untrained and pre-trained deep neural networks were employed, including AlexNet and GoogLeNet classifiers,
 using the Caffe framework. Data augmentation was performed for the presence/absence and low/normal ET tube datasets.
 
-In\cite{wang2018chestnet}, Hongyu Wang and Yong Xia proposed a model called ChestNet. It consists of two branches.
-The first classification branch is a uniform feature extraction-classification network, 
-which would, to some extent, free users from troublesome handcrafted feature extraction.
-The second branch is an attention branch to exploit the correlation between class labels and the locations of patholog-ical abnormalities.
-By introducing the attention branch, the patholog-ically abnormal regions could be adaptively concentrated by the model
-With this model they achieved SOTA on the Chest X-ray 14 dataset.
+In\cite{wang2018chestnet}, Hongyu Wang and Yong Xia proposed a model called ChestNet. It consists of two
+branches. The first classification branch is a universal feature extraction-classification network, which would, to some
+extent, free users from troublesome handcrafted feature extraction. The second branch is an attention branch to exploit
+the correlation between class labels and the locations of pathological abnormalities. By introducing the attention
+branch, the pathologically abnormal regions could be adaptively concentrated by the model. Using the proposed model,
+they achieved SOTA on the Chest X-ray 14 dataset.
 
 In \cite{fridadar2019endotracheal}, Maayan and etc. suggest a method for training the network, first with synthetic data
 and then with real X-ray images in a fine-tuning phase, which allows the network to train on thousands of cases without
@@ -144,14 +145,14 @@ kind of tubes are mispositioned.
 Convolutional neural network (CNN) is one of the most popular architectures to solve the image classification problem.
 ResNet\cite{he2015deep} is one of the most widely used CNN architectures. ResNet features residual learning blocks that
 help fight against vanishing gradients problem by introducing skip connections. DenseNet\cite{huang2017densely} connects
-each layer to every other layer in a feed-forward fashion. For the traditional convolotional networks, usually it would have L layers with L connections. 
-But for the DenseNet, it has L(L+1)/2 direct connections. 
-Each layer in the DenseNet takes the feature-maps of all proceding layers as the inputs and all its own feature-maps would be used as the inputs into all subsequent layers.
-Not only does the DenseNets alleviate the vanishing-gradient problem, but also strengthen feature propagation, encourage feature reuse, and substantially reduce the number of parameters.
-EfficientNet\cite{tan2020efficientnet} is a recently introduced convolutional neural network. The authors of
-EfficientNet first design a new baseline network using neural architecture search and later scales it up using a new
-scaling method that uniformly scales the properties of CNNs using a highly effective compound coefficient. The
-EfficientNet series archives state-of-the-art accuracy in the ImageNet dataset as of 2020.
+each layer to every other layer in a feed-forward fashion. The traditional convolutional networks would have L layers
+with L connections, but the DenseNet has L(L+1)/2 direct connections. Each layer in the DenseNet takes all proceding
+layers' feature-maps as the inputs, and the feature-maps would be used as the inputs into all subsequent layers. The
+DenseNets alleviate the vanishing gradient problem, strengthen feature propagation, encourage feature reuse, and
+substantially reduce the parameters. EfficientNet\cite{tan2020efficientnet} is a recently introduced convolutional
+neural network. The authors of EfficientNet first design a new baseline network using neural architecture search and
+later scales it up using a new scaling method that uniformly scales the properties of CNNs using a highly effective
+compound coefficient. The EfficientNet series archives state-of-the-art accuracy in the ImageNet dataset as of 2020.
 
 We choose ResNet, DenseNet and EfficientNet as the backbone CNN for our classification model in our experiments. Most of
 the published experiments on this dataset use ResNet as their image classification backbone. ResNet series are great
@@ -294,7 +295,7 @@ The test AUC for different CNN models is shown in \autoref{table:cnn_auc}.
 \end{table}
 
 \paragraph{Compare between different heads}
-The overall AUC for differrnt heads shown in \autoref{fig:head_val_overall}.
+The overall AUC for differrnt heads is shown in \autoref{fig:head_val_overall}.
 
 \begin{figure}[h]
      \centering
@@ -335,7 +336,8 @@ The test AUC for different CNN models is shown in \autoref{table:head_auc}.
 
 \section{Discussion}
 \subsection{Different backbones}
-In this report, we tried four different backbones: ResNet50, DenseNet201, EfficientNet-b4 and EfficientNet-b5. From \autoref{fig:cnn_val_overall}, we can see that EfficientNet-b5 has the highest AUC. It is expected since it is the
+In this report, we tried four different backbones: ResNet50, DenseNet201, EfficientNet-b4 and EfficientNet-b5. From
+\autoref{fig:cnn_val_overall}, we can see that EfficientNet-b5 has the highest AUC. It is expected since it is the
 largest model among all of the four models. The ResNet-50 performs better than we expected. It has almost the same
 performance as EfficientNet-b5 on ETT, and outperforms EfficientNet-b4 on all categories. Recent work has shown that
 convolutional networks can be more accurate and efficient to train if there are more short connections in and between
@@ -344,23 +346,24 @@ the AUC for DenseNet is the lowest. One possible reason is that these skip conne
 structure and the individual CNN layers in the heads are actually affecting each other.
 
 \subsection{Different headers}
-We tried two different headers: one with Linear layer and the other with CNN + Linear layer. Comparing AUC for different heads using data in \autoref{fig:head_val_overall}, we can see that CNN + Linear layer head
-works better for both models. The result is consistent with what we expected before: shallow CNN layers learn general
-features; deep CNN layers learn specific features. With one layer more flexibility of learning, the whole model will
-work better.
+We tried two different headers: one with Linear layer and the other with CNN + Linear layer. Comparing AUC for different
+heads using data in \autoref{fig:head_val_overall}, we can see that CNN + Linear layer head works better for both
+models. The result is consistent with what we expected before: shallow CNN layers learn general features; deep CNN
+layers learn specific features. With one layer more flexibility of learning, the whole model will work better.
 
 \subsection{Different types of tubes}
-From \autoref{fig:cnn_categories_val_auc}, we could see that, we achieved a relatively high accuracy on ETT, NGT and SGC (above 90\% accuracy, some of them even above 95\% accuracy). 
-But for the CVC, the highest accuracy we could achieve is around 79\%. 
-From \autoref{fig:visual_tubes}, we could see that CVC is the most complicated situation. We could have the tubes positioned on the left side, right side or even both sides of the body.
-And we could also have multiple tubes in one patient. It would be very hard for the network to correctly detect all different CVC cases. 
-For the other types of tubes, they are relatively straightforward, which match with our network performances.
+From \autoref{fig:cnn_categories_val_auc}, we could see that, we achieved a relatively high accuracy on ETT, NGT and SGC
+(above 90\% accuracy, some of them even above 95\% accuracy). But for the CVC, the highest accuracy we could achieve is
+around 79\%. From \autoref{fig:visual_tubes}, we could see that CVCs are the most complicated tubes. The tubes can be at
+the the left side, right side or even at the both sides of the body. It would be hard for the network to correctly
+detect different CVC tubes at all positions. The other types of tubes are relatively straightforward, and so get higher
+accuracy for these tubes.
 
 \begin{figure}[h]
 
     \centering
     \includegraphics[width=0.98\textwidth]{Visualization.png}
-     \caption{Visualization of different types of tubes.}
+     \caption{Visualization of different types of tubes.\cite{RANZCRCL76:online}}
      \label{fig:visual_tubes}
 \end{figure}
 
